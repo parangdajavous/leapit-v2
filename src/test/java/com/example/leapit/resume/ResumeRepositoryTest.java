@@ -35,4 +35,28 @@ public class ResumeRepositoryTest {
             System.out.println();
         }
     }
+
+    @Test
+    public void deleteById() {
+        // given
+        Integer resumeId = 1;
+        Integer userId = 1;
+
+        // eye
+        List<Resume> beforResumes = resumeRepository.findAllByUserId(userId);
+        for (Resume resume : beforResumes) {
+            System.out.println("id: " + resume.getId());
+        }
+        System.out.println();
+
+        // when
+        resumeRepository.deleteById(resumeId);
+
+        // eye
+        List<Resume> afterResumes = resumeRepository.findAllByUserId(userId);
+        for (Resume resume : afterResumes) {
+            System.out.println("id: " + resume.getId());
+        }
+        System.out.println();
+    }
 }

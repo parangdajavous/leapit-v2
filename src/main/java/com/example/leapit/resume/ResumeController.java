@@ -14,11 +14,17 @@ public class ResumeController {
     private final ResumeService resumeService;
     private final HttpSession session;
 
-    @GetMapping("/personal/resume") // TODO : /s/api 추가
-    public ResponseEntity<?> getList(HttpServletRequest request) {
-        //User sessionUser = (User) session.getAttribute("sessionUser");
-        Integer userId = 1;
-        ResumeResponse.ListDTO respDTO = resumeService.getList(userId); // TODO : (sessionUser.getId())
+    @GetMapping("/s/api/personal/resume")
+    public ResponseEntity<?> getList() {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        ResumeResponse.ListDTO respDTO = resumeService.getList(sessionUser.getId());
         return Resp.ok(respDTO);
+    }
+
+    @DeleteMapping("/s/api/personal/resume/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") int id) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        resumeService.delete(id, sessionUser.getId());
+        return Resp.ok(null);
     }
 }
