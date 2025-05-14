@@ -2,6 +2,7 @@ package com.example.leapit.user;
 
 import com.example.leapit._core.error.ex.ExceptionApi400;
 import com.example.leapit._core.error.ex.ExceptionApi401;
+import com.example.leapit._core.error.ex.ExceptionApi404;
 import com.example.leapit._core.util.JwtUtil;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -64,5 +65,22 @@ public class UserService {
         // 토큰 생성
         String accessToken = JwtUtil.create(userPS);
         return UserResponse.TokenDTO.builder().accessToken(accessToken).build();
+    }
+
+    @Transactional
+    public UserResponse.UpdateDTO update(UserRequest.CompanyUpdateDTO reqDTO, Integer userId) {
+        User userPS = userRepository.findById(userId);
+        if (userPS == null) throw new ExceptionApi404("회원정보가 존재하지 않습니다.");
+        userPS.companyUpdate(reqDTO.getNewPassword(),reqDTO.getContactNumber());
+        UserResponse.UpdateDTO respDTO = new UserResponse.UpdateDTO(userPS);
+        return respDTO;
+    }
+    @Transactional
+    public UserResponse.UpdateDTO update(UserRequest.PersonalUpdateDTO reqDTO, Integer userId) {
+        User userPS = userRepository.findById(userId);
+        if (userPS == null) throw new ExceptionApi404("회원정보가 존재하지 않습니다.");
+        userPS.personalUpdate(reqDTO.getName(),reqDTO.getNewPassword(), reqDTO.getEmail(),reqDTO.getContactNumber());
+        UserResponse.UpdateDTO respDTO = new UserResponse.UpdateDTO(userPS);
+        return respDTO;
     }
 }

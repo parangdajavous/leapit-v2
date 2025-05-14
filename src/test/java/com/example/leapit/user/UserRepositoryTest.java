@@ -64,4 +64,28 @@ public class UserRepositoryTest {
         System.out.println("권한: " + savedUser.getRole());
         System.out.println("============================================");
     }
+
+    @Test
+    public void findById_test() {
+        // given
+        Integer userId = 7;
+
+        // when
+        User user = userRepository.findById(userId);
+
+        // eye
+        System.out.println("========== 유저 조회 결과 ==========");
+        if (user != null) {
+            System.out.println("ID: " + user.getId());
+            System.out.println("이름: " + user.getName());
+            System.out.println("아이디: " + user.getUsername());
+            System.out.println("이메일: " + user.getEmail());
+            System.out.println("전화번호: " + user.getContactNumber());
+            System.out.println("역할: " + user.getRole());
+            System.out.println("생년월일: " + user.getBirthDate());
+        } else {
+            System.out.println("해당 ID의 유저가 존재하지 않습니다.");
+        }
+        System.out.println("===================================");
+    }
 }

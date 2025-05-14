@@ -2,6 +2,10 @@ package com.example.leapit.user;
 
 import com.example.leapit.common.enums.Role;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -54,5 +58,17 @@ public class User {
         this.createdAt = createdAt;
         this.name = name;
         this.birthDate = birthDate;
+    }
+
+    public void companyUpdate(String newPassword, String contactNumber) {
+        this.password = newPassword;
+        this.contactNumber = contactNumber;
+    }
+
+    public void personalUpdate(String name, String password, String email, String contactNumber) {
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.contactNumber = contactNumber;
     }
 }

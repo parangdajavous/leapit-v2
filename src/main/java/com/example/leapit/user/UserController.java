@@ -1,7 +1,9 @@
 package com.example.leapit.user;
 
+import com.example.leapit._core.error.ex.ExceptionApi400;
 import com.example.leapit._core.util.Resp;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
+    private final HttpSession session;
 
     @PostMapping("/personal/join")
     public ResponseEntity<?> personalJoin(@Valid @RequestBody UserRequest.PersonalJoinDTO reqDTO, Errors errors) {
@@ -37,6 +40,22 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody UserRequest.LoginDTO loginDTO, HttpServletResponse response, Errors errors) {
         UserResponse.TokenDTO respDTO = userService.login(loginDTO);
+        return Resp.ok(respDTO);
+    }
+
+    @PutMapping("/s/company/user")
+    public ResponseEntity<?> companyUpdate(@Valid @RequestBody UserRequest.CompanyUpdateDTO reqDTO, Errors errors) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        if (!reqDTO.getNewPassword().equals(reqDTO.getConfirmPassword())) throw new ExceptionApi400("입력한 비밀번호가 다릅니다.");
+        UserResponse.UpdateDTO respDTO = userService.update(reqDTO, sessionUser.getId());
+        return Resp.ok(respDTO);
+    }
+
+    @PutMapping("/s/personal/user")
+    public ResponseEntity<?> personalUpdate(@Valid @RequestBody UserRequest.PersonalUpdateDTO reqDTO) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        if (!reqDTO.getNewPassword().equals(reqDTO.getConfirmPassword())) throw new ExceptionApi400("입력한 비밀번호가 다릅니다.");
+        UserResponse.UpdateDTO respDTO = userService.update(reqDTO, sessionUser.getId());
         return Resp.ok(respDTO);
     }
 }

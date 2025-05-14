@@ -97,4 +97,32 @@ public class UserRequest {
         private Role role;
         private String rememberMe;
     }
+
+    @Data
+    public static class CompanyUpdateDTO {
+        private String newPassword;
+        private String confirmPassword;
+        private String contactNumber;
+    }
+
+    @Data
+    public static class PersonalUpdateDTO {
+        @Size(min = 2, max = 20, message = "이름은 2~20자 이내여야 합니다.")
+        @NotBlank(message = "이름은 필수입니다.")
+        private String name;
+
+        @Pattern(
+                regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+=\\-{}\\[\\]:;\"'<>,.?/]).{8,16}$",
+                message = "비밀번호는 8~16자, 영문 대소문자, 숫자, 특수문자를 포함해야 합니다."
+        )
+        private String newPassword;
+
+        private String confirmPassword;
+
+        @Email(message = "올바른 이메일 형식이 아닙니다.")
+        private String email;
+
+        @Pattern(regexp = "^010-\\d{4}-\\d{4}$", message = "전화번호는 010-1234-5678 형식으로 입력해주세요.")
+        private String contactNumber;
+    }
 }
