@@ -53,18 +53,18 @@ INSERT INTO tech_stack_tb (code)
 VALUES ('Django');
 
 -- 2. resume_tb
-INSERT INTO resume_tb (user_id, title, photo_url, summary, position_type, self_introduction, is_public, created_at)
-VALUES (1, '쌀의 이력서', NULL, '자바 개발자입니다', '백엔드', '적극적이고 성실합니다', false, now());
-INSERT INTO resume_tb (user_id, title, photo_url, summary, position_type, self_introduction, is_public, created_at)
-VALUES (1, '쌀의 이력서2', '이력서 사진4.png', '프론트엔드 자신 있습니다', '프론트엔드', '디자인 감각도 좋아요', true, now());
-INSERT INTO resume_tb (user_id, title, photo_url, summary, position_type, self_introduction, is_public, created_at)
-VALUES (2, '파이썬 이력서', '이력서 사진5.png', 'Django와 FastAPI 경험 있음', '백엔드', '데이터 파이프라인 경험', false, now());
-INSERT INTO resume_tb (user_id, title, photo_url, summary, position_type, self_introduction, is_public, created_at)
-VALUES (3, '풀스택 도전기', NULL, '다양한 프로젝트 수행 경험 있음', '풀스택', '매일 꾸준히 성장 중', true, now());
-INSERT INTO resume_tb (user_id, title, photo_url, summary, position_type, self_introduction, is_public, created_at)
-VALUES (4, '코틀린 마스터', NULL, '안드로이드 개발 경험 풍부', '모바일 앱 개발자', '성능 최적화에 관심 많습니다', true, now());
-INSERT INTO resume_tb (user_id, title, photo_url, summary, position_type, self_introduction, is_public, created_at)
-VALUES (5, '데이터 분석가', NULL, 'SQL과 데이터 시각화 강점', 'AI 엔지니어', '통계에 자신 있습니다', false, now());
+INSERT INTO resume_tb (user_id, title, photo_url, summary, position_type, self_introduction, created_at, updated_at)
+VALUES (1, '쌀의 이력서', NULL, '자바 개발자입니다', '백엔드', '적극적이고 성실합니다', now(), now());
+INSERT INTO resume_tb (user_id, title, photo_url, summary, position_type, self_introduction, created_at, updated_at)
+VALUES (1, '쌀의 이력서2', '이력서 사진4.png', '프론트엔드 자신 있습니다', '프론트엔드', '디자인 감각도 좋아요',now(), now());
+INSERT INTO resume_tb (user_id, title, photo_url, summary, position_type, self_introduction, created_at, updated_at)
+VALUES (2, '파이썬 이력서', '이력서 사진5.png', 'Django와 FastAPI 경험 있음', '백엔드', '데이터 파이프라인 경험', now(), now());
+INSERT INTO resume_tb (user_id, title, photo_url, summary, position_type, self_introduction, created_at, updated_at)
+VALUES (3, '풀스택 도전기', NULL, '다양한 프로젝트 수행 경험 있음', '풀스택', '매일 꾸준히 성장 중', now(), now());
+INSERT INTO resume_tb (user_id, title, photo_url, summary, position_type, self_introduction, created_at, updated_at)
+VALUES (4, '코틀린 마스터', NULL, '안드로이드 개발 경험 풍부', '모바일 앱 개발자', '성능 최적화에 관심 많습니다', now(), now());
+INSERT INTO resume_tb (user_id, title, photo_url, summary, position_type, self_introduction, created_at, updated_at)
+VALUES (5, '데이터 분석가', NULL, 'SQL과 데이터 시각화 강점', 'AI 엔지니어', '통계에 자신 있습니다', now(), now());
 
 -- 2.3 resume_tech_stack_tb
 INSERT INTO resume_tech_stack_tb (resume_id, tech_stack)
