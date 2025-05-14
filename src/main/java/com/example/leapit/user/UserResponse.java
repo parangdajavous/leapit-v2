@@ -1,9 +1,20 @@
 package com.example.leapit.user;
 
 import com.example.leapit.common.enums.Role;
+import lombok.Builder;
 import lombok.Data;
 
 public class UserResponse {
+    @Data
+    public static class TokenDTO {
+        private String accessToken;
+
+        @Builder
+        public TokenDTO(String accessToken) {
+            this.accessToken = accessToken;
+        }
+    }
+
     @Data
     public static class DTO {
         private Integer id;

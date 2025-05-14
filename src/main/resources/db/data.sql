@@ -1,20 +1,20 @@
 -- 1. user_tb
 INSERT INTO user_tb (username, password, email, contact_number, role, created_at, name, birth_date)
-VALUES ('ssar', '1234', 'ssar@nate.com', '010-1234-5678', 'PERSONAL', NOW(), '쌀', '2000-01-01');
+VALUES ('ssar', '$2a$10$gCUnBtPpadsQOWl43CsAhe.oYPd.a5f0TPUhxOnhImDNo8U433B7S', 'ssar@nate.com', '010-1234-5678', 'PERSONAL', NOW(), '쌀', '2000-01-01');
 INSERT INTO user_tb (username, password, email, contact_number, role, created_at, name, birth_date)
-VALUES ('cos', '1234', 'cos@nate.com', '010-2345-6789', 'PERSONAL', NOW(), '코스', '1999-12-31');
+VALUES ('cos', '$2a$10$gCUnBtPpadsQOWl43CsAhe.oYPd.a5f0TPUhxOnhImDNo8U433B7S', 'cos@nate.com', '010-2345-6789', 'PERSONAL', NOW(), '코스', '1999-12-31');
 INSERT INTO user_tb (username, password, email, contact_number, role, created_at, name, birth_date)
-VALUES ('love', '1234', 'love@nate.com', '010-3456-6709', 'PERSONAL', NOW(), '러브', '1999-10-25');
+VALUES ('love', '$2a$10$gCUnBtPpadsQOWl43CsAhe.oYPd.a5f0TPUhxOnhImDNo8U433B7S', 'love@nate.com', '010-3456-6709', 'PERSONAL', NOW(), '러브', '1999-10-25');
 INSERT INTO user_tb (username, password, email, contact_number, role, created_at, name, birth_date)
-VALUES ('hana', '1234', 'hana@nate.com', '010-4567-7890', 'PERSONAL', NOW(), '김하나', '2001-03-14');
+VALUES ('hana', '$2a$10$gCUnBtPpadsQOWl43CsAhe.oYPd.a5f0TPUhxOnhImDNo8U433B7S', 'hana@nate.com', '010-4567-7890', 'PERSONAL', NOW(), '김하나', '2001-03-14');
 INSERT INTO user_tb (username, password, email, contact_number, role, created_at, name, birth_date)
-VALUES ('minsu', '1234', 'minsu@nate.com', '010-5678-8901', 'PERSONAL', NOW(), '박민수', '1998-07-22');
+VALUES ('minsu', '$2a$10$gCUnBtPpadsQOWl43CsAhe.oYPd.a5f0TPUhxOnhImDNo8U433B7S', 'minsu@nate.com', '010-5678-8901', 'PERSONAL', NOW(), '박민수', '1998-07-22');
 INSERT INTO user_tb (username, password, email, contact_number, role, created_at)
-VALUES ('company01', '1234', 'company01@nate.com', '02-1234-5678', 'COMPANY', NOW());
+VALUES ('company01', '$2a$10$gCUnBtPpadsQOWl43CsAhe.oYPd.a5f0TPUhxOnhImDNo8U433B7S', 'company01@nate.com', '02-1234-5678', 'COMPANY', NOW());
 INSERT INTO user_tb (username, password, email, contact_number, role, created_at)
-VALUES ('company02', '1234', 'company02@nate.com', '02-2345-6789', 'COMPANY', NOW());
+VALUES ('company02', '$2a$10$gCUnBtPpadsQOWl43CsAhe.oYPd.a5f0TPUhxOnhImDNo8U433B7S', 'company02@nate.com', '02-2345-6789', 'COMPANY', NOW());
 INSERT INTO user_tb (username, password, email, contact_number, role, created_at)
-VALUES ('company03', '1234', 'company03@nate.com', '02-3456-7890', 'COMPANY', NOW());
+VALUES ('company03', '$2a$10$gCUnBtPpadsQOWl43CsAhe.oYPd.a5f0TPUhxOnhImDNo8U433B7S', 'company03@nate.com', '02-3456-7890', 'COMPANY', NOW());
 
 -- 2.1 position_type_tb
 INSERT INTO position_type_tb (code)
