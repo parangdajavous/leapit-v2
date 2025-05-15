@@ -13,6 +13,7 @@ import java.util.Optional;
 public class CompanyInfoRepository {
     private final EntityManager em;
 
+
     public Optional<CompanyInfo> findByUserId(Integer userId) {
         try {
             CompanyInfo result = em.createQuery(
@@ -25,5 +26,9 @@ public class CompanyInfoRepository {
         } catch (Exception e) {
             return Optional.empty();
         }
+    }
+    public CompanyInfo save(CompanyInfo companyInfo) {
+        em.persist(companyInfo);
+        return companyInfo;
     }
 }

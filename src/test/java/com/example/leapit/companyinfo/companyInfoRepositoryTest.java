@@ -1,9 +1,5 @@
-package com.example.leapit.companyinforepository;
+package com.example.leapit.companyinfo;
 
-import com.example.leapit.companyinfo.CompanyInfo;
-import com.example.leapit.companyinfo.CompanyInfoRepository;
-import com.example.leapit.user.User;
-import com.example.leapit.user.UserRepository;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,4 +28,5 @@ public class companyInfoRepositoryTest {
         System.out.println(companyInfoOP.get().getAddress());
         System.out.println("===========유저네임중복체크============");
     }
+
 }

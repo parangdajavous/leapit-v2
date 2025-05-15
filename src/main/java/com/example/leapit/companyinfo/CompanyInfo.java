@@ -41,4 +41,18 @@ public class CompanyInfo {
 
     @Lob
     private String benefit;
+
+    @Builder
+    public CompanyInfo(Integer id, User user, String logoImage, String companyName, LocalDate establishmentDate, String address, String mainService, String introduction, String image, String benefit) {
+        this.id = id;
+        this.user = user;
+        this.logoImage = logoImage;
+        this.companyName = companyName;
+        this.establishmentDate = establishmentDate;
+        this.address = address;
+        this.mainService = mainService;
+        this.introduction = introduction;
+        this.image = image;
+        this.benefit = benefit;
+    }
 }

@@ -86,6 +86,7 @@ public class UserRequest {
                     .role(Role.COMPANY)
                     .build();
         }
+
     }
 
     @Data

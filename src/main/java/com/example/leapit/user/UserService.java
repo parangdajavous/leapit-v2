@@ -9,7 +9,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -43,6 +42,7 @@ public class UserService {
         return new UserResponse.DTO(userPS);
     }
 
+
     public Map<String, Object> checkUsernameAvailable(String username) {
         Optional<User> userOP = userRepository.findByUsername(username);
         Map<String, Object> respDTO = new HashMap<>();
@@ -54,6 +54,7 @@ public class UserService {
         }
         return respDTO;
     }
+
 
     public UserResponse.TokenDTO login(UserRequest.@Valid LoginDTO loginDTO) {
         User userPS = userRepository.findByUsername(loginDTO.getUsername())
