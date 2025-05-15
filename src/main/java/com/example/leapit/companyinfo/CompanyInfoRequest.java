@@ -50,4 +50,22 @@ public class CompanyInfoRequest {
         }
     }
 
+    @Data
+    public static class UpdateDTO {
+        private String logoImage;  // Base64로 변환된 로고 이미지 문자열 (data:image/png;base64,...)
+        @NotEmpty(message = "회사명은 필수입니다.")
+        private String companyName;
+        private LocalDate establishmentDate;
+        @NotEmpty(message = "주소는 필수입니다.")
+        private String address;
+        private String mainService;
+        private String introduction;
+        private String image;  // Base64로 변환된 대표 이미지 문자열 (data:image/png;base64,...)
+        private String benefit;
+
+        // Base64로 변환할 이미지 파일
+        private String logoImageFile;
+        private String imageFile;
+    }
+
 }
