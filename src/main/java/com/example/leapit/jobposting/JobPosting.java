@@ -1,10 +1,12 @@
 package com.example.leapit.jobposting;
 
 import com.example.leapit.application.Application;
+import com.example.leapit.common.enums.CareerLevel;
 import com.example.leapit.jobposting.bookmark.JobPostingBookmark;
 import com.example.leapit.jobposting.techstack.JobPostingTechStack;
 import com.example.leapit.user.User;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +14,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -34,8 +37,14 @@ public class JobPosting {
     @Column(nullable = false)
     private String positionType;
 
-    private Integer minCareerLevel;
-    private Integer maxCareerLevel;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private CareerLevel minCareerLevel;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private CareerLevel maxCareerLevel;
+
     private String educationLevel;
     private Integer addressRegionId;
     private Integer addressSubRegionId;
@@ -79,4 +88,32 @@ public class JobPosting {
 
     @OneToMany(mappedBy = "jobPosting", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Application> applications;
+
+    @Builder
+    public JobPosting(Integer id, User user, String title, String positionType,
+                      CareerLevel minCareerLevel, CareerLevel maxCareerLevel,
+                      String educationLevel, Integer addressRegionId, Integer addressSubRegionId,
+                      String addressDetail, String serviceIntro, LocalDate deadline,
+                      String responsibility, String qualification, String preference,
+                      String benefit, String additionalInfo) {
+        this.id = id;
+        this.user = user;
+        this.title = title;
+        this.positionType = positionType;
+        this.minCareerLevel = minCareerLevel;
+        this.maxCareerLevel = maxCareerLevel;
+        this.educationLevel = educationLevel;
+        this.addressRegionId = addressRegionId;
+        this.addressSubRegionId = addressSubRegionId;
+        this.addressDetail = addressDetail;
+        this.serviceIntro = serviceIntro;
+        this.deadline = deadline;
+        this.responsibility = responsibility;
+        this.qualification = qualification;
+        this.preference = preference;
+        this.benefit = benefit;
+        this.additionalInfo = additionalInfo;
+        this.viewCount = 0;
+        this.jobPostingTechStacks = new ArrayList<>();
+    }
 }
