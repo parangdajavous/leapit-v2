@@ -1,5 +1,6 @@
 package com.example.leapit.jobposting.techstack;
 
+import com.example.leapit.common.techstack.TechStack;
 import com.example.leapit.jobposting.JobPosting;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -18,6 +19,7 @@ public class JobPostingTechStack {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "job_posting_id")
     private JobPosting jobPosting;
 
     @Column(nullable = false)
