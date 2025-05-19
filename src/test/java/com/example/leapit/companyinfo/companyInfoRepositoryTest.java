@@ -40,6 +40,8 @@ public class companyInfoRepositoryTest {
     public void findById_test() {
         Integer userId = 7;
         Optional<CompanyInfo> companyInfoOP = companyInfoRepository.findById(userId);
+
+        // eye
         System.out.println("===========유저네임중복체크============");
         System.out.println(companyInfoOP.get().getId());
         System.out.println(companyInfoOP.get().getCompanyName());

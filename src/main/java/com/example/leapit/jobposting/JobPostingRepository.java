@@ -43,4 +43,9 @@ public class JobPostingRepository {
         query.setParameter("userId", userId);
         return (Long) query.getSingleResult();
     }
+
+    // 아이디로 채용공고 삭제
+    public void deleteById(Integer id) {
+        em.remove(em.find(JobPosting.class, id));
+    }
 }

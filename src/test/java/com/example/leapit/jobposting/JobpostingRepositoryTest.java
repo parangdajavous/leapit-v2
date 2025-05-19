@@ -2,6 +2,8 @@ package com.example.leapit.jobposting;
 
 import com.example.leapit.common.enums.CareerLevel;
 import com.example.leapit.common.enums.EducationLevel;
+import com.example.leapit.common.enums.CareerLevel;
+import com.example.leapit.common.enums.EducationLevel;
 import com.example.leapit.companyinfo.CompanyInfo;
 import com.example.leapit.companyinfo.CompanyInfoRepository;
 import com.example.leapit.jobposting.techstack.JobPostingTechStack;
@@ -46,7 +48,6 @@ public class JobpostingRepositoryTest {
             System.out.println("=================================");
         }
     }
-
 
     @Test
     public void save_job_posting() {
@@ -109,6 +110,23 @@ public class JobpostingRepositoryTest {
         System.out.print("기술스택: ");
         saved.getJobPostingTechStacks().forEach(stack -> System.out.print(stack.getTechStack() + " "));
         System.out.println("\n===============================================");
+    }
+
+    @Test
+    public void job_posting_delete_test() {
+        // given
+        Integer jobPostingId = 1;
+
+        // eye : 삭제 전
+        Optional<JobPosting> before = jobPostingRepository.findById(jobPostingId);
+        System.out.println("삭제 전: " + before);
+
+        // when
+        jobPostingRepository.deleteById(jobPostingId);
+
+        // eye : 삭제 후
+        Optional<JobPosting> after = jobPostingRepository.findById(jobPostingId);
+        System.out.println("삭제 후: " + after); // Optional.empty
     }
 
 
@@ -185,6 +203,8 @@ public class JobpostingRepositoryTest {
             }
 
             System.out.println("======== 채용공고 상세보기 끝 ========");
+        } else {
+            System.out.println("채용공고를 찾을 수 없습니다.");
         }
     }
 

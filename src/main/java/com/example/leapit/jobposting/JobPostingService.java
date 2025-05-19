@@ -1,5 +1,6 @@
 package com.example.leapit.jobposting;
 
+import com.example.leapit._core.error.ex.ExceptionApi403;
 import com.example.leapit._core.error.ex.ExceptionApi404;
 import com.example.leapit.common.enums.CareerLevel;
 import com.example.leapit.common.enums.EducationLevel;
@@ -31,7 +32,7 @@ public class JobPostingService {
 
     // 채용공고 저장
     @Transactional
-    public JobPostingResponse.CompanyDTO save(JobPostingRequest.SaveDTO reqDTO, User sessionUser) {
+    public JobPostingResponse.DTO save(JobPostingRequest.SaveDTO reqDTO, User sessionUser) {
         // 1. 연관된 기술스택까지 포함된 JobPosting 생성
         JobPosting jobPosting = reqDTO.toEntity(sessionUser);
 
@@ -39,7 +40,7 @@ public class JobPostingService {
         JobPosting jobPostingPS = jobPostingRepository.save(jobPosting);
 
         // 3. 응답용 DTO로 반환
-        return new JobPostingResponse.CompanyDTO(jobPostingPS);
+        return new JobPostingResponse.DTO(jobPostingPS);
     }
 
     // 채용공고 저장 화면에 필요한 데이터 불러오기
@@ -74,10 +75,10 @@ public class JobPostingService {
 
     // 기업 채용공고 상세보기
     @Transactional
-    public JobPostingResponse.CompanyDTO getDetailCompany(Integer id) {
+    public JobPostingResponse.DTO getDetailCompany(Integer id) {
         JobPosting jobPosting = jobPostingRepository.findById(id)
                 .orElseThrow(() -> new ExceptionApi404("해당 채용공고를 찾을 수 없습니다."));
-        return new JobPostingResponse.CompanyDTO(jobPosting);
+        return new JobPostingResponse.DTO(jobPosting);
     }
 
     // 구직자 채용공고 상세보기
@@ -94,10 +95,23 @@ public class JobPostingService {
                 .orElseThrow(() -> new ExceptionApi404("해당 기업의 정보가 존재하지 않습니다."));
 
         // DTO 구성
-        JobPostingResponse.CompanyDTO companyDTO = new JobPostingResponse.CompanyDTO(jobPosting);
+        JobPostingResponse.DTO companyDTO = new JobPostingResponse.DTO(jobPosting);
         JobPostingResponse.DetailPersonalDTO.CompanyInfoDTO companyInfoDTO =
                 new JobPostingResponse.DetailPersonalDTO.CompanyInfoDTO(companyInfo);
 
         return new JobPostingResponse.DetailPersonalDTO(companyDTO, companyInfoDTO);
+    }
+
+    // 채용공고 삭제
+    @Transactional
+    public void delete(Integer id, Integer sessionUser) {
+        JobPosting jobPosting = jobPostingRepository.findById(id)
+                .orElseThrow(() -> new ExceptionApi404("해당 채용공고를 찾을 수 없습니다."));
+
+        if (!jobPosting.getUser().getId().equals(sessionUser)) {
+            throw new ExceptionApi403("삭제 권한이 없습니다.");
+        }
+
+        jobPostingRepository.deleteById(id);
     }
 }

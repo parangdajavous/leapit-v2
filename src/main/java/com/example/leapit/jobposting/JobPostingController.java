@@ -20,7 +20,7 @@ public class JobPostingController {
     @PostMapping("/s/api/company/jobposting")
     public ResponseEntity<?> save(@RequestBody @Valid JobPostingRequest.SaveDTO reqDTO, Errors errors) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        JobPostingResponse.CompanyDTO respDTO = jobPostingService.save(reqDTO, sessionUser);
+        JobPostingResponse.DTO respDTO = jobPostingService.save(reqDTO, sessionUser);
         return Resp.ok(respDTO);
     }
 
@@ -34,7 +34,7 @@ public class JobPostingController {
     // 기업 채용공고 상세보기
     @GetMapping("/s/api/company/jobposting/{id}/detail")
     public ResponseEntity<?> companyGetDetailForm(@PathVariable Integer id) {
-        JobPostingResponse.CompanyDTO respDTO = jobPostingService.getDetailCompany(id);
+        JobPostingResponse.DTO respDTO = jobPostingService.getDetailCompany(id);
         return Resp.ok(respDTO);
     }
 
@@ -44,4 +44,12 @@ public class JobPostingController {
         JobPostingResponse.DetailPersonalDTO respDTO = jobPostingService.getDetailPersonal(id);
         return Resp.ok(respDTO);
     }
+
+    @DeleteMapping("/s/api/company/jobposting/{id}")
+    public ResponseEntity<?> delete(@PathVariable Integer id) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        jobPostingService.delete(id, sessionUser.getId());
+        return Resp.ok(null);
+    }
+
 }
