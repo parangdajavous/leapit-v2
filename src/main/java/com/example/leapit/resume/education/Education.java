@@ -1,7 +1,9 @@
 package com.example.leapit.resume.education;
 
+import com.example.leapit.common.enums.EducationLevel;
 import com.example.leapit.resume.Resume;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -28,7 +30,7 @@ public class Education {
     private Boolean isDropout = false;
 
     @Column(nullable = false)
-    private String educationLevel;
+    private EducationLevel educationLevel;
 
     @Column(nullable = false)
     private String schoolName;
@@ -43,4 +45,19 @@ public class Education {
 
     @CreationTimestamp
     private Timestamp createdAt;
+
+    @Builder
+
+    public Education(Integer id, Resume resume, LocalDate graduationDate, Boolean isDropout, EducationLevel educationLevel, String schoolName, String major, BigDecimal gpa, BigDecimal gpaScale, Timestamp createdAt) {
+        this.id = id;
+        this.resume = resume;
+        this.graduationDate = graduationDate;
+        this.isDropout = isDropout;
+        this.educationLevel = educationLevel;
+        this.schoolName = schoolName;
+        this.major = major;
+        this.gpa = gpa;
+        this.gpaScale = gpaScale;
+        this.createdAt = createdAt;
+    }
 }

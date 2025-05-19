@@ -12,7 +12,6 @@ import java.util.Optional;
 public class CompanyInfoRepository {
     private final EntityManager em;
 
-
     public Optional<CompanyInfo> findByUserId(Integer userId) {
         try {
             CompanyInfo result = em.createQuery(

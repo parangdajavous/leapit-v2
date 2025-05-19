@@ -36,4 +36,19 @@ public class Etc {
 
     @CreationTimestamp
     private Timestamp createdAt;
+
+    @Builder
+
+    public Etc(Integer id, Resume resume, LocalDate startDate, LocalDate endDate, Boolean hasEndDate, String title, String etcType, String institutionName, String description, Timestamp createdAt) {
+        this.id = id;
+        this.resume = resume;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.hasEndDate = hasEndDate;
+        this.title = title;
+        this.etcType = etcType;
+        this.institutionName = institutionName;
+        this.description = description;
+        this.createdAt = createdAt;
+    }
 }

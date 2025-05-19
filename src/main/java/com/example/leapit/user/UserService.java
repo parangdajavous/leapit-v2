@@ -70,16 +70,17 @@ public class UserService {
 
     @Transactional
     public UserResponse.UpdateDTO update(UserRequest.CompanyUpdateDTO reqDTO, Integer userId) {
-        User userPS = userRepository.findById(userId);
-        if (userPS == null) throw new ExceptionApi404("회원정보가 존재하지 않습니다.");
+        User userPS = userRepository.findById(userId)
+                .orElseThrow(() -> new ExceptionApi404("자원을 찾을 수 없습니다"));
         userPS.companyUpdate(reqDTO.getNewPassword(),reqDTO.getContactNumber());
         UserResponse.UpdateDTO respDTO = new UserResponse.UpdateDTO(userPS);
         return respDTO;
     }
+
     @Transactional
     public UserResponse.UpdateDTO update(UserRequest.PersonalUpdateDTO reqDTO, Integer userId) {
-        User userPS = userRepository.findById(userId);
-        if (userPS == null) throw new ExceptionApi404("회원정보가 존재하지 않습니다.");
+        User userPS = userRepository.findById(userId)
+                .orElseThrow(() -> new ExceptionApi404("자원을 찾을 수 없습니다"));
         userPS.personalUpdate(reqDTO.getName(),reqDTO.getNewPassword(), reqDTO.getEmail(),reqDTO.getContactNumber());
         UserResponse.UpdateDTO respDTO = new UserResponse.UpdateDTO(userPS);
         return respDTO;

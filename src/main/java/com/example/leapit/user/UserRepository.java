@@ -28,5 +28,7 @@ public class UserRepository {
         return user;
     }
 
-    public User findById(Integer id) {return em.find(User.class, id);}
+    public Optional<User> findById(Integer id) {
+        return Optional.ofNullable(em.find(User.class, id));
+    }
 }

@@ -70,11 +70,32 @@ public class Resume {
     @Lob
     private String selfIntroduction;
 
-    private Boolean isPublic;
-
     @CreationTimestamp
     private Timestamp createdAt;
 
     @UpdateTimestamp
     private Timestamp updatedAt;
+
+    @Builder
+    public Resume(Integer id, User user, String title, String photoUrl, String summary, String positionType,
+                  List<ResumeTechStack> resumeTechStacks, List<Education> educations, List<Project> projects,
+                  List<Experience> experiences, List<Link> links, List<Training> trainings, List<Etc> etcs,
+                  String selfIntroduction, Timestamp createdAt, Timestamp updatedAt) {
+        this.id = id;
+        this.user = user;
+        this.title = title;
+        this.photoUrl = photoUrl;
+        this.summary = summary;
+        this.positionType = positionType;
+        this.resumeTechStacks = resumeTechStacks != null ? resumeTechStacks : new ArrayList<>();
+        this.educations = educations != null ? educations : new ArrayList<>();
+        this.projects = projects != null ? projects : new ArrayList<>();
+        this.experiences = experiences != null ? experiences : new ArrayList<>();
+        this.links = links != null ? links : new ArrayList<>();
+        this.trainings = trainings != null ? trainings : new ArrayList<>();
+        this.etcs = etcs != null ? etcs : new ArrayList<>();
+        this.selfIntroduction = selfIntroduction;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }
