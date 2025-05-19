@@ -1,5 +1,6 @@
 package com.example.leapit.jobposting;
 
+import com.example.leapit._core.error.ex.ExceptionApi404;
 import com.example.leapit.common.enums.CareerLevel;
 import com.example.leapit.common.enums.EducationLevel;
 import com.example.leapit.common.enums.CareerLevel;
@@ -54,10 +55,11 @@ public class JobpostingRepositoryTest {
         // given
         Integer userId = 6;
 
-        User savedUser = userRepository.findById(userId);
+        User userPS = userRepository.findById(userId)
+                .orElseThrow(() -> new ExceptionApi404("유저를 찾을 수 없습니다"));
 
         JobPosting jobPosting = JobPosting.builder()
-                .user(savedUser)
+                .user(userPS)
                 .title("백엔드 개발자 모집")
                 .positionType("백엔드")
                 .minCareerLevel(CareerLevel.YEAR_2)

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -25,7 +26,8 @@ public class BoardService {
     @Transactional
     public BoardResponse.DTO save(BoardRequest.SaveDTO reqDTO, User sessionUser) {
         // 여기에서 영속 상태의 user로 변환
-        User userPS = userRepository.findById(sessionUser.getId());
+        User userPS = userRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new ExceptionApi404("유저를 찾을 수 없습니다"));
 
         Board board = reqDTO.toEntity(userPS);
         Board boardPS = boardRepository.save(board);

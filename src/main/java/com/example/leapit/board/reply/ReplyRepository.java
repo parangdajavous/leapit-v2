@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository
@@ -24,5 +25,20 @@ public class ReplyRepository {
         em.createQuery("delete from Reply r where r.board.id = :boardId")
                 .setParameter("boardId", boardId)
                 .executeUpdate();
+    }
+
+    public Reply save(Reply reply) {
+        em.persist(reply);
+        return reply;
+    }
+
+    public void deleteById(Integer id) {
+        em.createQuery("delete from Reply r where r.id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
+    public Optional<Reply> findById(Integer id) {
+        return Optional.ofNullable(em.find(Reply.class, id));
     }
 }

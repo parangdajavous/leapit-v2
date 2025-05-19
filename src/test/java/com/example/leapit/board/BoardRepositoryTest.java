@@ -1,5 +1,6 @@
 package com.example.leapit.board;
 
+import com.example.leapit._core.error.ex.ExceptionApi404;
 import com.example.leapit.board.like.LikeRepository;
 import com.example.leapit.board.reply.Reply;
 import com.example.leapit.board.reply.ReplyRepository;
@@ -31,14 +32,15 @@ public class BoardRepositoryTest {
     @Test
     public void save_test() {
         // given
-        User user = userRepository.findById(1);
+        User userPS = userRepository.findById(1)
+                .orElseThrow(() -> new ExceptionApi404("유저를 찾을 수 없습니다"));
 
         String title = "제목";
         String content = "내용";
         Board board = Board.builder()
                 .title(title)
                 .content(content)
-                .user(user)
+                .user(userPS)
                 .build();
 
         // when

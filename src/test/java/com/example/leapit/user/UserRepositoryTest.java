@@ -71,18 +71,18 @@ public class UserRepositoryTest {
         Integer userId = 7;
 
         // when
-        User user = userRepository.findById(userId);
+        Optional<User> userOP = userRepository.findById(userId);
 
         // eye
         System.out.println("========== 유저 조회 결과 ==========");
-        if (user != null) {
-            System.out.println("ID: " + user.getId());
-            System.out.println("이름: " + user.getName());
-            System.out.println("아이디: " + user.getUsername());
-            System.out.println("이메일: " + user.getEmail());
-            System.out.println("전화번호: " + user.getContactNumber());
-            System.out.println("역할: " + user.getRole());
-            System.out.println("생년월일: " + user.getBirthDate());
+        if (userOP.isPresent()) {
+            System.out.println("ID: " + userOP.get().getId());
+            System.out.println("이름: " + userOP.get().getName());
+            System.out.println("아이디: " + userOP.get().getUsername());
+            System.out.println("이메일: " + userOP.get().getEmail());
+            System.out.println("전화번호: " + userOP.get().getContactNumber());
+            System.out.println("역할: " + userOP.get().getRole());
+            System.out.println("생년월일: " + userOP.get().getBirthDate());
         } else {
             System.out.println("해당 ID의 유저가 존재하지 않습니다.");
         }

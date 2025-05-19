@@ -28,4 +28,13 @@ public class Reply {
 
     @CreationTimestamp
     private Timestamp createdAt;
+
+    @Builder
+    public Reply(Integer id, String content, User user, Board board, Timestamp createdAt) {
+        this.id = id;
+        this.content = content;
+        this.user = user;
+        this.board = board;
+        this.createdAt = createdAt;
+    }
 }

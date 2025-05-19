@@ -30,6 +30,7 @@ public class Education {
     private Boolean isDropout = false;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private EducationLevel educationLevel;
 
     @Column(nullable = false)
