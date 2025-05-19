@@ -5,18 +5,26 @@ import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 import java.util.List;
 
 @RequiredArgsConstructor
 @Repository
 public class JobPostingRepository {
     private final EntityManager em;
-    
+
     // 채용공고 저장
     public JobPosting save(JobPosting jobPosting) {
         em.persist(jobPosting);
         return jobPosting;
     }
+
+    // 아이디로 채용공고 찾기
+    public Optional<JobPosting> findById(Integer id) {
+        return Optional.ofNullable(em.find(JobPosting.class, id));
+    }
+
 
     // COMPANY의 채용공고 & 해당 채용공고의 기술스택 조회
     public List<Object[]> findByUserIdJoinJobPostingTechStacks(Integer userId) {

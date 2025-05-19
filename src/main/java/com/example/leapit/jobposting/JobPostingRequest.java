@@ -1,6 +1,7 @@
 package com.example.leapit.jobposting;
 
 import com.example.leapit.common.enums.CareerLevel;
+import com.example.leapit.common.enums.EducationLevel;
 import com.example.leapit.jobposting.techstack.JobPostingTechStack;
 import com.example.leapit.user.User;
 import jakarta.validation.constraints.NotEmpty;
@@ -21,7 +22,7 @@ public class JobPostingRequest {
         private String positionType;
         private CareerLevel minCareerLevel;
         private CareerLevel maxCareerLevel;
-        private String educationLevel;
+        private EducationLevel educationLevel;
         private Integer addressRegionId;
         private Integer addressSubRegionId;
         private String addressDetail;

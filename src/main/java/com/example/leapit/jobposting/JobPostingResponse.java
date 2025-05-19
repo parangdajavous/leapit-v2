@@ -1,7 +1,9 @@
 package com.example.leapit.jobposting;
 
 import com.example.leapit.common.enums.CareerLevel;
+import com.example.leapit.common.enums.EducationLevel;
 import com.example.leapit.common.region.SubRegion;
+import com.example.leapit.companyinfo.CompanyInfo;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -15,12 +17,14 @@ public class JobPostingResponse {
         private List<String> techStackCodes;
         private List<RegionDTO> regions;
         private List<CareerLevel> careerLevels;
+        private List<EducationLevel> educationLevels;
 
-        public SaveDTO(List<String> positionTypes, List<String> techStackCodes, List<RegionDTO> regions, List<CareerLevel> careerLevels) {
+        public SaveDTO(List<String> positionTypes, List<String> techStackCodes, List<RegionDTO> regions, List<CareerLevel> careerLevels, List<EducationLevel> educationLevels) {
             this.positionTypes = positionTypes;
             this.techStackCodes = techStackCodes;
             this.regions = regions;
             this.careerLevels = careerLevels;
+            this.educationLevels = educationLevels;
         }
     }
 
@@ -50,16 +54,36 @@ public class JobPostingResponse {
         }
     }
 
-    public static class CareerLevelDTO {
-        private CareerLevel careerLevel;
+    @Data
+    public static class DetailPersonalDTO {
+        private CompanyDTO companyDTO;
+        private CompanyInfoDTO companyInfo;
 
-        public CareerLevelDTO(CareerLevel careerLevel) {
-            this.careerLevel = careerLevel;
+        public DetailPersonalDTO(CompanyDTO companyDTO, CompanyInfoDTO companyInfo) {
+            this.companyDTO = companyDTO;
+            this.companyInfo = companyInfo;
+        }
+
+        @Data
+        public static class CompanyInfoDTO {
+            private Integer id;
+            private String logoImage;
+            private String companyName;
+            private LocalDate establishmentDate;
+            private String mainService;
+
+            public CompanyInfoDTO(CompanyInfo companyInfo) {
+                this.id = companyInfo.getId();
+                this.logoImage = companyInfo.getLogoImage();
+                this.companyName = companyInfo.getCompanyName();
+                this.establishmentDate = companyInfo.getEstablishmentDate();
+                this.mainService = companyInfo.getMainService();
+            }
         }
     }
 
     @Data
-    public static class DTO {
+    public static class CompanyDTO {
         private Integer id;
         private String title;
         private String positionType;
@@ -81,13 +105,13 @@ public class JobPostingResponse {
 
         private List<String> techStacks;
 
-        public DTO(JobPosting jobPosting) {
+        public CompanyDTO(JobPosting jobPosting) {
             this.id = jobPosting.getId();
             this.title = jobPosting.getTitle();
             this.positionType = jobPosting.getPositionType();
-            this.minCareerLevel = jobPosting.getMinCareerLevel().getLabel();
-            this.maxCareerLevel = jobPosting.getMaxCareerLevel().getLabel();
-            this.educationLevel = jobPosting.getEducationLevel();
+            this.minCareerLevel = jobPosting.getMinCareerLevel().label;
+            this.maxCareerLevel = jobPosting.getMaxCareerLevel().label;
+            this.educationLevel = jobPosting.getEducationLevel().label;
             this.addressRegionId = jobPosting.getAddressRegionId();
             this.addressSubRegionId = jobPosting.getAddressSubRegionId();
             this.addressDetail = jobPosting.getAddressDetail();

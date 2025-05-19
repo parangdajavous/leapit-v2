@@ -103,19 +103,19 @@ VALUES (2, '개인 블로그', 'https://velog.io/@username');
 -- 2.5 education_tb
 INSERT INTO education_tb (resume_id, graduation_date, is_dropout, education_level, school_name, major, gpa, gpa_scale,
                           created_at)
-VALUES (1, '2025-02-28', FALSE, '전문학사', '가나다대학교', '컴퓨터공학과', 4.2, 4.5, NOW());
+VALUES (1, '2025-02-28', FALSE, 'ASSOCIATE', '가나다대학교', '컴퓨터공학과', 4.2, 4.5, NOW());
 INSERT INTO education_tb (resume_id, graduation_date, is_dropout, education_level, school_name, major, gpa, gpa_scale,
                           created_at)
-VALUES (2, '2025-02-28', TRUE, '전문학사', '가나다대학교', '컴퓨터공학과', 2.2, 4.5, NOW());
+VALUES (2, '2025-02-28', TRUE, 'ASSOCIATE', '가나다대학교', '컴퓨터공학과', 2.2, 4.5, NOW());
 INSERT INTO education_tb (resume_id, graduation_date, is_dropout, education_level, school_name, major, gpa, gpa_scale,
                           created_at)
-VALUES (3, '2024-08-31', TRUE, '고등학교', '라마바고등학교', '정보처리학과', 3.5, 4.5, NOW());
+VALUES (3, '2024-08-31', TRUE, 'HIGH_SCHOOL', '라마바고등학교', '정보처리학과', 3.5, 4.5, NOW());
 INSERT INTO education_tb (resume_id, graduation_date, is_dropout, education_level, school_name, major, gpa, gpa_scale,
                           created_at)
-VALUES (4, '2023-02-28', FALSE, '학사', '사아자차카대학교', '인공지능학과', 3.9, 4.3, NOW());
+VALUES (4, '2023-02-28', FALSE, 'BACHELOR', '사아자차카대학교', '인공지능학과', 3.9, 4.3, NOW());
 INSERT INTO education_tb (resume_id, graduation_date, is_dropout, education_level, school_name, major, gpa, gpa_scale,
                           created_at)
-VALUES (5, '2024-02-28', FALSE, '전문학사', '부산대학교', '통계학과', 4.25, 4.3, NOW());
+VALUES (5, '2024-02-28', FALSE, 'ASSOCIATE', '부산대학교', '통계학과', 4.25, 4.3, NOW());
 
 -- 2.6 experience_tb
 INSERT INTO experience_tb (resume_id, start_date, end_date, is_employed, company_name, summary, position,
@@ -293,8 +293,8 @@ INSERT INTO job_posting_tb (user_id, title, position_type, min_career_level, max
                             education_level, address_region_id, address_sub_region_id, address_detail,
                             service_intro, deadline, responsibility, qualification, preference,
                             benefit, additional_info, view_count, created_at)
-VALUES (6, '시니어 백엔드 개발자 채용', '백엔드', 'YEAR_5', 'OVER_10',
-        '전문학사', 1, 1, '강남대로 123',
+VALUES (6, '시니어 백엔드 개발자 채용', '백엔드', 5, 10,
+        'HIGH_SCHOOL', 1, 1, '강남대로 123',
         '대용량 트래픽 처리 기반 백엔드 플랫폼 개발',
         '2025-06-30', '마이크로서비스 아키텍처 기반 시스템 설계 및 운영',
         'Java, Spring 기반 개발 경험 필수',
@@ -306,8 +306,8 @@ INSERT INTO job_posting_tb (user_id, title, position_type, min_career_level, max
                             education_level, address_region_id, address_sub_region_id, address_detail,
                             service_intro, deadline, responsibility, qualification, preference,
                             benefit, additional_info, view_count, created_at)
-VALUES (7, '프론트엔드 개발자 모집', '프론트엔드', 'YEAR_0', 'YEAR_2',
-        NULL, 1, 2, '서초대로 77',
+VALUES (7, '프론트엔드 개발자 모집', '프론트엔드', 0, 2,
+        'NO_PREFERENCE', 1, 2, '서초대로 77',
         'B2B SaaS 웹서비스 구축 중인 스타트업입니다.',
         '2025-05-20', 'React 기반 웹 프론트엔드 개발 및 유지보수',
         'React, TypeScript 기반 개발 경험',
@@ -319,8 +319,8 @@ INSERT INTO job_posting_tb (user_id, title, position_type, min_career_level, max
                             education_level, address_region_id, address_sub_region_id, address_detail,
                             service_intro, deadline, responsibility, qualification, preference,
                             benefit, additional_info, view_count, created_at)
-VALUES (7, '데이터 엔지니어 채용', '데이터 엔지니어', 'YEAR_0', 'YEAR_2',
-        NULL, 1, 2, '서초대로 77',
+VALUES (7, '데이터 엔지니어 채용', '데이터 엔지니어', 0, 2,
+        'NO_PREFERENCE', 1, 2, '서초대로 77',
         'B2B SaaS 플랫폼의 데이터 인프라를 담당할 인재를 찾습니다.',
         '2025-07-20', 'ETL 파이프라인 구축 및 데이터 웨어하우스 운영',
         'Python, SQL 기반 데이터 처리 경험',
@@ -332,8 +332,8 @@ INSERT INTO job_posting_tb (user_id, title, position_type, min_career_level, max
                             education_level, address_region_id, address_sub_region_id, address_detail,
                             service_intro, deadline, responsibility, qualification, preference,
                             benefit, additional_info, view_count, created_at)
-VALUES (7, '주니어 데이터 엔지니어 모집', '데이터 엔지니어', 'YEAR_0', 'YEAR_2',
-        NULL, 1, 2, '서초대로 77',
+VALUES (7, '주니어 데이터 엔지니어 모집', '데이터 엔지니어', 0, 2,
+        'NO_PREFERENCE', 1, 2, '서초대로 77',
         'B2B SaaS 스타트업의 데이터 기반 서비스 구축에 참여할 인재를 찾습니다.',
         '2025-05-20', '데이터 수집 및 정제 자동화 시스템 구축',
         'Python, SQL 기본 지식 필수',
@@ -345,8 +345,8 @@ INSERT INTO job_posting_tb (user_id, title, position_type, min_career_level, max
                             education_level, address_region_id, address_sub_region_id, address_detail,
                             service_intro, deadline, responsibility, qualification, preference,
                             benefit, additional_info, view_count, created_at)
-VALUES (7, '마감된 개발자 모집', '프론트엔드', 'YEAR_0', 'YEAR_2',
-        NULL, 1, 2, '서초대로 77',
+VALUES (7, '마감된 개발자 모집', '프론트엔드', 0, 2,
+        'NO_PREFERENCE', 1, 2, '서초대로 77',
         'B2B SaaS 웹서비스 구축 중인 스타트업입니다.',
         '2025-03-20', 'React 기반 웹 프론트엔드 개발 및 유지보수',
         'React, TypeScript 기반 개발 경험',
@@ -358,8 +358,8 @@ INSERT INTO job_posting_tb (user_id, title, position_type, min_career_level, max
                             education_level, address_region_id, address_sub_region_id, address_detail,
                             service_intro, deadline, responsibility, qualification, preference,
                             benefit, additional_info, view_count, created_at)
-VALUES (8, '데이터 엔지니어 채용', '데이터 엔지니어', 'YEAR_3', 'YEAR_5',
-        '학사', 2, 3, '해운대로 456',
+VALUES (8, '데이터 엔지니어 채용', '데이터 엔지니어', 3, 5,
+        'BACHELOR', 2, 3, '해운대로 456',
         'AI 데이터 파이프라인 구축 기업입니다.',
         '2025-04-15', 'ETL 파이프라인 설계 및 데이터 웨어하우스 운영',
         'Python, SQL, AWS Redshift 경험',
@@ -371,8 +371,8 @@ INSERT INTO job_posting_tb (user_id, title, position_type, min_career_level, max
                             education_level, address_region_id, address_sub_region_id, address_detail,
                             service_intro, deadline, responsibility, qualification, preference,
                             benefit, additional_info, view_count, created_at)
-VALUES (6, '프론트엔드 웹 개발자 채용', '프론트엔드', 'YEAR_2', 'YEAR_5',
-        '학사', 1, 2, '테헤란로 456',
+VALUES (6, '프론트엔드 웹 개발자 채용', '프론트엔드', 2, 5,
+        'BACHELOR', 1, 2, '테헤란로 456',
         '대규모 플랫폼 웹 프론트엔드 개발',
         '2025-06-30', 'React 기반 SPA 아키텍처 설계 및 개발',
         'React, TypeScript 실무 경험자',
@@ -384,8 +384,8 @@ INSERT INTO job_posting_tb (user_id, title, position_type, min_career_level, max
                             education_level, address_region_id, address_sub_region_id, address_detail,
                             service_intro, deadline, responsibility, qualification, preference,
                             benefit, additional_info, view_count, created_at)
-VALUES (6, '모바일 프론트엔드 앱 개발자', '모바일 앱 개발자', 'YEAR_2', 'YEAR_5',
-        '학사', 1, 1, '정자일로 123',
+VALUES (6, '모바일 프론트엔드 앱 개발자', '모바일 앱 개발자', 2, 5,
+        'BACHELOR', 1, 1, '정자일로 123',
         'React Native 기반 모바일 앱 개발',
         '2025-06-30', '모바일 최적화 및 퍼포먼스 개선 작업',
         'React Native 개발 경험 필수',
@@ -397,8 +397,8 @@ INSERT INTO job_posting_tb (user_id, title, position_type, min_career_level, max
                             education_level, address_region_id, address_sub_region_id, address_detail,
                             service_intro, deadline, responsibility, qualification, preference,
                             benefit, additional_info, view_count, created_at)
-VALUES (7, 'iOS 앱 개발자 구인', '모바일 앱 개발자', 'YEAR_1', 'YEAR_4',
-        '학사', 1, 2, '잠실로 321',
+VALUES (7, 'iOS 앱 개발자 구인', '모바일 앱 개발자', 1, 4,
+        'BACHELOR', 1, 2, '잠실로 321',
         'iOS 기반 모바일 앱 개발',
         '2025-07-31', 'Swift 기반 앱 아키텍처 설계 및 구현',
         'Swift, UIKit 경험자 필수',
@@ -410,8 +410,8 @@ INSERT INTO job_posting_tb (user_id, title, position_type, min_career_level, max
                             education_level, address_region_id, address_sub_region_id, address_detail,
                             service_intro, deadline, responsibility, qualification, preference,
                             benefit, additional_info, view_count, created_at)
-VALUES (8, 'AI 연구원 채용', 'AI 엔지니어', 'YEAR_0', 'YEAR_2',
-        '석사', 2, 4, '777',
+VALUES (8, 'AI 연구원 채용', 'AI 엔지니어', 0, 2,
+        'MASTER', 2, 4, '777',
         '머신러닝/딥러닝 모델 연구 및 개발',
         '2025-07-01', '최신 AI 모델 논문 분석 및 모델 개선',
         'TensorFlow, PyTorch 활용 경험',
@@ -423,8 +423,8 @@ INSERT INTO job_posting_tb (user_id, title, position_type, min_career_level, max
                             education_level, address_region_id, address_sub_region_id, address_detail,
                             service_intro, deadline, responsibility, qualification, preference,
                             benefit, additional_info, view_count, created_at)
-VALUES (8, '풀스택 개발자 채용', '풀스택', 'YEAR_4', 'YEAR_8',
-        '전문학사', 1, 2, '디지털로 888',
+VALUES (8, '풀스택 개발자 채용', '풀스택', 4, 8,
+        'ASSOCIATE', 1, 2, '디지털로 888',
         '웹 및 서버 통합 풀스택 개발을 담당할 인재를 찾습니다.',
         '2025-08-10', 'React 및 Spring Boot 기반 풀스택 아키텍처 설계 및 개발',
         'Java, Spring Boot, React 개발 경험',
@@ -436,8 +436,8 @@ INSERT INTO job_posting_tb (user_id, title, position_type, min_career_level, max
                             education_level, address_region_id, address_sub_region_id, address_detail,
                             service_intro, deadline, responsibility, qualification, preference,
                             benefit, additional_info, view_count, created_at)
-VALUES (7, 'QA 엔지니어 모집', '백엔드', 'YEAR_1', 'YEAR_5',
-        '학사', 2, 1, '999',
+VALUES (7, 'QA 엔지니어 모집', '백엔드', 1, 5,
+        'BACHELOR', 2, 1, '999',
         '품질 보증 및 테스트 자동화 구축',
         '2025-07-20', '테스트 케이스 작성 및 품질 관리',
         '테스트 자동화 경험 필수 (Selenium 등)',

@@ -1,11 +1,15 @@
 package com.example.leapit.jobposting;
 
+import com.example.leapit._core.error.ex.ExceptionApi404;
 import com.example.leapit.common.enums.CareerLevel;
+import com.example.leapit.common.enums.EducationLevel;
 import com.example.leapit.common.positiontype.PositionTypeRepository;
 import com.example.leapit.common.region.Region;
 import com.example.leapit.common.region.RegionRepository;
 import com.example.leapit.common.region.SubRegion;
 import com.example.leapit.common.techstack.TechStackRepository;
+import com.example.leapit.companyinfo.CompanyInfo;
+import com.example.leapit.companyinfo.CompanyInfoRepository;
 import com.example.leapit.user.User;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -22,11 +26,12 @@ public class JobPostingService {
     private final TechStackRepository techStackRepository;
     private final RegionRepository regionRepository;
     private final PositionTypeRepository positionTypeRepository;
+    private final CompanyInfoRepository companyInfoRepository;
 
 
     // 채용공고 저장
     @Transactional
-    public JobPostingResponse.DTO save(JobPostingRequest.SaveDTO reqDTO, User sessionUser) {
+    public JobPostingResponse.CompanyDTO save(JobPostingRequest.SaveDTO reqDTO, User sessionUser) {
         // 1. 연관된 기술스택까지 포함된 JobPosting 생성
         JobPosting jobPosting = reqDTO.toEntity(sessionUser);
 
@@ -34,7 +39,7 @@ public class JobPostingService {
         JobPosting jobPostingPS = jobPostingRepository.save(jobPosting);
 
         // 3. 응답용 DTO로 반환
-        return new JobPostingResponse.DTO(jobPostingPS);
+        return new JobPostingResponse.CompanyDTO(jobPostingPS);
     }
 
     // 채용공고 저장 화면에 필요한 데이터 불러오기
@@ -59,7 +64,40 @@ public class JobPostingService {
             JobPostingResponse.RegionDTO regionDTO = new JobPostingResponse.RegionDTO(region.getId(), region.getName(), subRegions);
             regionDTOs.add(regionDTO);
         }
-        // 6. 최종 응답 DTO 생성
-        return new JobPostingResponse.SaveDTO(positionTypes, techStacks, regionDTOs, careerLevels);
+
+        // 6. 학력 (enum)
+        List<EducationLevel> educationLevels = List.of(EducationLevel.values());
+
+        // 7. 최종 응답 DTO 생성
+        return new JobPostingResponse.SaveDTO(positionTypes, techStacks, regionDTOs, careerLevels, educationLevels);
+    }
+
+    // 기업 채용공고 상세보기
+    @Transactional
+    public JobPostingResponse.CompanyDTO getDetailCompany(Integer id) {
+        JobPosting jobPosting = jobPostingRepository.findById(id)
+                .orElseThrow(() -> new ExceptionApi404("해당 채용공고를 찾을 수 없습니다."));
+        return new JobPostingResponse.CompanyDTO(jobPosting);
+    }
+
+    // 구직자 채용공고 상세보기
+    @Transactional
+    public JobPostingResponse.DetailPersonalDTO getDetailPersonal(Integer jobPostingId) {
+        JobPosting jobPosting = jobPostingRepository.findById(jobPostingId)
+                .orElseThrow(() -> new ExceptionApi404("해당 채용공고를 찾을 수 없습니다."));
+
+        // 채용공고를 작성한 기업 유저
+        Integer companyUserId = jobPosting.getUser().getId();
+
+        // 기업 유저의 회사 정보 조회
+        CompanyInfo companyInfo = companyInfoRepository.findByUserId(companyUserId)
+                .orElseThrow(() -> new ExceptionApi404("해당 기업의 정보가 존재하지 않습니다."));
+
+        // DTO 구성
+        JobPostingResponse.CompanyDTO companyDTO = new JobPostingResponse.CompanyDTO(jobPosting);
+        JobPostingResponse.DetailPersonalDTO.CompanyInfoDTO companyInfoDTO =
+                new JobPostingResponse.DetailPersonalDTO.CompanyInfoDTO(companyInfo);
+
+        return new JobPostingResponse.DetailPersonalDTO(companyDTO, companyInfoDTO);
     }
 }
