@@ -12,11 +12,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -27,43 +27,45 @@ public class CompanyInfoService {
     @Transactional
     public CompanyInfoResponse.DTO save(CompanyInfoRequest.SaveDTO reqDTO, User sessionUser) {
 
-        if (reqDTO.getLogoImageFile() == null || reqDTO.getLogoImageFile().isEmpty()) {
+        if (reqDTO.getLogoImage() == null || reqDTO.getLogoImage().isEmpty()) {
             throw new ExceptionApi400("로고 이미지는 필수입니다.");
         }
-        if (reqDTO.getImageFile() == null || reqDTO.getImageFile().isEmpty()) {
+        if (reqDTO.getImage() == null || reqDTO.getImage().isEmpty()) {
             throw new ExceptionApi400("대표이미지는 필수입니다.");
         }
 
 
         try {
-            // 로고 이미지 저장
-            if (reqDTO.getLogoImageFile() != null && !reqDTO.getLogoImageFile().isEmpty()) {
-                // logoImageFile의 파일명
-                String logoImageFile = reqDTO.getLogoImageFile();
+            // 로고 이미지 처리
+            if (reqDTO.getLogoImage() != null && !reqDTO.getLogoImage().isBlank()) {
+                // decoding
+                byte[] logoImageBytes = Base64Util.decodeAsBytes(reqDTO.getLogoImage());
 
-                // 이미지파일을 byte[] 배열로 읽어옴
-                byte[] logoImageBytes = Base64Util.readImageAsByteArray(logoImageFile);
-                // 읽어온 byte[] 를 Base64 문자열로 변환
-                String logoImageString = Base64Util.encodeAsString(logoImageBytes, "image/png");
-                // 로고 이미지를 Base64 문자열로 변환한 값을 DTO 필드에 저장 (DB 저장용)
-                reqDTO.setLogoImage(logoImageString);
+                // 고유 파일명 생성
+                String logoImageFilename = UUID.randomUUID() + "_logo.png";
+                String uploadDir = System.getProperty("user.dir") + "/upload/";
+                Path logoPath = Paths.get(uploadDir + logoImageFilename);
+
+                Files.write(logoPath, logoImageBytes); // 저장
+
+                reqDTO.setLogoImage(logoImageFilename); // DB에는 파일명만 저장
             }
 
-            // 대표 이미지 저장
-            if (reqDTO.getImageFile() != null && !reqDTO.getImageFile().isEmpty()) {
-                // encoding
-                String imageFile = reqDTO.getImageFile();
+            // 대표 이미지 처리
+            if (reqDTO.getImage() != null && !reqDTO.getImage().isBlank()) {
+                byte[] imageBytes = Base64Util.decodeAsBytes(reqDTO.getImage());
 
-                // 이미지파일을 byte[] 배열로 읽어옴
-                byte[] imageBytes = Base64Util.readImageAsByteArray(imageFile);
-                // 읽어온 byte[] 를 Base64 문자열로 변환
-                String imgString = Base64Util.encodeAsString(imageBytes, "image/png");
-                // 로고 이미지를 Base64 문자열로 변환한 값을 DTO 필드에 저장 (DB 저장용)
-                reqDTO.setImage(imgString);
+                String imageFilename = UUID.randomUUID() + "_image.png";
+                String uploadDir = System.getProperty("user.dir") + "/upload/";
+                Path imagePath = Paths.get(uploadDir + imageFilename);
+
+                Files.write(imagePath, imageBytes);
+
+                reqDTO.setImage(imageFilename);
             }
 
         } catch (Exception e) {
-            throw new ExceptionApi400("파일 업로드 실패");
+            throw new ExceptionApi400("파일 저장 실패");
         }
 
 
@@ -82,42 +84,44 @@ public class CompanyInfoService {
             throw new ExceptionApi403("권한이 없습니다.");
         }
 
-        if (reqDTO.getLogoImageFile() == null || reqDTO.getLogoImageFile().isEmpty()) {
+        if (reqDTO.getLogoImage() == null || reqDTO.getLogoImage().isEmpty()) {
             throw new ExceptionApi400("로고 이미지는 필수입니다.");
         }
-        if (reqDTO.getImageFile() == null || reqDTO.getImageFile().isEmpty()) {
+        if (reqDTO.getImage() == null || reqDTO.getImage().isEmpty()) {
             throw new ExceptionApi400("대표이미지는 필수입니다.");
         }
 
-        try {
-            // 로고 이미지 저장 - encoding
-            if (reqDTO.getLogoImageFile() != null && !reqDTO.getLogoImageFile().isEmpty()) {
-                // logoImageFile의 파일명
-                String logoImageFile = reqDTO.getLogoImageFile();
 
-                // 이미지파일을 byte[] 배열로 읽어옴
-                byte[] logoImageBytes = Base64Util.readImageAsByteArray(logoImageFile);
-                // 읽어온 byte[] 를 Base64 문자열로 변환
-                String logoImageString = Base64Util.encodeAsString(logoImageBytes, "image/png");
-                // 로고 이미지를 Base64 문자열로 변환한 값을 DTO 필드에 저장 (DB 저장용)
-                reqDTO.setLogoImage(logoImageString);
+        try {
+            // 로고 이미지 처리
+            if (reqDTO.getLogoImage() != null && !reqDTO.getLogoImage().isBlank()) {
+                byte[] logoImageBytes = Base64Util.decodeAsBytes(reqDTO.getLogoImage());
+
+                // 고유 파일명 생성
+                String logoImageFilename = UUID.randomUUID() + "_logo.png";
+                String uploadDir = System.getProperty("user.dir") + "/upload/";
+                Path logoPath = Paths.get(uploadDir + logoImageFilename);
+
+                Files.write(logoPath, logoImageBytes); // 저장
+
+                reqDTO.setLogoImage(logoImageFilename); // DB에는 파일명만 저장
             }
 
-            // 대표 이미지 저장 - encoding
-            if (reqDTO.getImageFile() != null && !reqDTO.getImageFile().isEmpty()) {
-                // imageFile의 파일명
-                String imageFile = reqDTO.getImageFile();
+            // 대표 이미지 처리
+            if (reqDTO.getImage() != null && !reqDTO.getImage().isBlank()) {
+                byte[] imageBytes = Base64Util.decodeAsBytes(reqDTO.getImage());
 
-                // 이미지파일을 byte[] 배열로 읽어옴
-                byte[] imageBytes = Base64Util.readImageAsByteArray(imageFile);
-                // 읽어온 byte[] 를 Base64 문자열로 변환
-                String imgString = Base64Util.encodeAsString(imageBytes, "image/png");
-                // 로고 이미지를 Base64 문자열로 변환한 값을 DTO 필드에 저장 (DB 저장용)
-                reqDTO.setImage(imgString);
+                String imageFilename = UUID.randomUUID() + "_image.png";
+                String uploadDir = System.getProperty("user.dir") + "/upload/";
+                Path imagePath = Paths.get(uploadDir + imageFilename);
+
+                Files.write(imagePath, imageBytes);
+
+                reqDTO.setImage(imageFilename);
             }
 
         } catch (Exception e) {
-            throw new ExceptionApi400("파일 업로드 실패");
+            throw new ExceptionApi400("파일 저장 실패");
         }
 
 
@@ -149,27 +153,6 @@ public class CompanyInfoService {
     public CompanyInfoResponse.DetailDTO getDetail(Integer id, Integer userId) {
         CompanyInfo companyInfoPS = companyInfoRepository.findById(id)
                 .orElseThrow(() -> new ExceptionApi404("기업정보를 찾을 수 없습니다"));
-
-        // 1. DB에 있는 logoImage, image를 Base64 문자열로 변환
-        String logoImageString = null;
-        String imageString = null;
-        try {
-            // logoImage Base64 변환
-            if (companyInfoPS.getLogoImage() != null) {
-                String logoImage = companyInfoPS.getLogoImage();
-                byte[] logoImageBytes = Base64Util.readImageAsByteArray(logoImage);
-                logoImageString = Base64Util.encodeAsString(logoImageBytes, "image/png");
-            }
-
-            // image Base64 변환
-            if (companyInfoPS.getImage() != null) {
-                String image = companyInfoPS.getImage();
-                byte[] imageBytes = Base64Util.readImageAsByteArray(image);
-                imageString = Base64Util.encodeAsString(imageBytes, "image/png");
-            }
-        } catch (Exception e) {
-            throw new ExceptionApi400("파일 읽기 실패");
-        }
 
         // 2. 조인된 결과 가져오기 (JobPosting + JobPostingTechStack)
         List<Object[]> results = jobPostingRepository.findByUserIdJoinJobPostingTechStacks(userId);
@@ -214,7 +197,7 @@ public class CompanyInfoService {
         Long jobPostingCount = jobPostingRepository.countByUserIdAndDeadlineAfter(userId);
 
         // 7. DTO 생성자 호출
-        return new CompanyInfoResponse.DetailDTO(companyInfoPS, userId, jobPostingCount.intValue(), jobPostings, allTechStacks, logoImageString, imageString);
+        return new CompanyInfoResponse.DetailDTO(companyInfoPS, userId, jobPostingCount.intValue(), jobPostings, allTechStacks);
     }
 
     public CompanyInfo findById(Integer id) {

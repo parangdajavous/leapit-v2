@@ -12,8 +12,7 @@ public class CompanyInfoRequest {
     public static class SaveDTO {
         private Integer id;
 
-        // Base64로 변환된 로고 이미지 문자열 (data:image/png;base64,...)
-        private String logoImage;
+        private String logoImage; // 로고이미지 파일명
 
         @NotEmpty(message = "회사명은 필수입니다.")
         private String companyName;
@@ -26,14 +25,14 @@ public class CompanyInfoRequest {
         private String mainService;
         private String introduction;
 
-        // Base64로 변환된 대표 이미지 문자열 (data:image/png;base64,...)
-        private String image;
+
+        private String image; // 대표 이미지 파일명
 
         private String benefit;
 
-        // base64
-        private String logoImageFile;
-        private String imageFile;
+        // base64로 변환된 문자열
+        private String logoImageFileName;
+        private String imageFileName;
 
         public CompanyInfo toEntity(User user) {
             return CompanyInfo.builder()
@@ -52,7 +51,7 @@ public class CompanyInfoRequest {
 
     @Data
     public static class UpdateDTO {
-        private String logoImage;  // Base64로 변환된 로고 이미지 문자열 (data:image/png;base64,...)
+        private String logoImage;  // 로고 이미지 파일명
         @NotEmpty(message = "회사명은 필수입니다.")
         private String companyName;
         private LocalDate establishmentDate;
@@ -60,12 +59,12 @@ public class CompanyInfoRequest {
         private String address;
         private String mainService;
         private String introduction;
-        private String image;  // Base64로 변환된 대표 이미지 문자열 (data:image/png;base64,...)
+        private String image;  // 대표 이미지 파일명
         private String benefit;
 
-        // Base64로 변환할 이미지 파일
-        private String logoImageFile;
-        private String imageFile;
+        // base64로 변환된 문자열
+        private String logoImageFileName;
+        private String imageFileName;
     }
 
 }

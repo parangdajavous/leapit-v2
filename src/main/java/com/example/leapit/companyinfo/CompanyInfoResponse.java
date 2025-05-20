@@ -1,5 +1,6 @@
 package com.example.leapit.companyinfo;
 
+import com.example.leapit._core.util.Base64Util;
 import com.example.leapit.jobposting.JobPosting;
 import com.example.leapit.jobposting.techstack.JobPostingTechStack;
 import lombok.Data;
@@ -15,27 +16,45 @@ public class CompanyInfoResponse {
     @Data
     public static class DTO {
         private Integer id;
-        private String logoImage; // Base64로 변환된 로고 이미지 문자열 (data:image/png;base64,...)
+        private String logoImage; // Base64로 인코딩된 로고 이미지 문자열
         private String companyName;
-        private LocalDate establishmentDate; // 원본 날짜
-        private String formattedEstablishmentInfo; // 포맷된 날짜
+        private LocalDate establishmentDate;
+        private String formattedEstablishmentInfo;
         private String address;
         private String mainService;
         private String introduction;
-        private String image;  // Base64로 변환된 대표 이미지 문자열 (data:image/png;base64,...)
+        private String image;  // Base64로 인코딩된 대표 이미지 문자열
         private String benefit;
 
         public DTO(CompanyInfo companyInfo) {
             this.id = companyInfo.getId();
-            this.logoImage = companyInfo.getLogoImage();
             this.companyName = companyInfo.getCompanyName();
             this.establishmentDate = companyInfo.getEstablishmentDate();
             this.formattedEstablishmentInfo = formatEstablishmentInfo(companyInfo.getEstablishmentDate());
             this.address = companyInfo.getAddress();
             this.mainService = companyInfo.getMainService();
             this.introduction = companyInfo.getIntroduction();
-            this.image = companyInfo.getImage();
             this.benefit = companyInfo.getBenefit();
+
+            // 로고 이미지 Base64 변환
+            try {
+                if (companyInfo.getLogoImage() != null) {
+                    byte[] logoBytes = Base64Util.readImageAsByteArray(companyInfo.getLogoImage());
+                    this.logoImage = Base64Util.encodeAsString(logoBytes, "image/png");
+                }
+            } catch (Exception e) {
+                this.logoImage = null;
+            }
+
+            // 대표 이미지 Base64 변환
+            try {
+                if (companyInfo.getImage() != null) {
+                    byte[] imageBytes = Base64Util.readImageAsByteArray(companyInfo.getImage());
+                    this.image = Base64Util.encodeAsString(imageBytes, "image/png");
+                }
+            } catch (Exception e) {
+                this.image = null;
+            }
         }
 
         private String formatEstablishmentInfo(LocalDate date) {
@@ -55,14 +74,14 @@ public class CompanyInfoResponse {
     @Data
     public static class DetailDTO {
         private Integer id;
-        private String logoImage; // Base64로 변환된 로고 이미지 문자열 (data:image/png;base64,...)
+        private String logoImage; // Base64로 인코딩된 로고 이미지 문자열
         private String companyName;
         private LocalDate establishmentDate; // 원본 날짜
         private String formattedEstablishmentInfo; // 포맷된 날짜
         private String address;
         private String mainService;
         private String introduction;
-        private String image; // Base64로 변환된 대표 이미지 문자열 (data:image/png;base64,...)
+        private String image; // Base64로 인코딩된 대표 이미지 문자열
         private String benefit;
         private Integer jobPostingCount; // 해당 기업의 공고 수
 
@@ -105,29 +124,47 @@ public class CompanyInfoResponse {
         }
 
 
-        public DetailDTO(CompanyInfo companyInfo, Integer userId, Integer jobPostingCount, List<JobPosting> jobPostings, List<JobPostingTechStack> techStacks, String logoImageString, String imageString) {
+        public DetailDTO(CompanyInfo companyInfo, Integer userId, Integer jobPostingCount,
+                         List<JobPosting> jobPostings, List<JobPostingTechStack> techStacks) {
             this.id = companyInfo.getId();
-            this.logoImage = logoImageString;
             this.companyName = companyInfo.getCompanyName();
             this.establishmentDate = companyInfo.getEstablishmentDate();
             this.formattedEstablishmentInfo = formatEstablishmentInfo(companyInfo.getEstablishmentDate());
             this.address = companyInfo.getAddress();
             this.mainService = companyInfo.getMainService();
             this.introduction = companyInfo.getIntroduction();
-            this.image = imageString;
             this.benefit = companyInfo.getBenefit();
             this.jobPostingCount = jobPostingCount;
 
+            // 로고 이미지 Base64 변환
+            try {
+                if (companyInfo.getLogoImage() != null) {
+                    byte[] logoBytes = Base64Util.readImageAsByteArray(companyInfo.getLogoImage());
+                    this.logoImage = Base64Util.encodeAsString(logoBytes, "image/png");
+                }
+            } catch (Exception e) {
+                this.logoImage = null;
+            }
+
+            // 대표 이미지 Base64 변환
+            try {
+                if (companyInfo.getImage() != null) {
+                    byte[] imageBytes = Base64Util.readImageAsByteArray(companyInfo.getImage());
+                    this.image = Base64Util.encodeAsString(imageBytes, "image/png");
+                }
+            } catch (Exception e) {
+                this.image = null;
+            }
+
+            // 공고 목록 생성
             List<JobPostingDTO> jobPostingsDTO = new ArrayList<>();
-
-
             for (JobPosting jobPosting : jobPostings) {
                 List<JobPostingTechStack> matchedStacks = techStacks.stream()
-                        .filter(stack -> stack.getJobPosting() != null && stack.getJobPosting().getId().equals(jobPosting.getId()))
+                        .filter(stack -> stack.getJobPosting() != null &&
+                                stack.getJobPosting().getId().equals(jobPosting.getId()))
                         .toList();
 
-                JobPostingDTO jobPostingDTO = new JobPostingDTO(jobPosting, matchedStacks);
-                jobPostingsDTO.add(jobPostingDTO);
+                jobPostingsDTO.add(new JobPostingDTO(jobPosting, matchedStacks));
             }
             this.jobPostings = jobPostingsDTO;
         }
