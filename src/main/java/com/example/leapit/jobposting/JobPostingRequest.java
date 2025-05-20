@@ -117,4 +117,37 @@ public class JobPostingRequest {
             return value != null && !value.trim().isEmpty();
         }
     }
+
+    @Data
+    public static class UpdateDTO {
+        @NotEmpty(message = "제목은 필수입니다.")
+        private String title;
+
+        @NotEmpty(message = "직무는 필수입니다.")
+        private String positionType;
+
+        private CareerLevel minCareerLevel;
+        private CareerLevel maxCareerLevel;
+        private EducationLevel educationLevel;
+        private Integer addressRegionId;
+        private Integer addressSubRegionId;
+        private String addressDetail;
+        private String serviceIntro;
+
+        @NotNull(message = "마감일은 필수입니다.")
+        private LocalDate deadline;
+
+        @NotEmpty(message = "담당 업무는 필수입니다.")
+        private String responsibility;
+
+        @NotEmpty(message = "자격요건은 필수입니다.")
+        private String qualification;
+
+        private String preference;
+        private String benefit;
+        private String additionalInfo;
+
+        @NotEmpty(message = "기술스택은 필수입니다.")
+        private List<String> techStackCodes;
+    }
 }

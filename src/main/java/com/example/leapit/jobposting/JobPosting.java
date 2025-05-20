@@ -120,4 +120,26 @@ public class JobPosting {
         this.viewCount = 0;
         this.jobPostingTechStacks = new ArrayList<>();
     }
+
+    public void update(JobPostingRequest.UpdateDTO dto) {
+        this.title = dto.getTitle();
+        this.positionType = dto.getPositionType();
+        this.minCareerLevel = dto.getMinCareerLevel();
+        this.maxCareerLevel = dto.getMaxCareerLevel();
+        this.educationLevel = dto.getEducationLevel();
+        this.addressRegionId = dto.getAddressRegionId();
+        this.addressSubRegionId = dto.getAddressSubRegionId();
+        this.addressDetail = dto.getAddressDetail();
+        this.serviceIntro = dto.getServiceIntro();
+        this.deadline = dto.getDeadline();
+        this.responsibility = dto.getResponsibility();
+        this.qualification = dto.getQualification();
+        this.preference = dto.getPreference();
+        this.benefit = dto.getBenefit();
+        this.additionalInfo = dto.getAdditionalInfo();
+        this.jobPostingTechStacks.clear();
+        dto.getTechStackCodes().forEach(code ->
+                this.jobPostingTechStacks.add(new JobPostingTechStack(null, this, code))
+        );
+    }
 }

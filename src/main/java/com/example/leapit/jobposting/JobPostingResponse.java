@@ -23,6 +23,68 @@ import java.util.stream.Collectors;
 
 public class JobPostingResponse {
 
+    // 등록된 채용공고에 대한 수정화면 DTO
+    @Data
+    public static class UpdateDTO {
+        private List<String> positionTypes;
+        private List<String> techStackCodes;
+        private List<RegionDTO> regions;
+        private List<String> careerLevels;
+        private List<String> educationLevels;
+        private DetailDTO detailDTO;
+
+        public UpdateDTO(List<String> positionTypes, List<String> techStackCodes, List<RegionDTO> regions, List<String> careerLevels, List<String> educationLevels, DetailDTO detailDTO) {
+            this.positionTypes = positionTypes;
+            this.techStackCodes = techStackCodes;
+            this.regions = regions;
+            this.careerLevels = careerLevels;
+            this.educationLevels = educationLevels;
+            this.detailDTO = detailDTO;
+        }
+    }
+
+    // 등록되어 있는 채용공고의 데이터를 담는 DTO
+    @Data
+    public static class DetailDTO {
+        private String title;
+        private String positionType;
+        private String minCareerLevel;
+        private String maxCareerLevel;
+        private String educationLevel;
+        private Integer addressRegionId;
+        private Integer addressSubRegionId;
+        private String addressDetail;
+        private String serviceIntro;
+        private LocalDate deadline;
+        private String responsibility;
+        private String qualification;
+        private String preference;
+        private String benefit;
+        private String additionalInfo;
+        private List<String> techStackCodes;
+
+        public DetailDTO(JobPosting jobPosting) {
+            this.title = jobPosting.getTitle();
+            this.positionType = jobPosting.getPositionType();
+            this.minCareerLevel = jobPosting.getMinCareerLevel().label;
+            this.maxCareerLevel = jobPosting.getMaxCareerLevel().label;
+            this.educationLevel = jobPosting.getEducationLevel().label;
+            this.addressRegionId = jobPosting.getAddressRegionId();
+            this.addressSubRegionId = jobPosting.getAddressSubRegionId();
+            this.addressDetail = jobPosting.getAddressDetail();
+            this.serviceIntro = jobPosting.getServiceIntro();
+            this.deadline = jobPosting.getDeadline();
+            this.responsibility = jobPosting.getResponsibility();
+            this.qualification = jobPosting.getQualification();
+            this.preference = jobPosting.getPreference();
+            this.benefit = jobPosting.getBenefit();
+            this.additionalInfo = jobPosting.getAdditionalInfo();
+            this.techStackCodes = jobPosting.getJobPostingTechStacks().stream()
+                    .map(jpts -> jpts.getTechStack())
+                    .toList();
+        }
+    }
+
     @Data
     public static class SaveDTO {
         private List<String> positionTypes;
