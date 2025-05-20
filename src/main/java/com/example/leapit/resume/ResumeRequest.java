@@ -1,6 +1,7 @@
 package com.example.leapit.resume;
 
 import com.example.leapit.common.enums.EducationLevel;
+import com.example.leapit.common.enums.EtcType;
 import com.example.leapit.resume.education.Education;
 import com.example.leapit.resume.etc.Etc;
 import com.example.leapit.resume.experience.Experience;
@@ -23,6 +24,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class ResumeRequest {
+
+    // 이력서 등록 DTO
     @Data
     public static class SaveDTO {
         @NotEmpty(message = "제목을 입력해주세요.")
@@ -36,10 +39,12 @@ public class ResumeRequest {
         private List<String> resumeTechStacks;
         @Valid
         private List<LinkDTO> links;
+        @NotEmpty(message = "학력은 필수항목입니다.")
         @Valid
         private List<EducationDTO> educations;
         @Valid
         private List<ExperienceDTO> experiences;
+        @NotEmpty(message = "프로젝트는 필수항목입니다.")
         @Valid
         private List<ProjectDTO> projects;
         @Valid
@@ -61,7 +66,7 @@ public class ResumeRequest {
             @NotNull(message = "졸업일을 선택해주세요.")
             private LocalDate graduationDate;
             private Boolean isDropout;
-            @NotEmpty(message ="학력구분을 선택해주세요.")
+            @NotNull(message ="학력구분을 선택해주세요.")
             private EducationLevel educationLevel;
             @NotEmpty(message ="학교명을 입력해주세요.")
             private String schoolName;
@@ -130,8 +135,8 @@ public class ResumeRequest {
             private Boolean hasEndDate;
             @NotEmpty(message = "활동명/제목을 입력해주세요.")
             private String title;
-            @NotEmpty(message = "활동 구분을 선택해주세요.")
-            private String etcType;
+            @NotNull(message = "활동 구분을 선택해주세요.")
+            private EtcType etcType;
             @NotEmpty(message = "기관명을 입력해주세요.")
             private String institutionName;
             @NotEmpty(message = "상세내용/점수를 입력해주세요.")
@@ -284,6 +289,133 @@ public class ResumeRequest {
                 }
             }
             return resume;
+        }
+    }
+
+    // --------------------------------------------------------------------
+    // 이력서 수정 DTO
+
+    @Data
+    public static class UpdateDTO {
+        @NotEmpty(message = "제목을 입력해주세요.")
+        private String title;
+        private String photoUrl; // Base64로 인코딩된 문자열을 frontend로부터 받아온다.
+        private String photoFileName; // 원본 파일명
+        private String summary;
+        @NotEmpty(message = "직무를 선택해주세요.")
+        private String positionType;
+        @NotEmpty(message = "기술스택을 선택해주세요.")
+        private List<String> resumeTechStacks;
+        @Valid
+        private List<UpdateDTO.LinkDTO> links;
+        @NotEmpty(message = "학력은 필수항목입니다.")
+        @Valid
+        private List<UpdateDTO.EducationDTO> educations;
+        @Valid
+        private List<UpdateDTO.ExperienceDTO> experiences;
+        @NotEmpty(message = "프로젝트는 필수항목입니다.")
+        @Valid
+        private List<UpdateDTO.ProjectDTO> projects;
+        @Valid
+        private List<UpdateDTO.TrainingDTO> trainings;
+        @Valid
+        private List<UpdateDTO.EtcDTO> etcs;
+        private String selfIntroduction;
+
+        @Data
+        public static class LinkDTO {
+            private Integer id;
+            @NotEmpty(message = "링크 이름을 입력해주세요.")
+            private String title;
+            @NotEmpty(message = "링크를 입력해주세요.")
+            private String url;
+        }
+
+        @Data
+        public static class EducationDTO {
+            private Integer id;
+            @NotNull(message = "졸업일을 선택해주세요.")
+            private LocalDate graduationDate;
+            private Boolean isDropout;
+            @NotNull(message ="학력구분을 선택해주세요.")
+            private EducationLevel educationLevel;
+            @NotEmpty(message ="학교명을 입력해주세요.")
+            private String schoolName;
+            private String major;
+            private BigDecimal gpa;
+            private BigDecimal gpaScale;
+        }
+
+        @Data
+        public static class ExperienceDTO {
+            private Integer id;
+            @NotNull(message = "시작일을 선택해주세요.")
+            private LocalDate startDate;
+            private LocalDate endDate;
+            private Boolean isEmployed;
+            @NotEmpty(message = "회사명을 입력해주세요.")
+            private String companyName;
+            private String summary;
+            private String position;
+            @NotEmpty(message = "주요 업무를 입력해주세요.")
+            private String responsibility;
+            @NotEmpty(message = "기술 스택을 1개 이상 선택해주세요.")
+            @Valid
+            private List<String> techStacks;
+        }
+
+
+        @Data
+        public static class ProjectDTO {
+            private Integer id;
+            @NotNull(message = "시작일을 선택해주세요.")
+            private LocalDate startDate;
+            private LocalDate endDate;
+            private Boolean isOngoing;
+            @NotEmpty(message = "제목을 입력해주세요.")
+            private String title;
+            private String summary;
+            @NotEmpty(message = "설명을 입력해주세요.")
+            private String description;
+            private String repositoryUrl;
+            @NotEmpty(message = "기술 스택을 1개 이상 선택해주세요.")
+            @Valid
+            private List<String> techStacks;
+        }
+
+        @Data
+        public static class TrainingDTO {
+            private Integer id;
+            @NotNull(message = "시작일을 선택해주세요.")
+            private LocalDate startDate;
+            private LocalDate endDate;
+            private Boolean isOngoing;
+            @NotEmpty(message = "교육 과정명을 입력해주세요.")
+            private String courseName;
+            @NotEmpty(message = "기관명을 입력해주세요.")
+            private String institutionName;
+            @NotEmpty(message = "상세 설명을 입력해주세요.")
+            private String description;
+            @NotEmpty(message = "기술 스택을 1개 이상 선택해주세요.")
+            @Valid
+            private List<String> techStacks;
+        }
+
+        @Data
+        public static class EtcDTO {
+            private Integer id;
+            @NotNull(message = "시작일을 선택해주세요.")
+            private LocalDate startDate;
+            private LocalDate endDate;
+            private Boolean hasEndDate;
+            @NotEmpty(message = "활동명/제목을 입력해주세요.")
+            private String title;
+            @NotNull(message = "활동 구분을 선택해주세요.")
+            private EtcType etcType;
+            @NotEmpty(message = "기관명을 입력해주세요.")
+            private String institutionName;
+            @NotEmpty(message = "상세내용/점수를 입력해주세요.")
+            private String description;
         }
     }
 }

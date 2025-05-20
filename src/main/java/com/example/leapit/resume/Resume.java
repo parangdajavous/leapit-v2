@@ -98,4 +98,12 @@ public class Resume {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
+
+    public void update(String title, String photoUrl, String summary, String positionType, String selfIntroduction) {
+        this.title = title;
+        this.photoUrl = photoUrl;
+        this.summary = summary;
+        this.positionType = positionType;
+        this.selfIntroduction = selfIntroduction;
+    }
 }

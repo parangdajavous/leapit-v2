@@ -61,4 +61,14 @@ public class Project {
         this.createdAt = createdAt;
         this.projectTechStacks = projectTechStacks != null ? projectTechStacks : new ArrayList<>();
     }
+
+    public void update(LocalDate startDate, LocalDate endDate, Boolean isOngoing, String title, String summary, String description, String repositoryUrl) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.isOngoing = isOngoing;
+        this.title = title;
+        this.summary = summary;
+        this.description = description;
+        this.repositoryUrl = repositoryUrl;
+    }
 }

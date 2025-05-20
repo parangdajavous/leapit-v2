@@ -48,7 +48,6 @@ public class Education {
     private Timestamp createdAt;
 
     @Builder
-
     public Education(Integer id, Resume resume, LocalDate graduationDate, Boolean isDropout, EducationLevel educationLevel, String schoolName, String major, BigDecimal gpa, BigDecimal gpaScale, Timestamp createdAt) {
         this.id = id;
         this.resume = resume;
@@ -60,5 +59,15 @@ public class Education {
         this.gpa = gpa;
         this.gpaScale = gpaScale;
         this.createdAt = createdAt;
+    }
+
+    public void update(LocalDate graduationDate, Boolean isDropout, EducationLevel educationLevel, String schoolName, String major, BigDecimal gpa, BigDecimal gpaScale) {
+        this.graduationDate = graduationDate;
+        this.isDropout = isDropout;
+        this.educationLevel = educationLevel;
+        this.schoolName = schoolName;
+        this.major = major;
+        this.gpa = gpa;
+        this.gpaScale = gpaScale;
     }
 }

@@ -1,7 +1,9 @@
 package com.example.leapit.resume;
 
 import com.example.leapit._core.util.Base64Util;
+import com.example.leapit.common.enums.CareerLevel;
 import com.example.leapit.common.enums.EducationLevel;
+import com.example.leapit.common.enums.EtcType;
 import com.example.leapit.resume.education.Education;
 import com.example.leapit.resume.etc.Etc;
 import com.example.leapit.resume.experience.Experience;
@@ -17,7 +19,7 @@ import java.util.List;
 public class ResumeResponse {
 
     @Data
-    public static class DTO { // TODO : 이력서+항목O 유저정보X -> 업데이트 및 저장이 잘 됐는지 확인을 위함
+    public static class DTO {
         private Integer id;
         private String title;
         private String photoUrl;
@@ -162,7 +164,7 @@ public class ResumeResponse {
             private LocalDate endDate;
             private Boolean hasEndDate;
             private String title;
-            private String etcType;
+            private EtcType etcType;
             private String institutionName;
             private String description;
 
@@ -246,18 +248,109 @@ public class ResumeResponse {
         private String email;
         private Integer birthDate; // 생년만 (e.g. 2000)
         private String contactNumber;
-        // TODO : CareerLevel 추가
+        //private List<CareerLevelDTO> careerLevels;
+        private List<EducationLevelDTO> educationLevels;
+        private List<EtcTypeDTO> etcTypes;
         private List<String> positionTypes;
         private List<String> techStacks;
 
-        public SaveDTO(User user, List<String> positionTypes, List<String> techStacks) {
+        @Data
+        public static class EducationLevelDTO {
+            private String name;
+            private String label;
+
+            public EducationLevelDTO(EducationLevel educationLevel) {
+                this.name = educationLevel.name();
+                this.label = educationLevel.label;
+            }
+        }
+
+        @Data
+        public static class EtcTypeDTO {
+            private String name;
+            private String label;
+
+            public EtcTypeDTO(EtcType etcType) {
+                this.name = etcType.name();
+                this.label = etcType.label;
+            }
+        }
+
+
+        public SaveDTO(User user, List<EducationLevel> educationLevels,
+                       List<EtcType> etcTypes, List<String> positionTypes, List<String> techStacks) {
             this.name = user.getName();
             this.email = user.getEmail();
             this.birthDate = user.getBirthDate().getYear();
             this.contactNumber = user.getContactNumber();
+            //this.careerLevels = careerLevels;
+            this.educationLevels = educationLevels
+                    .stream()
+                    .map(educationLevel -> new EducationLevelDTO(educationLevel))
+                    .toList();
+            this.etcTypes = etcTypes
+                    .stream()
+                    .map(etcType -> new EtcTypeDTO(etcType))
+                    .toList();
             this.positionTypes = positionTypes;
             this.techStacks = techStacks;
         }
     }
 
+    // 이력서 수정시 유저정보 + 이력서 + 선택지
+    @Data
+    public static class UpdateDTO {
+        private String name;
+        private String email;
+        private Integer birthDate; // 생년만 (e.g. 2000)
+        private String contactNumber;
+        //private List<CareerLevel> careerLevels;
+        private List<EducationLevelDTO> educationLevels;
+        private List<EtcTypeDTO> etcTypes;
+        private List<String> positionTypes;
+        private List<String> techStacks;
+        private DTO resumeDTO;
+
+        @Data
+        public static class EducationLevelDTO {
+            private String name;
+            private String label;
+
+            public EducationLevelDTO(EducationLevel educationLevel) {
+                this.name = educationLevel.name();
+                this.label = educationLevel.label;
+            }
+        }
+
+        @Data
+        public static class EtcTypeDTO {
+            private String name;
+            private String label;
+
+            public EtcTypeDTO(EtcType etcType) {
+                this.name = etcType.name();
+                this.label = etcType.label;
+            }
+        }
+
+        public UpdateDTO(User user, List<EducationLevel> educationLevels,
+                         List<EtcType> etcTypes, List<String> positionTypes, List<String> techStacks, DTO resumeDTO) {
+            this.name = user.getName();
+            this.email = user.getEmail();
+            this.birthDate = user.getBirthDate().getYear();
+            this.contactNumber = user.getContactNumber();
+            //this.careerLevels = careerLevels;
+            this.educationLevels = educationLevels
+                    .stream()
+                    .map(educationLevel -> new EducationLevelDTO(educationLevel))
+                    .toList();
+            this.etcTypes = etcTypes
+                    .stream()
+                    .map(etcType -> new EtcTypeDTO(etcType))
+                    .toList();
+            this.positionTypes = positionTypes;
+            this.techStacks = techStacks;
+            this.resumeDTO = resumeDTO;
+        }
+    }
 }
