@@ -36,4 +36,19 @@ public class LikeRepository {
         query.setParameter("boardId", boardId);
         query.executeUpdate();
     }
+
+    public Like save(Like like) {
+        em.persist(like);
+        return like;
+    }
+
+    public void deleteById(Integer id) {
+        Query query = em.createQuery("delete from Like li where li.id = :id");
+        query.setParameter("id", id);
+        query.executeUpdate();
+    }
+
+    public Optional<Like> findById(Integer id) {
+        return Optional.ofNullable(em.find(Like.class, id));
+    }
 }

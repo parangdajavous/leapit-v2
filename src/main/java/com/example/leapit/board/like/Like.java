@@ -32,4 +32,12 @@ public class Like {
 
     @CreationTimestamp
     private Timestamp createdAt;
+
+    @Builder
+    public Like(Integer id, User user, Board board, Timestamp createdAt) {
+        this.id = id;
+        this.user = user;
+        this.board = board;
+        this.createdAt = createdAt;
+    }
 }
