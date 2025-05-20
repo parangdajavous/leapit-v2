@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository
@@ -174,5 +175,9 @@ public class ApplicationRepository {
                         (String) row[5]
                 ))
                 .toList();
+    }
+
+    public Optional<Application> findById(Integer id) {
+        return Optional.ofNullable(em.find(Application.class, id));
     }
 }

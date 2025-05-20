@@ -1,5 +1,6 @@
 package com.example.leapit.application;
 import com.example.leapit.common.enums.BookmarkStatus;
+import com.example.leapit.common.enums.PassStatus;
 import com.example.leapit.common.enums.ViewStatus;
 import com.example.leapit.jobposting.JobPostingResponse;
 import lombok.Data;
@@ -97,6 +98,17 @@ public class ApplicationResponse {
             this.appliedDate = appliedDate;
             this.bookmarkStatus = bookmarkStatus;
             this.viewStatus = viewStatus;
+        }
+    }
+
+    @Data
+    public static class UpdatePassDTO {
+        private Integer applicationId;
+        private PassStatus passStatus;
+
+        public UpdatePassDTO(Integer applicationId, PassStatus passStatus) {
+            this.applicationId = applicationId;
+            this.passStatus = passStatus;
         }
     }
 }

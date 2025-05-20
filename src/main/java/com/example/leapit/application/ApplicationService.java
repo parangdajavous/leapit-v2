@@ -1,9 +1,13 @@
 package com.example.leapit.application;
 
+import com.example.leapit._core.error.ex.ExceptionApi403;
+import com.example.leapit._core.error.ex.ExceptionApi404;
 import com.example.leapit.jobposting.JobPostingRepository;
 import com.example.leapit.jobposting.JobPostingResponse;
+import com.example.leapit.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -46,5 +50,20 @@ public class ApplicationService {
         // respDTO에 담기
         ApplicationResponse.MyPageDTO respDTO = new ApplicationResponse.MyPageDTO(statusDTO, itemDTOs);
         return respDTO;
+    }
+
+    @Transactional
+    public ApplicationResponse.UpdatePassDTO updatePass(Integer applicationId, ApplicationRequest.UpdatePassDTO reqDTO, Integer sessionUserId) {
+        // 1. 지원서 존재 여부 확인
+        Application applicationPS = applicationRepository.findById(applicationId)
+                .orElseThrow(() -> new ExceptionApi404("해당 지원서는 존재하지 않습니다."));
+
+        // 2. 권한 확인 (지원서의 채용공고 주인 == sessionUserId)
+        if (!(applicationPS.getJobPosting().getUser().getId().equals(sessionUserId))) throw new ExceptionApi403("권한이 없습니다.");
+
+        // 3. 합격 불합격 처리
+        applicationPS.updatePassStatus(reqDTO.getPassStatus());
+
+        return new ApplicationResponse.UpdatePassDTO(applicationPS.getId(), applicationPS.getPassStatus());
     }
 }

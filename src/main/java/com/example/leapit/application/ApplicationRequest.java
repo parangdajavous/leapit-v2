@@ -17,4 +17,9 @@ public class ApplicationRequest {
         private BookmarkStatus bookmarkStatus;   // 스크랩 여부
         private PassStatus passStatus;           // 합격 여부
     }
+
+    @Data
+    public static class UpdatePassDTO {
+        private PassStatus passStatus;
+    }
 }

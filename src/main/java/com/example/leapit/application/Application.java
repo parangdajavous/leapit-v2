@@ -42,4 +42,12 @@ public class Application {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ViewStatus viewStatus; // VIEWED / UNVIEWED
+
+    public void updatePassStatus(PassStatus passStatus) {
+        this.passStatus = passStatus;
+    }
+
+    public void updateViewStatus(ViewStatus viewStatus) {
+        this.viewStatus = viewStatus;
+    }
 }
