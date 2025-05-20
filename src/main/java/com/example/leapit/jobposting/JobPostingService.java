@@ -1,5 +1,4 @@
 package com.example.leapit.jobposting;
-
 import com.example.leapit._core.error.ex.ExceptionApi403;
 import com.example.leapit._core.error.ex.ExceptionApi404;
 import com.example.leapit.common.enums.CareerLevel;
@@ -15,6 +14,7 @@ import com.example.leapit.user.User;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.example.leapit.common.region.RegionResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +22,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class JobPostingService {
-
     private final JobPostingRepository jobPostingRepository;
+
     private final TechStackRepository techStackRepository;
     private final RegionRepository regionRepository;
     private final PositionTypeRepository positionTypeRepository;
@@ -113,5 +113,50 @@ public class JobPostingService {
         }
 
         jobPostingRepository.deleteById(id);
+    }
+
+    // 공고현황 페이지(필터)
+    public JobPostingResponse.FilteredListDTO getList(JobPostingRequest.FilterDTO reqDTO,Integer sessionUserId) {
+
+        // 1. 포지션 타입 코드 리스트 (예: ["백엔드", "프론트엔드"])
+        List<String> positionTypes = positionTypeRepository.findAll();
+
+        // 2. 기술 스택 코드 리스트 (예: ["Java", "React"])
+        List<String> techStacks = techStackRepository.findAll();
+
+        // 3. 전체 지역 조회
+        List<Region> regions = regionRepository.findAllRegion();
+
+        // 4. 커리어 레벨 (enum)
+        List<CareerLevel> careerLevels = List.of(CareerLevel.values());
+
+        // 5. Region + SubRegion DTO 변환
+        List<RegionResponse.DTO> regionDTOs = new ArrayList<>();
+        for (Region region : regions) {
+            List<SubRegion> subRegions = regionRepository.findAllSubRegionByRegionId(region.getId());
+            RegionResponse.DTO regionDTO = new RegionResponse.DTO(region.getId(), region.getName(), subRegions);
+            regionDTOs.add(regionDTO);
+        }
+
+        // 전체 공고목록 조회
+        List<JobPostingResponse.ItemDTO> jobPostingList = jobPostingRepository.findAllByFilter(
+                reqDTO.getRegionId(),
+                reqDTO.getSubRegionId(),
+                reqDTO.getCareerLevel(),
+                reqDTO.getTechStackCode(),
+                reqDTO.getSelectedPosition(),
+                reqDTO.getSortTypeOrDefault(),
+                sessionUserId
+        );
+
+        JobPostingResponse.FilteredListDTO respDTO =
+                new JobPostingResponse.FilteredListDTO(
+                        positionTypes,
+                        techStacks,
+                        regionDTOs,
+                        careerLevels,
+                        jobPostingList
+                );
+        return respDTO;
     }
 }

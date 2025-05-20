@@ -20,5 +20,4 @@ public class RegionRepository {
                 .setParameter("regionId", regionId)
                 .getResultList();
     }
-
 }

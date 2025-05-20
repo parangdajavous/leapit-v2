@@ -184,4 +184,12 @@ public class CompanyInfoResponse {
         }
     }
 
+    @Data
+    public static class TechStackDTO {
+        private String name;
+
+        public TechStackDTO(String name) {
+            this.name = name;
+        }
+    }
 }
