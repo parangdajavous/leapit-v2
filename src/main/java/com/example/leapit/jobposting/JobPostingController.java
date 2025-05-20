@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class JobPostingController {
     private final JobPostingService jobPostingService;
+
     private final HttpSession session;
 
     // 채용공고 등록

@@ -1,4 +1,5 @@
 package com.example.leapit.jobposting.bookmark;
+import com.example.leapit.resume.Resume;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -6,11 +7,18 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository
 public class JobPostingBookmarkRepository {
     private final EntityManager em;
+
+    // 북마크 등록
+    public JobPostingBookmark save(JobPostingBookmark bookmark) {
+        em.persist(bookmark);
+        return bookmark;
+    }
 
     //  개인 마이페이지 공고 스크랩 목록 조회
     public List<JobPostingBookmarkResponse.ItemDTO> findItemsByuserId(Integer userId) {
@@ -42,5 +50,13 @@ public class JobPostingBookmarkRepository {
         }
 
         return dtos;
+    }
+
+    public Optional<JobPostingBookmark> findById(Integer id) {
+        return Optional.ofNullable(em.find(JobPostingBookmark.class, id));
+    }
+
+    public void delete(JobPostingBookmark bookmark) {
+        em.remove(bookmark);
     }
 }

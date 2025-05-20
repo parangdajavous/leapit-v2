@@ -71,4 +71,9 @@ public class User {
         this.email = email;
         this.contactNumber = contactNumber;
     }
+
+    @Builder(builderMethodName = "idBuilder")
+    public User(Integer id) {
+        this.id = id;
+    }
 }

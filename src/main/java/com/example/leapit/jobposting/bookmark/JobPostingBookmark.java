@@ -28,4 +28,12 @@ public class JobPostingBookmark {
 
     @CreationTimestamp
     private Timestamp createdAt;
+
+    @Builder
+    public JobPostingBookmark(Integer id, User user, JobPosting jobPosting, Timestamp createdAt) {
+        this.id = id;
+        this.user = user;
+        this.jobPosting = jobPosting;
+        this.createdAt = createdAt;
+    }
 }

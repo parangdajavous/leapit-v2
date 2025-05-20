@@ -113,8 +113,6 @@ public class JobPostingRepository {
                 .getResultList();
     }
 
-
-
     public List<JobPostingResponse.ItemDTO> findAllByFilter(
             Integer regionId,
             Integer subRegionId,
