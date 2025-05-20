@@ -9,6 +9,7 @@ import com.example.leapit.application.ApplicationRepository;
 import com.example.leapit.common.enums.CareerLevel;
 import com.example.leapit.common.enums.EducationLevel;
 import com.example.leapit.common.enums.EtcType;
+import com.example.leapit.common.enums.Role;
 import com.example.leapit.common.positiontype.PositionTypeRepository;
 import com.example.leapit.common.techstack.TechStackRepository;
 import com.example.leapit.resume.education.EducationService;
@@ -20,6 +21,7 @@ import com.example.leapit.resume.techstack.ResumeTechStackService;
 import com.example.leapit.resume.training.TrainingService;
 import com.example.leapit.user.User;
 import com.example.leapit.user.UserRepository;
+import io.micrometer.common.lang.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -223,6 +225,36 @@ public class ResumeService {
         trainingService.update(resumePS, reqDTO.getTrainings());
         etcService.update(resumePS, reqDTO.getEtcs());
 
+        return new ResumeResponse.DTO(resumePS);
+    }
+
+    public ResumeResponse.DTO getDetail(Integer resumeId, User sessionUser,  @Nullable Integer applicationId) {
+        // 1. 이력서 존재 확인
+        Resume resumePS = resumeRepository.findById(resumeId)
+                .orElseThrow(() -> new ExceptionApi404("이력서를 찾을 수 없습니다"));
+
+        // 2. 권한 체크 (개인 - 이력서 상세조회, 기업 - 지원서 상세조회)
+        if (sessionUser.getRole() == Role.PERSONAL) {
+            // 개인 유저는 본인만 열람 가능
+            if (!(resumePS.getUser().getId().equals(sessionUser.getId()))) {
+                throw new ExceptionApi403("해당 이력서에 대한 권한이 없습니다.");
+            }
+        } else if (sessionUser.getRole() == Role.COMPANY) {
+            // 기업 유저는 applicationId를 통해 접근한 경우만 허용
+            if (applicationId == null) {
+                throw new ExceptionApi403("기업 유저는 지원서를 통해 이력서를 열람할 수 있습니다.");
+            }
+
+            Application application = applicationRepository.findById(applicationId)
+                    .orElseThrow(() -> new ExceptionApi403("지원 내역을 찾을 수 없어 이력서를 열람할 수 없습니다."));
+
+            if (!application.getResume().getId().equals(resumeId) ||
+                    !application.getJobPosting().getUser().getId().equals(sessionUser.getId())) {
+                throw new ExceptionApi403("해당 이력서를 열람할 권한이 없습니다.");
+            }
+        }
+
+        // 3. 이력서 리턴
         return new ResumeResponse.DTO(resumePS);
     }
 }

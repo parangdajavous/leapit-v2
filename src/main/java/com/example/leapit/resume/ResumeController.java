@@ -2,7 +2,6 @@ package com.example.leapit.resume;
 
 import com.example.leapit._core.util.Resp;
 import com.example.leapit.user.User;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -64,6 +63,11 @@ public class ResumeController {
         return Resp.ok(respDTO);
     }
 
-
-
+    // 이력서 상세보기
+    @GetMapping("/s/personal/resume/{id}/detail")
+    public ResponseEntity<?> detail(@PathVariable("id") int id) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        ResumeResponse.DTO respDTO = resumeService.getDetail(id, sessionUser, null);
+        return Resp.ok(respDTO);
+    }
 }
