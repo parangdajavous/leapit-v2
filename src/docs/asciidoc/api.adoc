@@ -5,7 +5,8 @@ endif::[]
 :user: user-controller-test
 :board: board-controller-test
 :reply: reply-controller-test
-:love: love-controller-test
+:like: like-controller-test
+:resume: resume-controller-test
 
 = REST API
 :toc: left
@@ -113,3 +114,53 @@ include::{snippets}/{reply}/delete_test/http-request.adoc[]
 
 ===== Response Example
 include::{snippets}/{reply}/delete_test/http-response.adoc[]
+
+== 이력서
+=== 1. 이력서 목록
+===== Request Example
+include::{snippets}/{resume}/get_list_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{resume}/get_list_test/http-response.adoc[]
+
+=== 2. 이력서 삭제
+===== Request Example
+include::{snippets}/{resume}/delete_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{resume}/delete_test/http-response.adoc[]
+
+=== 3. 이력서 등록 화면
+===== Request Example
+include::{snippets}/{resume}/get_save_form_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{resume}/get_save_form_test/http-response.adoc[]
+
+=== 4. 이력서 등록
+===== Request Example
+include::{snippets}/{resume}/save_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{resume}/save_test/http-response.adoc[]
+
+=== 5. 이력서 수정 화면
+===== Request Example
+include::{snippets}/{resume}/get_update_form_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{resume}/get_update_form_test/http-response.adoc[]
+
+=== 6. 이력서 수정
+===== Request Example
+include::{snippets}/{resume}/update_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{resume}/update_test/http-response.adoc[]
+
+=== 6. 이력서 상세보기
+===== Request Example
+include::{snippets}/{resume}/get_detail_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{resume}/get_detail_test/http-response.adoc[]

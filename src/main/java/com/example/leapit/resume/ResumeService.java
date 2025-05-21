@@ -258,4 +258,3 @@ public class ResumeService {
         return new ResumeResponse.DTO(resumePS);
     }
 }
-
