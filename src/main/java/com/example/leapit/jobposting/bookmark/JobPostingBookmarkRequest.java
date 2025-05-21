@@ -15,7 +15,7 @@ public class JobPostingBookmarkRequest {
         public JobPostingBookmark toEntity(Integer personalUserId) {
             return JobPostingBookmark.builder()
                     .jobPosting(JobPosting.builder().id(jobPostingId).build())
-                    .user(User.idBuilder().id(personalUserId).build())
+                    .user(User.builder().id(personalUserId).build())
                     .build();
         }
     }

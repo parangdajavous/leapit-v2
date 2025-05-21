@@ -1,5 +1,6 @@
 package com.example.leapit.user;
 
+import com.example.leapit._core.error.ex.ExceptionApi400;
 import com.example.leapit.common.enums.Role;
 import jakarta.validation.constraints.*;
 import lombok.Data;
@@ -26,7 +27,7 @@ public class UserRequest {
         private String password;
 
         @NotEmpty(message = "이메일은 필수입니다.")
-        @Email(message = "올바른 이메일 형식이 아닙니다.")
+        @Pattern(regexp = "^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\\.[a-zA-Z]{2,3}$", message = "이메일 형식으로 적어주세요")
         private String email;
 
         private LocalDate birthDate;
@@ -67,7 +68,7 @@ public class UserRequest {
         private String password;
 
         @NotEmpty(message = "이메일은 필수입니다.")
-        @Email(message = "올바른 이메일 형식이 아닙니다.")
+        @Pattern(regexp = "^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\\.[a-zA-Z]{2,3}$", message = "이메일 형식으로 적어주세요")
         private String email;
 
         @NotEmpty(message = "전화번호는 필수입니다.")
@@ -101,9 +102,18 @@ public class UserRequest {
 
     @Data
     public static class CompanyUpdateDTO {
+        @Size(min = 4, max = 20)
+        @Pattern(
+                regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+=\\-{}\\[\\]:;\"'<>,.?/]).{8,16}$",
+                message = "비밀번호는 8~16자, 영문 대소문자, 숫자, 특수문자를 포함해야 합니다."
+        )
         private String newPassword;
         private String confirmPassword;
+        @Pattern(regexp = "^010-\\d{4}-\\d{4}$", message = "전화번호는 010-1234-5678 형식으로 입력해주세요.")
         private String contactNumber;
+        @Pattern(regexp = "^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\\.[a-zA-Z]{2,3}$", message = "이메일 형식으로 적어주세요")
+        private String email;
+
     }
 
     @Data
@@ -120,7 +130,7 @@ public class UserRequest {
 
         private String confirmPassword;
 
-        @Email(message = "올바른 이메일 형식이 아닙니다.")
+        @Pattern(regexp = "^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\\.[a-zA-Z]{2,3}$", message = "이메일 형식으로 적어주세요")
         private String email;
 
         @Pattern(regexp = "^010-\\d{4}-\\d{4}$", message = "전화번호는 010-1234-5678 형식으로 입력해주세요.")

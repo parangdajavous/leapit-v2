@@ -43,6 +43,7 @@ public class UserResponse {
         private String createdAt;
         private String name;
         private LocalDate birthDate;
+        private String contactNumber;
 
         public UpdateDTO(User user) {
             this.id = user.getId();
@@ -52,6 +53,7 @@ public class UserResponse {
             this.createdAt = user.getCreatedAt().toString();
             this.name = user.getName();
             this.birthDate = user.getBirthDate();
+            this.contactNumber = user.getContactNumber();
         }
     }
 }
