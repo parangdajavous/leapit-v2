@@ -31,8 +31,8 @@ public class CompanyInfoRequest {
         private String benefit;
 
         // base64로 변환된 문자열
-        private String logoImageFileName;
-        private String imageFileName;
+        private String logoImageFileContent;
+        private String imageFileContent;
 
         public CompanyInfo toEntity(User user) {
             return CompanyInfo.builder()
@@ -63,8 +63,8 @@ public class CompanyInfoRequest {
         private String benefit;
 
         // base64로 변환된 문자열
-        private String logoImageFileName;
-        private String imageFileName;
+        private String logoImageFileContent;
+        private String imageFileContent;
     }
 
 }

@@ -27,41 +27,41 @@ public class CompanyInfoService {
     @Transactional
     public CompanyInfoResponse.DTO save(CompanyInfoRequest.SaveDTO reqDTO, User sessionUser) {
 
-        if (reqDTO.getLogoImage() == null || reqDTO.getLogoImage().isEmpty()) {
+        if (reqDTO.getLogoImageFileContent() == null || reqDTO.getLogoImageFileContent().isEmpty()) {
             throw new ExceptionApi400("로고 이미지는 필수입니다.");
         }
-        if (reqDTO.getImage() == null || reqDTO.getImage().isEmpty()) {
+        if (reqDTO.getImageFileContent() == null || reqDTO.getImageFileContent().isEmpty()) {
             throw new ExceptionApi400("대표이미지는 필수입니다.");
         }
 
 
         try {
             // 로고 이미지 처리
-            if (reqDTO.getLogoImage() != null && !reqDTO.getLogoImage().isBlank()) {
+            if (reqDTO.getLogoImageFileContent() != null && !reqDTO.getLogoImageFileContent().isEmpty()) {
                 // decoding
-                byte[] logoImageBytes = Base64Util.decodeAsBytes(reqDTO.getLogoImage());
+                byte[] logoImageBytes = Base64Util.decodeAsBytes(reqDTO.getLogoImageFileContent());
 
                 // 고유 파일명 생성
-                String logoImageFilename = UUID.randomUUID() + "_logo.png";
+                String logoImage = UUID.randomUUID() + "_logo.png";
                 String uploadDir = System.getProperty("user.dir") + "/upload/";
-                Path logoPath = Paths.get(uploadDir + logoImageFilename);
+                Path logoPath = Paths.get(uploadDir + logoImage);
 
                 Files.write(logoPath, logoImageBytes); // 저장
 
-                reqDTO.setLogoImage(logoImageFilename); // DB에는 파일명만 저장
+                reqDTO.setLogoImage(logoImage); // DB에는 파일명만 저장
             }
 
             // 대표 이미지 처리
-            if (reqDTO.getImage() != null && !reqDTO.getImage().isBlank()) {
-                byte[] imageBytes = Base64Util.decodeAsBytes(reqDTO.getImage());
+            if (reqDTO.getImageFileContent() != null && !reqDTO.getImageFileContent().isEmpty()) {
+                byte[] imageBytes = Base64Util.decodeAsBytes(reqDTO.getImageFileContent());
 
-                String imageFilename = UUID.randomUUID() + "_image.png";
+                String image = UUID.randomUUID() + "_image.png";
                 String uploadDir = System.getProperty("user.dir") + "/upload/";
-                Path imagePath = Paths.get(uploadDir + imageFilename);
+                Path imagePath = Paths.get(uploadDir + image);
 
                 Files.write(imagePath, imageBytes);
 
-                reqDTO.setImage(imageFilename);
+                reqDTO.setImage(image);
             }
 
         } catch (Exception e) {
@@ -84,40 +84,41 @@ public class CompanyInfoService {
             throw new ExceptionApi403("권한이 없습니다.");
         }
 
-        if (reqDTO.getLogoImage() == null || reqDTO.getLogoImage().isEmpty()) {
+        if (reqDTO.getLogoImageFileContent() == null || reqDTO.getLogoImageFileContent().isEmpty()) {
             throw new ExceptionApi400("로고 이미지는 필수입니다.");
         }
-        if (reqDTO.getImage() == null || reqDTO.getImage().isEmpty()) {
+        if (reqDTO.getImageFileContent() == null || reqDTO.getImageFileContent().isEmpty()) {
             throw new ExceptionApi400("대표이미지는 필수입니다.");
         }
 
 
         try {
             // 로고 이미지 처리
-            if (reqDTO.getLogoImage() != null && !reqDTO.getLogoImage().isBlank()) {
-                byte[] logoImageBytes = Base64Util.decodeAsBytes(reqDTO.getLogoImage());
+            if (reqDTO.getLogoImageFileContent() != null && !reqDTO.getLogoImageFileContent().isEmpty()) {
+                // decoding
+                byte[] logoImageBytes = Base64Util.decodeAsBytes(reqDTO.getLogoImageFileContent());
 
                 // 고유 파일명 생성
-                String logoImageFilename = UUID.randomUUID() + "_logo.png";
+                String logoImage = UUID.randomUUID() + "_logo.png";
                 String uploadDir = System.getProperty("user.dir") + "/upload/";
-                Path logoPath = Paths.get(uploadDir + logoImageFilename);
+                Path logoPath = Paths.get(uploadDir + logoImage);
 
                 Files.write(logoPath, logoImageBytes); // 저장
 
-                reqDTO.setLogoImage(logoImageFilename); // DB에는 파일명만 저장
+                reqDTO.setLogoImage(logoImage); // DB에는 파일명만 저장
             }
 
             // 대표 이미지 처리
-            if (reqDTO.getImage() != null && !reqDTO.getImage().isBlank()) {
-                byte[] imageBytes = Base64Util.decodeAsBytes(reqDTO.getImage());
+            if (reqDTO.getImageFileContent() != null && !reqDTO.getImageFileContent().isEmpty()) {
+                byte[] imageBytes = Base64Util.decodeAsBytes(reqDTO.getImageFileContent());
 
-                String imageFilename = UUID.randomUUID() + "_image.png";
+                String image = UUID.randomUUID() + "_image.png";
                 String uploadDir = System.getProperty("user.dir") + "/upload/";
-                Path imagePath = Paths.get(uploadDir + imageFilename);
+                Path imagePath = Paths.get(uploadDir + image);
 
                 Files.write(imagePath, imageBytes);
 
-                reqDTO.setImage(imageFilename);
+                reqDTO.setImage(image);
             }
 
         } catch (Exception e) {
