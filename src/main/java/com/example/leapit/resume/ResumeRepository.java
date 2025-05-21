@@ -31,4 +31,16 @@ public class ResumeRepository {
         em.persist(resume);
         return resume;
     }
+
+    public List<Resume> findAllByUserIdJoinTechStacks(Integer userId) {
+        String jpql = """
+                    SELECT DISTINCT r
+                    FROM Resume r
+                    LEFT JOIN FETCH r.resumeTechStacks
+                    WHERE r.user.id = :userId
+                """;
+        Query query = em.createQuery(jpql, Resume.class);
+        query.setParameter("userId", userId);
+        return query.getResultList();
+    }
 }
