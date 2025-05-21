@@ -50,4 +50,15 @@ public class Application {
     public void updateViewStatus(ViewStatus viewStatus) {
         this.viewStatus = viewStatus;
     }
+
+    @Builder
+    public Application(Integer id, Resume resume, JobPosting jobPosting, List<ApplicationBookmark> applicationBookmarks, LocalDate appliedDate, PassStatus passStatus, ViewStatus viewStatus) {
+        this.id = id;
+        this.resume = resume;
+        this.jobPosting = jobPosting;
+        this.applicationBookmarks = applicationBookmarks;
+        this.appliedDate = appliedDate;
+        this.passStatus = passStatus;
+        this.viewStatus = viewStatus;
+    }
 }

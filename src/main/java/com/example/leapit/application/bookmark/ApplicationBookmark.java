@@ -27,4 +27,12 @@ public class ApplicationBookmark {
 
     @CreationTimestamp
     private Timestamp createdAt;
+
+    @Builder
+    public ApplicationBookmark(Integer id, User user, Application application, Timestamp createdAt) {
+        this.id = id;
+        this.user = user;
+        this.application = application;
+        this.createdAt = createdAt;
+    }
 }

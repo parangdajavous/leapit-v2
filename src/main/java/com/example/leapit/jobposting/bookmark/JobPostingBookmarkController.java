@@ -28,8 +28,8 @@ public class JobPostingBookmarkController {
     @PostMapping("/s/api/personal/jobpostingbookmark")
     public ResponseEntity<?> save(@Valid @RequestBody JobPostingBookmarkRequest.SaveDTO reqDTO, Errors errors) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-            JobPostingBookmarkResponse.DTO respDTO = jobPostingBookmarkService.save(reqDTO, sessionUser);
-            return Resp.ok(respDTO);
+        JobPostingBookmarkResponse.DTO respDTO = jobPostingBookmarkService.save(reqDTO, sessionUser);
+        return Resp.ok(respDTO);
     }
 
     // 개인 스크랩 삭제 job_posting_bookmark
