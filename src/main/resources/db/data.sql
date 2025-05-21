@@ -534,35 +534,22 @@ INSERT INTO job_posting_bookmark_tb (user_id, job_posting_id, created_at)
 VALUES (3, 3, NOW());
 
 -- 5. application_tb
-INSERT INTO application_tb (resume_id, job_posting_id, applied_date, pass_status, view_status)
-VALUES (2, 2, '2025-04-18', 'WAITING', 'UNVIEWED');
-INSERT INTO application_tb (resume_id, job_posting_id, applied_date, pass_status, view_status)
-VALUES (2, 2, '2025-04-19', 'PASS', 'VIEWED');
-INSERT INTO application_tb (resume_id, job_posting_id, applied_date, pass_status, view_status)
-VALUES (2, 1, '2025-04-19', 'WAITING', 'VIEWED');
-INSERT INTO application_tb (resume_id, job_posting_id, applied_date, pass_status, view_status)
-VALUES (3, 1, '2025-04-20', 'FAIL', 'VIEWED');
-INSERT INTO application_tb (resume_id, job_posting_id, applied_date, pass_status, view_status)
-VALUES (3, 3, '2025-04-21', 'PASS', 'VIEWED');
-INSERT INTO application_tb (resume_id, job_posting_id, applied_date, pass_status, view_status)
-VALUES (4, 3, '2025-04-21', 'WAITING', 'VIEWED');
-INSERT INTO application_tb (resume_id, job_posting_id, applied_date, pass_status, view_status)
-VALUES (4, 2, '2025-04-21', 'PASS', 'VIEWED');
-INSERT INTO application_tb (resume_id, job_posting_id, applied_date, pass_status, view_status)
-VALUES (5, 3, '2025-04-21', 'FAIL', 'VIEWED');
-
--- 5-1. application_bookmark_tb
-INSERT INTO application_bookmark_tb (user_id, application_id, created_at)
-VALUES (6, 3, NOW());
-INSERT INTO application_bookmark_tb (user_id, application_id, created_at)
-VALUES (7, 1, NOW());
-INSERT INTO application_bookmark_tb (user_id, application_id, created_at)
-VALUES (7, 7, NOW());
-INSERT INTO application_bookmark_tb (user_id, application_id, created_at)
-VALUES (8, 6, NOW());
-INSERT INTO application_bookmark_tb (user_id, application_id, created_at)
-VALUES (8, 5, NOW());
-
+INSERT INTO application_tb (resume_id, job_posting_id, bookmark,applied_date, pass_status, view_status)
+VALUES (2, 2, 'BOOKMARKED','2025-04-18', 'WAITING', 'UNVIEWED');
+INSERT INTO application_tb (resume_id, job_posting_id, bookmark,applied_date, pass_status, view_status)
+VALUES (2, 2, 'NOT_BOOKMARKED','2025-04-19', 'PASS', 'VIEWED');
+INSERT INTO application_tb (resume_id, job_posting_id, bookmark,applied_date, pass_status, view_status)
+VALUES (2, 1, 'BOOKMARKED','2025-04-19', 'WAITING', 'VIEWED');
+INSERT INTO application_tb (resume_id, job_posting_id, bookmark,applied_date, pass_status, view_status)
+VALUES (3, 1, 'NOT_BOOKMARKED','2025-04-20', 'FAIL', 'VIEWED');
+INSERT INTO application_tb (resume_id, job_posting_id, bookmark,applied_date, pass_status, view_status)
+VALUES (3, 3, 'NOT_BOOKMARKED','2025-04-21', 'PASS', 'VIEWED');
+INSERT INTO application_tb (resume_id, job_posting_id, bookmark,applied_date, pass_status, view_status)
+VALUES (4, 3, 'NOT_BOOKMARKED','2025-04-21', 'WAITING', 'VIEWED');
+INSERT INTO application_tb (resume_id, job_posting_id, bookmark,applied_date, pass_status, view_status)
+VALUES (4, 2, 'BOOKMARKED','2025-04-21', 'PASS', 'VIEWED');
+INSERT INTO application_tb (resume_id, job_posting_id, bookmark,applied_date, pass_status, view_status)
+VALUES (5, 3, 'BOOKMARKED','2025-04-21', 'FAIL', 'VIEWED');
 
 -- 6. company_info_tb
 INSERT INTO company_info_tb (user_id, logo_image, company_name, establishment_date, address, main_service, introduction,

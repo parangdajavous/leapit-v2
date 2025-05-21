@@ -43,16 +43,25 @@ public class ApplicationController {
         return Resp.ok(respDTO);
     }
 
+    // 기업 지원 스크랩 application_bookmark
+    @PutMapping("/s/api/company/application/{id}/bookmark")
+    public ResponseEntity<?> updateBookmark(@PathVariable("id") Integer applicationId) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        applicationService.updateBookmark(applicationId, sessionUser.getId());
+        return Resp.ok(null);
+    }
+
     // 특정 채용공고에 대한 이력서 지원하기 화면
     @GetMapping("/s/api/personal/jobposting/{id}/apply")
-    public ResponseEntity<?> getApplyForm(@PathVariable Integer id) {
+    public ResponseEntity<?> getApplyForm (@PathVariable Integer id){
         User sessionUser = (User) session.getAttribute("sessionUser");
         ApplicationResponse.ApplyDTO respDTO = applicationService.getApplyForm(id, sessionUser.getId());
         return Resp.ok(respDTO);
     }
 
+    // 공고 지원
     @PostMapping("/s/api/personal/application")
-    public ResponseEntity<?> save(@Valid @RequestBody ApplicationRequest.SaveDTO reqDTO, Errors errors) {
+    public ResponseEntity<?> save (@Valid @RequestBody ApplicationRequest.SaveDTO reqDTO, Errors errors){
         User sessionUser = (User) session.getAttribute("sessionUser");
         ApplicationResponse.SaveDTO respDTO = applicationService.save(reqDTO, sessionUser.getId());
         return Resp.ok(respDTO);

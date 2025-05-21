@@ -92,7 +92,7 @@ public class ApplicationResponse {
         private String jobTitle;
         private LocalDate appliedDate;
         private BookmarkStatus bookmarkStatus;
-        private ViewStatus viewStatus;
+        private String evaluationStatus;
 
         public ApplicantListDTO(Integer applicationId,
                                 Integer resumeId,
@@ -100,14 +100,14 @@ public class ApplicationResponse {
                                 String jobTitle,
                                 LocalDate appliedDate,
                                 BookmarkStatus bookmarkStatus,
-                                ViewStatus viewStatus) {
+                                String evaluationStatus) {
             this.applicationId = applicationId;
             this.resumeId = resumeId;
             this.applicantName = applicantName;
             this.jobTitle = jobTitle;
             this.appliedDate = appliedDate;
             this.bookmarkStatus = bookmarkStatus;
-            this.viewStatus = viewStatus;
+            this.evaluationStatus = evaluationStatus;
         }
     }
 

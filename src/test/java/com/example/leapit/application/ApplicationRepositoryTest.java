@@ -27,33 +27,32 @@ public class ApplicationRepositoryTest {
     @Test
     public void find_all_applicants_by_filter() {
         // given
-        Integer companyUserId = 7;
-        Integer jobPostingId = null;
-        PassStatus passStatus = null;
-        ViewStatus viewStatus = null;
-        BookmarkStatus bookmarkStatus = null;
+        Integer companyUserId = 7; // 테스트용 company 유저 ID (DB에 존재하는 값이어야 함)
+        Integer jobPostingId = null; // 전체 공고 대상으로 조회
+        PassStatus passStatus = null; // 합불 조건 없이 전체
+        ViewStatus viewStatus = null; // 열람 여부 전체
+        BookmarkStatus bookmarkStatus = null; // 북마크 여부 전체
 
         // when
-        List<ApplicationResponse.ApplicantListDTO> result =
-                applicationRepository.findApplicantsByFilter(
-                        companyUserId,
-                        jobPostingId,
-                        passStatus,
-                        viewStatus,
-                        bookmarkStatus
-                );
+        List<ApplicationResponse.ApplicantListDTO> result = applicationRepository.findApplicantsByFilter(
+                companyUserId,
+                jobPostingId,
+                passStatus,
+                viewStatus,
+                bookmarkStatus
+        );
 
-        // eye
-        System.out.println("===================================================");
+        // then
+        System.out.println("================= 지원자 목록 =================");
         for (ApplicationResponse.ApplicantListDTO dto : result) {
-            System.out.println("지원자 ID: " + dto.getApplicationId());
+            System.out.println("지원서 ID: " + dto.getApplicationId());
             System.out.println("이력서 ID: " + dto.getResumeId());
-            System.out.println("지원자명: " + dto.getApplicantName());
-            System.out.println("공고명: " + dto.getJobTitle());
-            System.out.println("지원일: " + dto.getAppliedDate());
-            System.out.println("열람 상태: " + dto.getViewStatus());
-            System.out.println("스크랩 상태: " + dto.getBookmarkStatus());
-            System.out.println("===================================================");
+            System.out.println("지원자 이름: " + dto.getApplicantName());
+            System.out.println("공고 제목: " + dto.getJobTitle());
+            System.out.println("지원일자: " + dto.getAppliedDate());
+            System.out.println("북마크 여부: " + dto.getBookmarkStatus());
+            System.out.println("평가 상태: " + dto.getEvaluationStatus());
+            System.out.println("--------------------------------------------");
         }
     }
 
@@ -121,6 +120,7 @@ public class ApplicationRepositoryTest {
         Application application = Application.builder()
                 .resume(resume)
                 .jobPosting(jobPosting)
+                .bookmark(BookmarkStatus.NOT_BOOKMARKED)
                 .appliedDate(LocalDate.now())
                 .passStatus(PassStatus.WAITING)
                 .viewStatus(ViewStatus.UNVIEWED)
@@ -133,9 +133,10 @@ public class ApplicationRepositoryTest {
         System.out.println("================= 지원 저장 결과 =================");
         System.out.println("이력서 ID: " + saved.getResume().getId());
         System.out.println("채용공고 ID: " + saved.getJobPosting().getId());
+        System.out.println("북마크 여부: "+saved.getBookmark());
         System.out.println("지원일시: " + saved.getAppliedDate());
-        System.out.println("지원일시: " + saved.getPassStatus());
-        System.out.println("지원일시: " + saved.getViewStatus());
+        System.out.println("합격여부: " + saved.getPassStatus());
+        System.out.println("열람여부: " + saved.getViewStatus());
         System.out.println("=================================================");
         //================= 지원 저장 결과 =================
         //이력서 ID: 2

@@ -33,49 +33,30 @@ public class ApplicationRepository {
             BookmarkStatus bookmarkStatus) {
 
         String sql = """
-                    SELECT
-                        att.id AS applicationId,
-                        rt.id AS resumeId,
-                        ut.name AS applicantName,
-                        jpt.title AS jobTitle,
-                        att.applied_date AS appliedDate,
-                        CASE WHEN abt.id IS NOT NULL THEN TRUE ELSE FALSE END AS isBookmarked,
-                        CASE
-                            WHEN att.view_status = 'UNVIEWED' THEN '미열람'
-                            WHEN att.view_status = 'VIEWED' AND att.pass_status = 'WAITING' THEN '열람'
-                            WHEN att.pass_status = 'PASS' THEN '합격'
-                            WHEN att.pass_status = 'FAIL' THEN '불합격'
-                        END AS evaluationStatus,
-                        att.view_status AS viewStatus
-                    FROM APPLICATION_TB att
-                    JOIN RESUME_TB rt ON att.resume_id = rt.id
-                    JOIN USER_TB ut ON rt.user_id = ut.id
-                    JOIN JOB_POSTING_TB jpt ON att.job_posting_id = jpt.id
-                    JOIN USER_TB comut ON jpt.user_id = comut.id
-                    LEFT JOIN APPLICATION_BOOKMARK_TB abt 
-                        ON abt.application_id = att.id AND abt.user_id = :companyUserId
-                    WHERE comut.id = :companyUserId
-                """;
-
-        if (jobPostingId != null) {
-            sql += " AND jpt.id = :jobPostingId";
-        }
-
-        if (viewStatus != null) {
-            sql += " AND att.view_status = '" + viewStatus.name() + "'";
-        }
-
-        if (passStatus != null) {
-            sql += " AND att.pass_status = '" + passStatus.name() + "'";
-        }
-
-        if (bookmarkStatus != null) {
-            if (bookmarkStatus == BookmarkStatus.BOOKMARKED) {
-                sql += " AND abt.id IS NOT NULL";
-            } else if (bookmarkStatus == BookmarkStatus.NOT_BOOKMARKED) {
-                sql += " AND abt.id IS NULL";
-            }
-        }
+                        SELECT
+                            att.id AS applicationId,
+                            rt.id AS resumeId,
+                            ut.name AS applicantName,
+                            jpt.title AS jobTitle,
+                            att.applied_date AS appliedDate,
+                            att.bookmark AS bookmarkStatus,
+                            CASE
+                                WHEN att.view_status = 'UNVIEWED' THEN '미열람'
+                                WHEN att.view_status = 'VIEWED' AND att.pass_status = 'WAITING' THEN '열람'
+                                WHEN att.pass_status = 'PASS' THEN '합격'
+                                WHEN att.pass_status = 'FAIL' THEN '불합격'
+                            END AS evaluationStatus
+                        FROM APPLICATION_TB att
+                        JOIN RESUME_TB rt ON att.resume_id = rt.id
+                        JOIN USER_TB ut ON rt.user_id = ut.id
+                        JOIN JOB_POSTING_TB jpt ON att.job_posting_id = jpt.id
+                        JOIN USER_TB comut ON jpt.user_id = comut.id
+                        WHERE comut.id = :companyUserId
+                    """;
+        if (jobPostingId != null) sql += " AND jpt.id = :jobPostingId";
+        if (viewStatus != null) sql += " AND att.view_status = '" + viewStatus.name() + "'";
+        if (passStatus != null) sql += " AND att.pass_status = '" + passStatus.name() + "'";
+        if (bookmarkStatus != null) sql += " AND att.bookmark = '" + bookmarkStatus.name() + "'";
 
         sql += " ORDER BY att.applied_date DESC";
 
@@ -92,12 +73,8 @@ public class ApplicationRepository {
             String applicantName = (String) row[2];
             String jobTitle = (String) row[3];
             LocalDate appliedDate = ((java.sql.Date) row[4]).toLocalDate();
-
-            BookmarkStatus resultBookmarkStatus = Boolean.TRUE.equals(row[5])
-                    ? BookmarkStatus.BOOKMARKED
-                    : BookmarkStatus.NOT_BOOKMARKED;
-
-            ViewStatus resultViewStatus = ViewStatus.valueOf((String) row[7]);
+            BookmarkStatus resultBookmarkStatus = BookmarkStatus.valueOf((String) row[5]);
+            String evaluationStatus = (String) row[6];
 
             dtoList.add(new ApplicationResponse.ApplicantListDTO(
                     applicationId,
@@ -106,7 +83,7 @@ public class ApplicationRepository {
                     jobTitle,
                     appliedDate,
                     resultBookmarkStatus,
-                    resultViewStatus
+                    evaluationStatus
             ));
         }
         return dtoList;

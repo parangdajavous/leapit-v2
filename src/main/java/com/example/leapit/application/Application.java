@@ -1,6 +1,6 @@
 package com.example.leapit.application;
 
-import com.example.leapit.application.bookmark.ApplicationBookmark;
+import com.example.leapit.common.enums.BookmarkStatus;
 import com.example.leapit.common.enums.PassStatus;
 import com.example.leapit.common.enums.ViewStatus;
 import com.example.leapit.jobposting.JobPosting;
@@ -30,8 +30,9 @@ public class Application {
     @JoinColumn(name = "job_posting_id")
     private JobPosting jobPosting;
 
-    @OneToMany(mappedBy = "application", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<ApplicationBookmark> applicationBookmarks;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private BookmarkStatus bookmark;
 
     private LocalDate appliedDate;
 
@@ -52,13 +53,18 @@ public class Application {
     }
 
     @Builder
-    public Application(Integer id, Resume resume, JobPosting jobPosting, List<ApplicationBookmark> applicationBookmarks, LocalDate appliedDate, PassStatus passStatus, ViewStatus viewStatus) {
+    public Application(Integer id, Resume resume, JobPosting jobPosting, BookmarkStatus bookmark, LocalDate appliedDate, PassStatus passStatus, ViewStatus viewStatus) {
         this.id = id;
         this.resume = resume;
         this.jobPosting = jobPosting;
-        this.applicationBookmarks = applicationBookmarks;
+        this.bookmark = bookmark;
         this.appliedDate = appliedDate;
         this.passStatus = passStatus;
         this.viewStatus = viewStatus;
+    }
+
+
+    public void updateBookmark(String bookmark) {
+        this.bookmark = bookmark == "BOOKMARKED"? BookmarkStatus.NOT_BOOKMARKED : BookmarkStatus.BOOKMARKED;
     }
 }
