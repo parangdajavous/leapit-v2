@@ -153,4 +153,61 @@ public class JobPostingRepositoryTest {
             System.out.println("공고명: " + jp.getTitle() + ", 등록일: " + jp.getCreatedAt());
         }
     }
+
+    @Test
+    public void find_by_id_join_job_posting() {
+        // given
+        Integer companyUserId = 7;
+
+        // when
+        List<JobPostingResponse.companyListDTO> openPostings =
+                jobPostingRepository.findOpenJobPostingByCompanyUserId(companyUserId);
+
+        List<JobPostingResponse.companyListDTO> closedPostings =
+                jobPostingRepository.findClosedJobPostingByCompanyUserId(companyUserId);
+
+        // eye
+        System.out.println("================= 진행중 공고 =================");
+        for (JobPostingResponse.companyListDTO dto : openPostings) {
+            System.out.println("공고 ID: " + dto.getJobPostingId());
+            System.out.println("공고 제목: " + dto.getTitle());
+            System.out.println("마감일: " + dto.getDeadLine());
+            System.out.println("--------------------------------------------");
+        }
+
+        System.out.println("================= 마감된 공고 =================");
+        for (JobPostingResponse.companyListDTO dto : closedPostings) {
+            System.out.println("공고 ID: " + dto.getJobPostingId());
+            System.out.println("공고 제목: " + dto.getTitle());
+            System.out.println("마감일: " + dto.getDeadLine());
+            System.out.println("--------------------------------------------");
+        }
+        //================= 진행중 공고 =================
+        //공고 ID: 3
+        //공고 제목: 데이터 엔지니어 채용
+        //마감일: 2025-07-20
+        //--------------------------------------------
+        //공고 ID: 9
+        //공고 제목: iOS 앱 개발자 구인
+        //마감일: 2025-07-31
+        //--------------------------------------------
+        //공고 ID: 12
+        //공고 제목: QA 엔지니어 모집
+        //마감일: 2025-07-20
+        //--------------------------------------------
+        //================= 마감된 공고 =================
+        //공고 ID: 2
+        //공고 제목: 프론트엔드 개발자 모집
+        //마감일: 2025-05-20
+        //--------------------------------------------
+        //공고 ID: 4
+        //공고 제목: 주니어 데이터 엔지니어 모집
+        //마감일: 2025-05-20
+        //--------------------------------------------
+        //공고 ID: 5
+        //공고 제목: 마감된 개발자 모집
+        //마감일: 2025-03-20
+        //--------------------------------------------
+    }
+
 }

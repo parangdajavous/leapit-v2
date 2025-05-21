@@ -141,9 +141,10 @@ public class ApplicationRepositoryTest {
         //================= 지원 저장 결과 =================
         //이력서 ID: 2
         //채용공고 ID: 3
+        //북마크 여부: NOT_BOOKMARKED
         //지원일시: 2025-05-21
-        //지원일시: WAITING
-        //지원일시: UNVIEWED
+        //합격여부: WAITING
+        //열람여부: UNVIEWED
         //=================================================
     }
 }

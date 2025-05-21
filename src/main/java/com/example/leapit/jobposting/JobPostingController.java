@@ -54,16 +54,17 @@ public class JobPostingController {
 
     // 구직자 - 채용공고 목록(공고현황 페이지(필터))
     @GetMapping("/api/personal/jobposting")
-    public ResponseEntity<?> getList(JobPostingRequest.FilterDTO reqDTO) {
+    public ResponseEntity<?> getPersonalList(JobPostingRequest.FilterDTO reqDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         Integer sessionUserId = (sessionUser != null) ? sessionUser.getId() : null;
 
         JobPostingResponse.FilteredListDTO respDTO =
-                jobPostingService.getList(reqDTO,
+                jobPostingService.getPersonalList(reqDTO,
                         sessionUserId
                 );
         return Resp.ok(respDTO);
     }
+
     // 채용공고 수정 화면
     @GetMapping("/s/api/company/jobposting/{id}/edit")
     public ResponseEntity<?> getUpdateForm(@PathVariable Integer id) {
@@ -79,4 +80,13 @@ public class JobPostingController {
         JobPostingResponse.DTO respDTO = jobPostingService.update(id, sessionUser.getId(), reqDTO);
         return Resp.ok(respDTO);
     }
+
+    // 기업 - 채용공고 목록
+    @GetMapping("/s/api/company/jobposting")
+    public ResponseEntity<?> getCompanyList() {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        JobPostingResponse.ListByStatusDTO respDTO = jobPostingService.getCompanyList(sessionUser.getId());
+        return Resp.ok(respDTO);
+    }
+
 }

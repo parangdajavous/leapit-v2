@@ -318,11 +318,11 @@ public class JobPostingResponse {
             private List<CompanyInfoResponse.DetailDTO.JobPostingDTO.TechStackDTO> techStacks;
 
             public PopularDTO(JobPosting jp,
-                                            String companyName,
-                                            String imageString,
-                                            String address,
-                                            List<JobPostingTechStack> techStacks,
-                                            boolean isBookmarked) {
+                              String companyName,
+                              String imageString,
+                              String address,
+                              List<JobPostingTechStack> techStacks,
+                              boolean isBookmarked) {
                 this.id = jp.getId();
                 this.title = jp.getTitle();
                 this.companyName = companyName;
@@ -382,4 +382,39 @@ public class JobPostingResponse {
             this.popular = popular;
         }
     }
+
+    // 진행중/마감된 리스트 조회
+    @Data
+    public static class companyListDTO {
+        private Integer jobPostingId;
+        private String title;
+        private LocalDate deadLine;
+        private boolean isOpen;
+
+        public companyListDTO(Integer jobPostingId, String title, LocalDate deadLine) {
+            this.jobPostingId = jobPostingId;
+            this.title = title;
+            this.deadLine = deadLine;
+            this.isOpen = deadLine.isAfter(LocalDate.now());
+        }
+    }
+
+    // 기업 - 채용공고 리스트 보기 화면 DTO
+    @Data
+    public static class ListByStatusDTO {
+        private List<JobPostingResponse.companyListDTO> openPostings;
+        private List<JobPostingResponse.companyListDTO> closedPostings;
+        private int openCount;
+        private int closedCount;
+
+        public ListByStatusDTO(List<JobPostingResponse.companyListDTO> openPostings,
+                               List<JobPostingResponse.companyListDTO> closedPostings) {
+            this.openPostings = openPostings;
+            this.closedPostings = closedPostings;
+            this.openCount = openPostings.size();
+            this.closedCount = closedPostings.size();
+        }
+    }
+
+
 }

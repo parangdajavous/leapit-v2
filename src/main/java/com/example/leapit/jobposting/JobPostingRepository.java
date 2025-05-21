@@ -301,5 +301,45 @@ public class JobPostingRepository {
 
         return query.getResultList();
     }
+
+    // 진행중인 공고 조회
+    public List<JobPostingResponse.companyListDTO> findOpenJobPostingByCompanyUserId(Integer companyUserId) {
+        String jpql = """
+                    SELECT new com.example.leapit.jobposting.JobPostingResponse$companyListDTO(
+                        jpt.id,
+                        jpt.title,
+                        jpt.deadline
+                    )
+                    FROM JobPosting jpt
+                    JOIN jpt.user u
+                    WHERE u.id = :companyUserId
+                      AND jpt.deadline >= CURRENT_DATE
+                    ORDER BY jpt.createdAt DESC
+                """;
+
+        return em.createQuery(jpql, JobPostingResponse.companyListDTO.class)
+                .setParameter("companyUserId", companyUserId)
+                .getResultList();
+    }
+
+    // 마감된 공고 조회
+    public List<JobPostingResponse.companyListDTO> findClosedJobPostingByCompanyUserId(Integer companyUserId) {
+        String jpql = """
+                    SELECT new com.example.leapit.jobposting.JobPostingResponse$companyListDTO(
+                        jpt.id,
+                        jpt.title,
+                        jpt.deadline
+                    )
+                    FROM JobPosting jpt
+                    JOIN jpt.user u
+                    WHERE u.id = :companyUserId
+                      AND jpt.deadline < CURRENT_DATE
+                    ORDER BY jpt.createdAt DESC
+                """;
+
+        return em.createQuery(jpql, JobPostingResponse.companyListDTO.class)
+                .setParameter("companyUserId", companyUserId)
+                .getResultList();
+    }
 }
 
