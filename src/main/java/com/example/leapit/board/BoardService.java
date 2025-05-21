@@ -23,6 +23,7 @@ public class BoardService {
     private final LikeRepository likeRepository;
     private final UserRepository userRepository;
 
+    // 게시글 등록
     @Transactional
     public BoardResponse.DTO save(BoardRequest.SaveDTO reqDTO, User sessionUser) {
         // 여기에서 영속 상태의 user로 변환
@@ -34,6 +35,7 @@ public class BoardService {
         return new BoardResponse.DTO(boardPS);
     }
 
+    // 게시글 수정
     @Transactional
     public BoardResponse.DTO update(BoardRequest.UpdateDTO reqDTO, Integer boardId, Integer sessionUserId) {
         Board boardPS = boardRepository.findById(boardId)
@@ -49,6 +51,7 @@ public class BoardService {
     }
 
 
+    // 게시글 보기
     public BoardResponse.DTO getOne(Integer id, Integer sessionUserId) {
         Board boardPS = boardRepository.findById(id)
                 .orElseThrow(() -> new ExceptionApi404("자원을 찾을 수 없습니다"));
@@ -66,6 +69,7 @@ public class BoardService {
                 .toList();
     }
 
+    // 게시글 상세보기
     public BoardResponse.DetailDTO getDetail(Integer id, Integer sessionUserId) {
         Board boardPS = boardRepository.findByIdJoinUserAndReplies(id)
                 .orElseThrow(() -> new ExceptionApi404("자원을 찾을 수 없습니다."));
@@ -96,6 +100,7 @@ public class BoardService {
         return detailDTO;
     }
 
+    // 게시글 삭제
     @Transactional
     public void delete(Integer id, Integer sessionUserId) {
         Board boardPS = boardRepository.findById(id)

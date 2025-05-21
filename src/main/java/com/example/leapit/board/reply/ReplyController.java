@@ -15,6 +15,7 @@ public class ReplyController {
     private final ReplyService replyService;
     private final HttpSession session;
 
+    // 댓글 등록
     @PostMapping("/s/api/personal/reply")
     public ResponseEntity<?> save(@Valid @RequestBody ReplyRequest.SaveDTO reqDTO, Errors errors) {
         User sessionUser = (User) session.getAttribute("sessionUser");
@@ -24,6 +25,7 @@ public class ReplyController {
         return Resp.ok(respDTO);
     }
 
+    // 댓글 삭제
     @DeleteMapping("/s/api/personal/reply/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");

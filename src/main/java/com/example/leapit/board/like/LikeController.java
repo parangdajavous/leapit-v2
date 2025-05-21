@@ -13,6 +13,7 @@ public class LikeController {
     private final LikeService likeService;
     private final HttpSession session;
 
+    // 좋아요 등록
     @PostMapping("/s/api/personal/like")
     public ResponseEntity<?> save(@RequestBody LikeRequest.SaveDTO reqDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
@@ -22,6 +23,7 @@ public class LikeController {
         return Resp.ok(respDTO);
     }
 
+    // 좋아요 삭제
     @DeleteMapping("/s/api/personal/like/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");

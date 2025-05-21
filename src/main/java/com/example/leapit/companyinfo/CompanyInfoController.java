@@ -16,6 +16,7 @@ public class CompanyInfoController {
     private final HttpSession session;
     // 기업 정보 삭제 기능 X -> 회원 탈퇴로 처리한다고 가정한다.
 
+    // 기업정보 등록
     @PostMapping("/s/api/company/info")
     public ResponseEntity<?> save(@Valid @RequestBody CompanyInfoRequest.SaveDTO reqDTO, Errors errors) {
         User sessionUser = (User) session.getAttribute("sessionUser");
@@ -25,6 +26,7 @@ public class CompanyInfoController {
         return Resp.ok(respDTO);
     }
 
+    // 기업정보 수정
     @PutMapping("/s/api/company/info/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Integer id, @Valid @RequestBody CompanyInfoRequest.UpdateDTO reqDTO, Errors errors) {
         User sessionUser = (User) session.getAttribute("sessionUser");
@@ -34,6 +36,7 @@ public class CompanyInfoController {
         return Resp.ok(respDTO);
     }
 
+    // 기업정보 보기
     @GetMapping("/s/api/company/companyinfo/{id}")
     public ResponseEntity<?> getOne(@PathVariable("id") Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");
@@ -43,6 +46,7 @@ public class CompanyInfoController {
         return Resp.ok(respDTO);
     }
 
+    // 기업정보 상세보기
     @GetMapping("/s/api/company/companyinfo/{id}/detail")
     public ResponseEntity<?> getDetailCompany(@PathVariable("id") Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");

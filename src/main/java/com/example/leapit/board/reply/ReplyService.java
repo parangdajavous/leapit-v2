@@ -17,6 +17,7 @@ public class ReplyService {
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
 
+    // 댓글 등록
     @Transactional
     public ReplyResponse.DTO save(ReplyRequest.SaveDTO reqDTO, User sessionUser) {
         // 여기에서 영속 상태의 user로 변환
@@ -30,6 +31,7 @@ public class ReplyService {
         return new ReplyResponse.DTO(replyPS);
     }
 
+    // 댓글 삭제
     @Transactional
     public void delete(Integer id, Integer sessionUserId) {
         Reply replyPS = replyRepository.findById(id)

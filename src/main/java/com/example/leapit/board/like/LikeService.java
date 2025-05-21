@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class LikeService {
     private final LikeRepository likeRepository;
 
+    // 좋아요 등록
     @Transactional
     public LikeResponse.SaveDTO save(LikeRequest.SaveDTO reqDTO, Integer sessionUserId) {
         Like likePS = likeRepository.save(reqDTO.toEntity(sessionUserId));
@@ -18,6 +19,7 @@ public class LikeService {
         return new LikeResponse.SaveDTO(likePS.getId(), likeCount.intValue());
     }
 
+    // 좋아요 삭제
     @Transactional
     public LikeResponse.DeleteDTO delete(Integer id, Integer sessionUserId) {
         Like likePS = likeRepository.findById(id)
