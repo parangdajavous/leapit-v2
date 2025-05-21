@@ -73,37 +73,7 @@ public class UserController {
         return Resp.ok(respDTO);
     }
 
-    // 메인화면
-    @GetMapping("/")
-    public ResponseEntity<?> index(
-            @RequestHeader(value = "Authorization", required = false) String accessToken) {
 
-        Integer userId = null;
-
-        // 1. 세션 기반 인증
-        User sessionUser = (User) session.getAttribute("sessionUser");
-        if (sessionUser != null) {
-            userId = sessionUser.getId();
-        }
-
-        // 2. 토큰 기반 인증 (세션이 없을 때만)
-        else if (accessToken != null && accessToken.startsWith("Bearer ")) {
-            try {
-                String token = accessToken.replace("Bearer ", "");
-                userId = JwtUtil.getUserId(token);
-            } catch (Exception e) {
-                System.out.println("JWT 파싱 실패: " + e.getMessage());
-                // userId는 null로 둬도 됨 → 북마크 없이 동작
-            }
-        }
-
-        List<JobPostingResponse.MainDTO.RecentDTO> recent = jobPostingService.getRecent(userId);
-        List<JobPostingResponse.MainDTO.PopularDTO> popular = jobPostingService.getPopular(userId);
-
-        JobPostingResponse.MainDTO respDTO = new JobPostingResponse.MainDTO(recent, popular);
-
-        return Resp.ok(respDTO);
-    }
 
     // 개인 유저 정보 수정 화면
     @GetMapping("/s/api/personal/user/edit")
@@ -119,5 +89,7 @@ public class UserController {
         User sessionUser = (User) session.getAttribute("sessionUser");
         UserResponse.UpdateDTO respDTO = userService.getCompanyUpdateForm(sessionUser.getId());
         return Resp.ok(respDTO);
+
     }
+
 }

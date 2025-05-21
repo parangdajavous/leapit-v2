@@ -1,5 +1,6 @@
 package com.example.leapit.jobposting;
 
+import com.example.leapit._core.util.JwtUtil;
 import com.example.leapit._core.util.Resp;
 import com.example.leapit.user.User;
 import jakarta.servlet.http.HttpSession;
@@ -8,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -89,4 +92,32 @@ public class JobPostingController {
         return Resp.ok(respDTO);
     }
 
+    // 메인화면
+    @GetMapping("/")
+    public ResponseEntity<?> index(
+            @RequestHeader(value = "Authorization", required = false) String accessToken) {
+
+        Integer userId = null;
+
+        // 1. 세션 기반 인증
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        if (sessionUser != null) {
+            userId = sessionUser.getId();
+        }
+
+        // 2. 토큰 기반 인증 (세션이 없을 때만)
+        else if (accessToken != null && accessToken.startsWith("Bearer ")) {
+            try {
+                String token = accessToken.replace("Bearer ", "");
+                userId = JwtUtil.getUserId(token);
+            } catch (Exception e) {
+                System.out.println("JWT 파싱 실패: " + e.getMessage());
+                // userId는 null로 둬도 됨 → 북마크 없이 동작
+            }
+        }
+
+        JobPostingResponse.MainDTO respDTO = jobPostingService.index(userId);
+
+        return Resp.ok(respDTO);
+    }
 }

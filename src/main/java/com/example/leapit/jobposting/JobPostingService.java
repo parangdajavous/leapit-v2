@@ -37,8 +37,8 @@ public class JobPostingService {
     private final CompanyInfoRepository companyInfoRepository;
     private final JobPostingBookmarkRepository jobPostingBookmarkRepository;
 
-    // 구직자 - 메인페이지 인기 공고 8개
-    public List<JobPostingResponse.MainDTO.PopularDTO> getPopular(Integer userId) {
+    public JobPostingResponse.MainDTO index(Integer userId){
+        // 구직자 - 메인페이지 인기 공고 8개
         // 1. 공고 + 기술스택을 (LEFT JOIN)으로 가져온 결과 (중복 포함된 row들)
         List<Object[]> results = jobPostingRepository.findTop8PopularJoinTechStacks();
 
@@ -109,13 +109,6 @@ public class JobPostingService {
                     isBookmarked
             ));
         }
-
-        return popularList;
-    }
-
-    // 구직자 - 메인페이지 최신공고 3개
-    public List<JobPostingResponse.MainDTO.RecentDTO> getRecent(Integer userId) {
-
         // 1. 등록일 기준으로 최신 공고 3개 조회
         List<JobPosting> recent = jobPostingRepository.findTop3Recent();
 
@@ -123,7 +116,7 @@ public class JobPostingService {
         AtomicInteger index = new AtomicInteger(0);
 
         // 3. 각 JobPosting을 MainRecentJobPostingDTO로 변환하여 리스트로 반환
-        return recent.stream()
+        List<JobPostingResponse.MainDTO.RecentDTO> recentList =  recent.stream()
                 .map(jp -> {
                     int i = index.getAndIncrement();   // 현재 공고의 순번
 
@@ -154,6 +147,9 @@ public class JobPostingService {
                     return new JobPostingResponse.MainDTO.RecentDTO(jp, companyInfo, imageString, i == 0, isBookmarked);
                 })
                 .toList();
+
+        JobPostingResponse.MainDTO respDTO = new JobPostingResponse.MainDTO(recentList, popularList);
+        return respDTO;
     }
 
     // 채용공고 저장
