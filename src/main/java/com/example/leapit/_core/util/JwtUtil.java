@@ -38,4 +38,10 @@ public class JwtUtil {
                 .username(username)
                 .build();
     }
+
+    // userId만 꺼내는 간단한 메서드 (컨트롤러용)
+    public static Integer getUserId(String jwt) {
+        DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC512("metacoding")).build().verify(jwt);
+        return decodedJWT.getClaim("id").asInt();
+    }
 }

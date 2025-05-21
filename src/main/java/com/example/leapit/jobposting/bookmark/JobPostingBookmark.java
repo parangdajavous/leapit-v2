@@ -1,6 +1,5 @@
 package com.example.leapit.jobposting.bookmark;
 
-import com.example.leapit.application.Application;
 import com.example.leapit.jobposting.JobPosting;
 import com.example.leapit.user.User;
 import jakarta.persistence.*;

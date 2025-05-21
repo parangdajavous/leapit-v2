@@ -1,5 +1,4 @@
 package com.example.leapit.jobposting.bookmark;
-import com.example.leapit.resume.Resume;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -23,14 +22,14 @@ public class JobPostingBookmarkRepository {
     //  개인 마이페이지 공고 스크랩 목록 조회
     public List<JobPostingBookmarkResponse.ItemDTO> findItemsByuserId(Integer userId) {
         String jpql = """
-        SELECT jp.id, ci.companyName, jp.title, jp.deadline
-        FROM JobPostingBookmark jb
-        JOIN jb.jobPosting jp
-        JOIN jp.user u
-        JOIN CompanyInfo ci ON ci.user = u
-        WHERE jb.user.id = :userId
-        ORDER BY jp.deadline DESC
-    """;
+                    SELECT jp.id, ci.companyName, jp.title, jp.deadline
+                    FROM JobPostingBookmark jb
+                    JOIN jb.jobPosting jp
+                    JOIN jp.user u
+                    JOIN CompanyInfo ci ON ci.user = u
+                    WHERE jb.user.id = :userId
+                    ORDER BY jp.deadline DESC
+                """;
 
         List<Object[]> resultList = em.createQuery(jpql, Object[].class)
                 .setParameter("userId", userId)
@@ -52,6 +51,7 @@ public class JobPostingBookmarkRepository {
         return dtos;
     }
 
+
     public Optional<JobPostingBookmark> findById(Integer id) {
         return Optional.ofNullable(em.find(JobPostingBookmark.class, id));
     }
@@ -59,4 +59,20 @@ public class JobPostingBookmarkRepository {
     public void delete(JobPostingBookmark bookmark) {
         em.remove(bookmark);
     }
+
+    public Optional<JobPostingBookmark> findByUserIdAndJobPostingId(Integer userId, Integer jobPostingId) {
+        try {
+            JobPostingBookmark bookmark = em.createQuery("""
+                                SELECT ab FROM JobPostingBookmark ab
+                                WHERE ab.user.id = :userId AND ab.jobPosting.id = :jobPostingId
+                            """, JobPostingBookmark.class)
+                    .setParameter("userId", userId)
+                    .setParameter("jobPostingId", jobPostingId)
+                    .getSingleResult();
+            return Optional.of(bookmark);
+        } catch (Exception e) {
+            return Optional.ofNullable(null);
+        }
+    }
+
 }
