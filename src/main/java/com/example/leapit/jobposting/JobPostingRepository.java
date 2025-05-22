@@ -66,7 +66,7 @@ public class JobPostingRepository {
                     FROM JobPosting jpt
                     JOIN jpt.user u
                     WHERE u.id = :companyUserId
-                    ORDER BY jpt.createdAt DESC
+                    ORDER BY jpt.id
                 """;
 
         return em.createQuery(jpql, JobPostingResponse.ListDTO.class)
@@ -85,7 +85,7 @@ public class JobPostingRepository {
                     JOIN jpt.user u
                     WHERE u.id = :companyUserId
                       AND jpt.deadline >= CURRENT_DATE
-                    ORDER BY jpt.createdAt DESC
+                    ORDER BY jpt.id
                 """;
 
         return em.createQuery(jpql, JobPostingResponse.ListDTO.class)
@@ -104,7 +104,7 @@ public class JobPostingRepository {
                     JOIN jpt.user u
                     WHERE u.id = :companyUserId
                       AND jpt.deadline < CURRENT_DATE
-                    ORDER BY jpt.createdAt DESC
+                    ORDER BY jpt.id
                 """;
 
         return em.createQuery(jpql, JobPostingResponse.ListDTO.class)

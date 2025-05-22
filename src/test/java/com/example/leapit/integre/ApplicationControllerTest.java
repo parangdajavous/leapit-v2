@@ -20,6 +20,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.hamcrest.Matchers.nullValue;
+
 @Transactional
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 public class ApplicationControllerTest extends MyRestDoc {
@@ -43,6 +45,7 @@ public class ApplicationControllerTest extends MyRestDoc {
         // 테스트 후 정리할 코드
     }
 
+    // 특정 채용공고에 대한 이력서 지원하기 화면
     @Test
     public void get_apply_form_test() throws Exception {
         // given
@@ -60,7 +63,6 @@ public class ApplicationControllerTest extends MyRestDoc {
         System.out.println(responseBody);
 
         // then
-        actions.andExpect(MockMvcResultMatchers.status().isOk());
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("성공"));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.resumes[0].resumeId").value(1));
@@ -88,7 +90,7 @@ public class ApplicationControllerTest extends MyRestDoc {
         actions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
-
+    // 채용공고에 이력서를 지원
     @Test
     public void save_test() throws Exception {
         // given
@@ -155,6 +157,7 @@ public class ApplicationControllerTest extends MyRestDoc {
         actions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
+    // 기업 지원서 상세보기
     @Test
     public void get_detail_test() throws Exception{
         // given
@@ -242,6 +245,136 @@ public class ApplicationControllerTest extends MyRestDoc {
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.resumeDTO.birthDate").value(1999));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.resumeDTO.contactNumber").value("010-2345-6789"));
 
+        actions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
+    // 개인 마에피이지 지원 현황 관리
+    @Test
+    public void get_my_application_test() throws Exception{
+        // given
+        Integer userId = 1;
+
+        String requestBody = om.writeValueAsString(userId);
+//        System.out.println("requestBody: " + requestBody);
+
+        // when
+        ResultActions actions = mvc.perform(
+                MockMvcRequestBuilders
+                        .get("/s/api/personal/mypage/application")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Bearer " + personalAccessToken)
+        );
+
+        // eye
+        String responseBody = actions.andReturn().getResponse().getContentAsString();
+         System.out.println(responseBody);
+
+        // then
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("성공"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.status.total").value(3));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.status.passed").value(1));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.status.failed").value(0));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.itemDTOs[0].companyName").value("랩핏테크"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.itemDTOs[0].jobTitle").value("프론트엔드 개발자 모집"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.itemDTOs[0].appliedDate").value("2025-04-19"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.itemDTOs[0].resumeId").value(2));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.itemDTOs[0].jobPostingId").value(2));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.itemDTOs[0].result").value("합격"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.itemDTOs[1].result").value("미정"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.itemDTOs[2].result").value("미열람"));
+        actions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
+    // 기업 지원자 현황 관리
+    @Test
+    public void get_applicant_test() throws Exception{
+        // given
+        Integer userId = 7;
+
+        String requestBody = om.writeValueAsString(userId);
+//        System.out.println("requestBody: " + requestBody);
+
+        // when
+        ResultActions actions = mvc.perform(
+                MockMvcRequestBuilders
+                        .get("/s/api/company/applicant")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Bearer " + companyAccessToken)
+        );
+
+        // eye
+        String responseBody = actions.andReturn().getResponse().getContentAsString();
+        System.out.println(responseBody);
+
+        // then
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("성공"));
+
+        // applicants 확인
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.applicants[0].applicationId").value(4));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.applicants[0].resumeId").value(3));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.applicants[0].applicantName").value("코스"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.applicants[0].jobTitle").value("시니어 백엔드 개발자 채용"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.applicants[0].appliedDate").value("2025-04-20"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.applicants[0].bookmarkStatus").value("NOT_BOOKMARKED"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.applicants[0].evaluationStatus").value("불합격"));
+
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.applicants[1].applicationId").value(3));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.applicants[1].resumeId").value(2));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.applicants[1].applicantName").value("쌀"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.applicants[1].jobTitle").value("시니어 백엔드 개발자 채용"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.applicants[1].appliedDate").value("2025-04-19"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.applicants[1].bookmarkStatus").value("BOOKMARKED"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.applicants[1].evaluationStatus").value("열람"));
+
+        // allPositions 확인
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.allPositions[0].jobPostingId").value(1));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.allPositions[0].title").value("시니어 백엔드 개발자 채용"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.allPositions[1].jobPostingId").value(7));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.allPositions[1].title").value("프론트엔드 웹 개발자 채용"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.allPositions[2].jobPostingId").value(8));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.allPositions[2].title").value("모바일 프론트엔드 앱 개발자"));
+
+        // openPositions 확인
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.openPositions[0].jobPostingId").value(1));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.openPositions[0].title").value("시니어 백엔드 개발자 채용"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.openPositions[1].jobPostingId").value(7));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.openPositions[1].title").value("프론트엔드 웹 개발자 채용"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.openPositions[2].jobPostingId").value(8));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.openPositions[2].title").value("모바일 프론트엔드 앱 개발자"));
+
+        // closedPostions 확인
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.closedPostions").isEmpty());
+
+        actions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
+    // 기업 지원 스크랩 application_bookmark
+    @Test // TODO 수정 예정(respDTO)
+    public void update_bookmark_test() throws Exception{
+        // given
+        Integer applicationId = 4;
+
+        String requestBody = om.writeValueAsString(applicationId);
+        // System.out.println(requestBody);
+
+        // when
+        ResultActions actions = mvc.perform(
+                MockMvcRequestBuilders
+                        .put("/s/api/company/application/{id}/bookmark", applicationId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Bearer " + companyAccessToken)
+        );
+
+        // eye
+        String responseBody = actions.andReturn().getResponse().getContentAsString();
+         System.out.println(responseBody);
+
+        // then
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("성공"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body").value(nullValue()));
         actions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 }

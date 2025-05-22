@@ -174,6 +174,28 @@ include::{snippets}/{jobposting}/get_personal_list_test/http-request.adoc[]
 ===== Response Example
 include::{snippets}/{jobposting}/get_personal_list_test/http-response.adoc[]
 
+=== 공고 북마크(jobpostingBookmark)
+=== 1. 개인 마이페이지 공고 스크랩 현황 관리
+===== Request Example
+include::{snippets}/{jobpostingBookmark}/get_my_bookmark_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{jobpostingBookmark}/get_my_bookmark_test/http-response.adoc[]
+
+=== 2. 개인 스크랩 등록
+===== Request Example
+include::{snippets}/{jobpostingBookmark}/save_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{jobpostingBookmark}/save_test/http-response.adoc[]
+
+=== 3. 개인 스크랩 삭제
+===== Request Example
+include::{snippets}/{jobpostingBookmark}/delete_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{jobpostingBookmark}/delete_test/http-response.adoc[]
+
 == 지원
 === 1. 지원하기 화면 - 구직자
 ===== Request Example
@@ -189,19 +211,40 @@ include::{snippets}/{application}/save_test/http-request.adoc[]
 ===== Response Example
 include::{snippets}/{application}/save_test/http-response.adoc[]
 
-=== 3. 지원자 상세보기 - 기업
+=== 3. 지원자 합격/불합격 처리 - 기업
+===== Request Example
+include::{snippets}/{application}/update_pass_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{application}/update_pass_test/http-response.adoc[]
+
+=== 4. 지원자 상세보기 - 기업
 ===== Request Example
 include::{snippets}/{application}/get_detail_test/http-request.adoc[]
 
 ===== Response Example
 include::{snippets}/{application}/get_detail_test/http-response.adoc[]
 
-=== 4. 지원자 합격/불합격 처리 - 기업
+=== 5. 지원자 상세보기 - 기업
 ===== Request Example
-include::{snippets}/{application}/update_pass_test/http-request.adoc[]
+include::{snippets}/{application}/get_my_application_test/http-request.adoc[]
 
 ===== Response Example
-include::{snippets}/{application}/update_pass_test/http-response.adoc[]
+include::{snippets}/{application}/get_my_application_test/http-response.adoc[]
+
+=== 6. 기업 지원자 현황 관리 - 기업
+===== Request Example
+include::{snippets}/{application}/get_applicant_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{application}/get_applicant_test/http-response.adoc[]
+
+=== 7. 기업 지원 스크랩 application_bookmark - 기업
+===== Request Example
+include::{snippets}/{application}/update_bookmark_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{application}/update_bookmark_test/http-response.adoc[]
 
 == 기업정보
 === 1. 기업정보 등록
@@ -304,25 +347,3 @@ include::{snippets}/{like}/delete_test/http-request.adoc[]
 
 ===== Response Example
 include::{snippets}/{like}/delete_test/http-response.adoc[]
-
-=== 공고 북마크(jobpostingBookmark)
-=== 1. 개인 마이페이지 공고 스크랩 현황 관리
-===== Request Example
-include::{snippets}/{jobpostingBookmark}/get_my_bookmark_test/http-request.adoc[]
-
-===== Response Example
-include::{snippets}/{jobpostingBookmark}/get_my_bookmark_test/http-response.adoc[]
-
-=== 2. 개인 스크랩 등록
-===== Request Example
-include::{snippets}/{jobpostingBookmark}/save_test/http-request.adoc[]
-
-===== Response Example
-include::{snippets}/{jobpostingBookmark}/save_test/http-response.adoc[]
-
-=== 3. 개인 스크랩 삭제
-===== Request Example
-include::{snippets}/{jobpostingBookmark}/delete_test/http-request.adoc[]
-
-===== Response Example
-include::{snippets}/{jobpostingBookmark}/delete_test/http-response.adoc[]
