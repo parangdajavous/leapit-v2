@@ -132,7 +132,7 @@ include::{snippets}/{application}/update_pass_test/http-request.adoc[]
 ===== Response Example
 include::{snippets}/{application}/update_pass_test/http-response.adoc[]
 
-save_test
+
 
 == 기업정보
 === 1. 기업정보 등록

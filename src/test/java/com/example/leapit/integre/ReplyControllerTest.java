@@ -1,6 +1,7 @@
 package com.example.leapit.integre;
 
 
+import com.example.leapit.MyRestDoc;
 import com.example.leapit._core.util.JwtUtil;
 import com.example.leapit.board.reply.ReplyRequest;
 import com.example.leapit.common.enums.Role;
@@ -15,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +26,7 @@ import static org.hamcrest.Matchers.nullValue;
 @Transactional
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-public class ReplyControllerTest {
+public class ReplyControllerTest extends MyRestDoc {
 
     @Autowired
     private ObjectMapper om;
@@ -79,6 +81,7 @@ public class ReplyControllerTest {
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.boardId").value(1));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.createdAt",
                 matchesPattern("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}\\+\\d{2}:\\d{2}")));
+        actions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
     @Test
@@ -101,5 +104,6 @@ public class ReplyControllerTest {
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("성공"));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body").value(nullValue()));
+        actions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 }
