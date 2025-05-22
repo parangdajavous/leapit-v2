@@ -67,7 +67,7 @@ public class ResumeController {
     @GetMapping("/s/api/personal/resume/{id}/detail")
     public ResponseEntity<?> detail(@PathVariable("id") int id) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        ResumeResponse.DTO respDTO = resumeService.getDetail(id, sessionUser, null);
+        ResumeResponse.DetailDTO respDTO = resumeService.getDetail(id, sessionUser, null);
         return Resp.ok(respDTO);
     }
 }

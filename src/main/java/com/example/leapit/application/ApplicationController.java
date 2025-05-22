@@ -66,4 +66,12 @@ public class ApplicationController {
         applicationService.updateBookmark(applicationId, sessionUser.getId());
         return Resp.ok(null);
     }
+
+    // 기업 지원서 상세보기
+    @GetMapping("/s/api/company/applicant/{id}")
+    public ResponseEntity<?> getDetail(@PathVariable("id") Integer id) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        ApplicationResponse.DetailDTO respDTO = applicationService.getDetail(id, sessionUser);
+        return Resp.ok(respDTO);
+    }
 }

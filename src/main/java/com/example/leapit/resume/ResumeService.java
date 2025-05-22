@@ -228,7 +228,7 @@ public class ResumeService {
         return new ResumeResponse.DTO(resumePS);
     }
 
-    public ResumeResponse.DTO getDetail(Integer resumeId, User sessionUser,  @Nullable Integer applicationId) {
+    public ResumeResponse.DetailDTO getDetail(Integer resumeId, User sessionUser,  @Nullable Integer applicationId) {
         // 1. 이력서 존재 확인
         Resume resumePS = resumeRepository.findById(resumeId)
                 .orElseThrow(() -> new ExceptionApi404("이력서를 찾을 수 없습니다"));
@@ -255,6 +255,6 @@ public class ResumeService {
         }
 
         // 3. 이력서 리턴
-        return new ResumeResponse.DTO(resumePS);
+        return new ResumeResponse.DetailDTO(resumePS);
     }
 }

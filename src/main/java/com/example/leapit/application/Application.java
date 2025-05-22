@@ -32,7 +32,7 @@ public class Application {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private BookmarkStatus bookmark;
+    private BookmarkStatus bookmark; // BOOKMARKED / NOT_BOOKMARKED
 
     private LocalDate appliedDate;
 
@@ -43,14 +43,6 @@ public class Application {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ViewStatus viewStatus; // VIEWED / UNVIEWED
-
-    public void updatePassStatus(PassStatus passStatus) {
-        this.passStatus = passStatus;
-    }
-
-    public void updateViewStatus(ViewStatus viewStatus) {
-        this.viewStatus = viewStatus;
-    }
 
     @Builder
     public Application(Integer id, Resume resume, JobPosting jobPosting, BookmarkStatus bookmark, LocalDate appliedDate, PassStatus passStatus, ViewStatus viewStatus) {
@@ -63,6 +55,13 @@ public class Application {
         this.viewStatus = viewStatus;
     }
 
+    public void updatePassStatus(PassStatus passStatus) {
+        this.passStatus = passStatus;
+    }
+
+    public void updateViewStatus(ViewStatus viewStatus) {
+        this.viewStatus = viewStatus;
+    }
 
     public void updateBookmark(String bookmark) {
         this.bookmark = bookmark == "BOOKMARKED"? BookmarkStatus.NOT_BOOKMARKED : BookmarkStatus.BOOKMARKED;

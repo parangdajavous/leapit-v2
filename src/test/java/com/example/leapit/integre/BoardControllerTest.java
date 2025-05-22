@@ -3,6 +3,7 @@ package com.example.leapit.integre;
 import com.example.leapit.MyRestDoc;
 import com.example.leapit._core.util.JwtUtil;
 import com.example.leapit.board.BoardRequest;
+import com.example.leapit.common.enums.Role;
 import com.example.leapit.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
@@ -33,7 +34,7 @@ public class BoardControllerTest extends MyRestDoc {
     @BeforeEach
     public void setUp(){
         // 테스트 시작 전에 실행할 코드
-        User ssar = User.builder().id(1).username("ssar").build();
+        User ssar = User.builder().id(1).username("ssar").role(Role.valueOf("PERSONAL")).build();
         accessToken = JwtUtil.create(ssar);
     }
 

@@ -353,4 +353,21 @@ public class ResumeResponse {
             this.resumeDTO = resumeDTO;
         }
     }
+
+    @Data
+    public static class DetailDTO {
+        private String name;
+        private String email;
+        private Integer birthDate; // 생년만 (e.g. 2000)
+        private String contactNumber;
+        private DTO resume;
+
+        public DetailDTO(Resume resume) {
+            this.name = resume.getUser().getName();
+            this.email = resume.getUser().getEmail();
+            this.birthDate = resume.getUser().getBirthDate().getYear();
+            this.contactNumber = resume.getUser().getContactNumber();
+            this.resume = new DTO(resume);
+        }
+    }
 }

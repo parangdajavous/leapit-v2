@@ -13,6 +13,8 @@ import com.example.leapit.jobposting.JobPostingRepository;
 import com.example.leapit.jobposting.JobPostingResponse;
 import com.example.leapit.resume.Resume;
 import com.example.leapit.resume.ResumeRepository;
+import com.example.leapit.resume.ResumeResponse;
+import com.example.leapit.resume.ResumeService;
 import com.example.leapit.user.User;
 import com.example.leapit.user.UserRepository;
 import jakarta.transaction.Transactional;
@@ -30,6 +32,8 @@ public class ApplicationService {
     private final ResumeRepository resumeRepository;
     private final UserRepository userRepository;
     private final CompanyInfoRepository companyInfoRepository;
+
+    private final ResumeService resumeService;
 
     // 기업 지원자 현황 관리
     public ApplicationResponse.ApplicantPageDTO getApplicant(Integer companyUserId, ApplicationRequest.ApplicantListDTO reqDTO) {
@@ -142,5 +146,20 @@ public class ApplicationService {
         // 5. 저장 및 응답 DTO 리턴
         Application applicationPS = applicationRepository.save(application);
         return new ApplicationResponse.SaveDTO(applicationPS);
+    }
+
+    @Transactional
+    public ApplicationResponse.DetailDTO getDetail(Integer id, User sessionUser) {
+        // 1. 지원내역 존재 여부 확인
+        Application applicationPS = applicationRepository.findById(id)
+                .orElseThrow(() -> new ExceptionApi404("해당 지원서는 존재하지 않습니다."));
+        // 2. 지원내역 미열람 상태일 경우 열람으로 update
+        if(applicationPS.getViewStatus().equals(ViewStatus.UNVIEWED)) {
+            applicationPS.updateViewStatus(ViewStatus.VIEWED);
+        }
+        // 3. 이력서 조회
+        ResumeResponse.DetailDTO resumeDTO = resumeService.getDetail(applicationPS.getResume().getId(), sessionUser, applicationPS.getId());
+        // 4. 지원 내역 return
+        return new ApplicationResponse.DetailDTO(applicationPS, resumeDTO);
     }
 }

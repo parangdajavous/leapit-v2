@@ -4,6 +4,7 @@ import com.example.leapit.MyRestDoc;
 import com.example.leapit._core.util.JwtUtil;
 import com.example.leapit.common.enums.CareerLevel;
 import com.example.leapit.common.enums.EducationLevel;
+import com.example.leapit.common.enums.Role;
 import com.example.leapit.jobposting.JobPostingRequest;
 import com.example.leapit.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -41,12 +42,14 @@ public class JobPostingControllerTest extends MyRestDoc {
         User ssar = User.builder()
                 .id(1)
                 .username("ssar")
+                .role(Role.valueOf("PERSONAL"))
                 .build();
         personalAccessToken = JwtUtil.create(ssar);
 
         User company01 = User.builder()
                 .id(6)
                 .username("company01")
+                .role(Role.valueOf("COMPANY"))
                 .build();
         companyAccessToken = JwtUtil.create(company01);
     }
