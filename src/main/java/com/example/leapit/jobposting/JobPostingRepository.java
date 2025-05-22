@@ -144,7 +144,7 @@ public class JobPostingRepository {
 
         // 경력 필터링
         if (career != null) {
-            jpql.append(" AND :careerValue >= jp.minCareerLevel AND :careerValue <= jp.maxCareerLevel");
+            jpql.append(" AND jp.minCareerLevel <= :career AND jp.maxCareerLevel >= :career");
         }
 
         // 직무(포지션) 필터링
@@ -173,7 +173,7 @@ public class JobPostingRepository {
 
         if (regionId != null) query.setParameter("regionId", regionId);
         if (subRegionId != null) query.setParameter("subRegionId", subRegionId);
-        if (career != null) query.setParameter("careerValue", career.value);
+        if (career != null) query.setParameter("career", career);
         if (techStackCode != null) query.setParameter("techStackCode", techStackCode);
         if (positionLabel != null) query.setParameter("positionLabel", positionLabel);
 
