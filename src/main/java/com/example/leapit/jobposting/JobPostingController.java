@@ -115,9 +115,7 @@ public class JobPostingController {
                 // userId는 null로 둬도 됨 → 북마크 없이 동작
             }
         }
-
         JobPostingResponse.MainDTO respDTO = jobPostingService.index(userId);
-
         return Resp.ok(respDTO);
     }
 }

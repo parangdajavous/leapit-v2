@@ -203,7 +203,7 @@ include::{snippets}/{application}/get_detail_test/http-request.adoc[]
 ===== Response Example
 include::{snippets}/{application}/get_detail_test/http-response.adoc[]
 
-=== 5. 지원자 상세보기 - 기업
+=== 5. 지원자 상세보기 - 구직자
 ===== Request Example
 include::{snippets}/{application}/get_my_application_test/http-request.adoc[]
 
@@ -268,7 +268,7 @@ include::{snippets}/{user}/personal_join_test/http-request.adoc[]
 ===== Response Example
 include::{snippets}/{user}/personal_join_test/http-response.adoc[]
 
-=== 2. 회원가입
+=== 2. 기업 회원가입
 ===== Request Example
 include::{snippets}/{user}/company_join_test/http-request.adoc[]
 

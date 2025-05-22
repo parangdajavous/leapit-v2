@@ -71,7 +71,7 @@ public class JobPostingBookmarkControllerTest extends MyRestDoc {
 
         // when
         ResultActions actions = mvc.perform(
-                MockMvcRequestBuilders.get("/s/personal/mypage/bookmark")
+                MockMvcRequestBuilders.get("/s/api/personal/mypage/bookmark")
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", "Bearer " + personalAccessToken)
         );

@@ -157,7 +157,7 @@ public class JobPostingRepository {
             jpql.append(" AND EXISTS (" +
                     "SELECT 1 FROM JobPostingTechStack jpts2 " +
                     "WHERE jpts2.jobPosting.id = jp.id " +
-                    "AND jpts2.techStack.code = :techStackCode" +
+                    "AND jpts2.techStack = :techStackCode" +
                     ")");
         }
 
