@@ -235,3 +235,25 @@ include::{snippets}/{like}/delete_test/http-request.adoc[]
 
 ===== Response Example
 include::{snippets}/{like}/delete_test/http-response.adoc[]
+
+=== 공고 북마크(jobpostingBookmark)
+=== 1. 개인 마이페이지 공고 스크랩 현황 관리
+===== Request Example
+include::{snippets}/{jobpostingBookmark}/get_my_bookmark_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{jobpostingBookmark}/get_my_bookmark_test/http-response.adoc[]
+
+=== 2. 개인 스크랩 등록
+===== Request Example
+include::{snippets}/{jobpostingBookmark}/save_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{jobpostingBookmark}/save_test/http-response.adoc[]
+
+=== 3. 개인 스크랩 삭제
+===== Request Example
+include::{snippets}/{jobpostingBookmark}/delete_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{jobpostingBookmark}/delete_test/http-response.adoc[]
