@@ -80,6 +80,7 @@ public class UserService {
 
         if (reqDTO.getContactNumber()==null||reqDTO.getContactNumber().isBlank()) {reqDTO.setContactNumber(userPS.getContactNumber());}
         if (reqDTO.getNewPassword()==null||reqDTO.getNewPassword().isBlank()) {reqDTO.setNewPassword(userPS.getPassword());}
+        if (reqDTO.getEmail()==null||reqDTO.getEmail().isBlank()) {reqDTO.setEmail(userPS.getEmail());}
 
         userPS.companyUpdate(reqDTO);
         return new UserResponse.UpdateDTO(userPS);

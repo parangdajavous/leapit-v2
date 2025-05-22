@@ -61,6 +61,7 @@ public class User {
     }
 
     public void companyUpdate(UserRequest.CompanyUpdateDTO reqDTO) {
+        this.email = reqDTO.getEmail();
         this.password = reqDTO.getNewPassword();
         this.contactNumber = reqDTO.getContactNumber();
     }
