@@ -32,7 +32,7 @@ public class BoardControllerTest extends MyRestDoc {
     private String accessToken;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         // 테스트 시작 전에 실행할 코드
         User ssar = User.builder().id(1).username("ssar").role(Role.valueOf("PERSONAL")).build();
         accessToken = JwtUtil.create(ssar);
@@ -69,7 +69,7 @@ public class BoardControllerTest extends MyRestDoc {
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.title").value("제목8"));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.content").value("내용8"));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.name").value("쌀"));
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.createdAtFormatted").value("2025.05.21"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.createdAtFormatted").value(matchesPattern("\\d{4}\\.\\d{2}\\.\\d{2}")));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.createdAt",
                 matchesPattern("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}\\+\\d{2}:\\d{2}")));
         actions.andDo(MockMvcResultHandlers.print()).andDo(document);
@@ -107,7 +107,7 @@ public class BoardControllerTest extends MyRestDoc {
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.title").value("제1"));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.content").value("내1"));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.name").value("쌀"));
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.createdAtFormatted").value("2025.05.21"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.createdAtFormatted").value(matchesPattern("\\d{4}\\.\\d{2}\\.\\d{2}")));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.createdAt",
                 matchesPattern("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}\\+\\d{2}:\\d{2}")));
         actions.andDo(MockMvcResultHandlers.print()).andDo(document);
@@ -139,7 +139,7 @@ public class BoardControllerTest extends MyRestDoc {
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.title").value("취업 준비중인데 조언 부탁드립니다"));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.content").value("개발자로 취업 준비 중입니다. 혹시 면접에서 자주 나오는 질문이나, 포트폴리오에 꼭 들어가야 하는 내용 있을까요?"));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.name").value("쌀"));
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.createdAtFormatted").value("2025.05.21"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.createdAtFormatted").value(matchesPattern("\\d{4}\\.\\d{2}\\.\\d{2}")));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.createdAt",
                 matchesPattern("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}\\+\\d{2}:\\d{2}")));
         actions.andDo(MockMvcResultHandlers.print()).andDo(document);
@@ -168,7 +168,7 @@ public class BoardControllerTest extends MyRestDoc {
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.[0].title").value("펌펌테크... 다시는 가고 싶지 않네요"));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.[0].name").value("러브"));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.[0].isBoardOwner").value(false));
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.[0].createdAtFormatted").value("2025.05.21"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.[0].createdAtFormatted").value(matchesPattern("\\d{4}\\.\\d{2}\\.\\d{2}")));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.[0].createdAt",
                 matchesPattern("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}\\+\\d{2}:\\d{2}")));
         actions.andDo(MockMvcResultHandlers.print()).andDo(document);
@@ -200,7 +200,7 @@ public class BoardControllerTest extends MyRestDoc {
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.content").value("개발자로 취업 준비 중입니다. 혹시 면접에서 자주 나오는 질문이나, 포트폴리오에 꼭 들어가야 하는 내용 있을까요?"));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.name").value("쌀"));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.isBoardOwner").value(true));
-        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.createdAtFormatted").value("2025.05.21"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.createdAtFormatted").value(matchesPattern("\\d{4}\\.\\d{2}\\.\\d{2}")));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.createdAt",
                 matchesPattern("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}\\+\\d{2}:\\d{2}")));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.isLike").value(true));

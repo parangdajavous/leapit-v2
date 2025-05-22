@@ -33,21 +33,21 @@ public class JobPostingController {
 
     // 기업 채용공고 상세보기 -> 통합 테스트 코드 작성 완료
     @GetMapping("/s/api/company/jobposting/{id}/detail")
-    public ResponseEntity<?> companyGetDetailForm(@PathVariable Integer id) {
+    public ResponseEntity<?> companyGetDetailForm(@PathVariable("id") Integer id) {
         JobPostingResponse.DTO respDTO = jobPostingService.getDetailCompany(id);
         return Resp.ok(respDTO);
     }
 
     // 구직자 채용공고 상세보기 -> 통합 테스트 코드 작성 완료
     @GetMapping("/s/api/personal/jobposting/{id}/detail")
-    public ResponseEntity<?> personalGetDetailForm(@PathVariable Integer id) {
+    public ResponseEntity<?> personalGetDetailForm(@PathVariable("id") Integer id) {
         JobPostingResponse.DetailPersonalDTO respDTO = jobPostingService.getDetailPersonal(id);
         return Resp.ok(respDTO);
     }
 
     // 채용공고 삭제 -> 통합 테스트 코드 작성 완료
     @DeleteMapping("/s/api/company/jobposting/{id}")
-    public ResponseEntity<?> delete(@PathVariable Integer id) {
+    public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         jobPostingService.delete(id, sessionUser.getId());
         return Resp.ok(null);
@@ -68,7 +68,7 @@ public class JobPostingController {
 
     // 채용공고 수정 화면 -> 통합 테스트 코드 작성 완료
     @GetMapping("/s/api/company/jobposting/{id}/edit")
-    public ResponseEntity<?> getUpdateForm(@PathVariable Integer id) {
+    public ResponseEntity<?> getUpdateForm(@PathVariable("id") Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         JobPostingResponse.UpdateDTO respDTO = jobPostingService.getUpdateForm(id, sessionUser.getId());
         return Resp.ok(respDTO);
@@ -76,7 +76,7 @@ public class JobPostingController {
 
     // 채용공고 수정 -> 통합 테스트 코드 작성 완료
     @PutMapping("/s/api/company/jobposting/{id}")
-    public ResponseEntity<?> update(@PathVariable Integer id, @Valid @RequestBody JobPostingRequest.UpdateDTO reqDTO, Errors errors) {
+    public ResponseEntity<?> update(@PathVariable("id") Integer id, @Valid @RequestBody JobPostingRequest.UpdateDTO reqDTO, Errors errors) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         JobPostingResponse.DTO respDTO = jobPostingService.update(id, sessionUser.getId(), reqDTO);
         return Resp.ok(respDTO);

@@ -24,7 +24,6 @@ public class CompanyInfoService {
     private final CompanyInfoRepository companyInfoRepository;
     private final JobPostingRepository jobPostingRepository;
 
-    // 기업정보 등록
     @Transactional
     public CompanyInfoResponse.DTO save(CompanyInfoRequest.SaveDTO reqDTO, User sessionUser) {
 
@@ -75,7 +74,6 @@ public class CompanyInfoService {
         return new CompanyInfoResponse.DTO(companyInfoPS);
     }
 
-    // 기업정보 수정
     @Transactional
     public CompanyInfoResponse.DTO update(Integer id, Integer sessionUserId, CompanyInfoRequest.UpdateDTO reqDTO) {
 
@@ -143,7 +141,6 @@ public class CompanyInfoService {
         return new CompanyInfoResponse.DTO(companyInfoPS);
     }
 
-    // 기업정보 보기
     public CompanyInfoResponse.DTO getOne(Integer id, Integer sessionUserId) {
         CompanyInfo companyInfoPS = companyInfoRepository.findById(id)
                 .orElseThrow(() -> new ExceptionApi404("기업정보를 찾을 수 없습니다."));
@@ -154,7 +151,6 @@ public class CompanyInfoService {
         return new CompanyInfoResponse.DTO(companyInfoPS);
     }
 
-    // 기업정보 상세보기
     public CompanyInfoResponse.DetailDTO getDetail(Integer id, Integer userId) {
         CompanyInfo companyInfoPS = companyInfoRepository.findById(id)
                 .orElseThrow(() -> new ExceptionApi404("기업정보를 찾을 수 없습니다"));
@@ -188,6 +184,7 @@ public class CompanyInfoService {
         // 5. 해당 ID에 맞는 JobPosting 리스트만 추출
         List<JobPosting> jobPostings = top2PostingIds.stream()
                 .map(postingMap::get)
+                .filter(jp -> jp.getDeadline() == null || !jp.getDeadline().isBefore(LocalDate.now())) // 필터링 적용
                 .toList();
 
 
@@ -205,7 +202,6 @@ public class CompanyInfoService {
         return new CompanyInfoResponse.DetailDTO(companyInfoPS, userId, jobPostingCount.intValue(), jobPostings, allTechStacks);
     }
 
-    // 기업정보 조회
     public CompanyInfo findById(Integer id) {
         return companyInfoRepository.findById(id)
                 .orElseThrow(() -> new ExceptionApi404("기업정보를 찾을 수 없습니다."));

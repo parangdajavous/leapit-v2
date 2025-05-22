@@ -1,6 +1,5 @@
 package com.example.leapit.board;
 
-import com.example.leapit._core.error.ex.ExceptionApi404;
 import com.example.leapit.board.like.LikeRepository;
 import com.example.leapit.board.reply.Reply;
 import com.example.leapit.board.reply.ReplyRepository;
@@ -15,8 +14,9 @@ import org.springframework.context.annotation.Import;
 import java.util.List;
 import java.util.Optional;
 
-@Import({BoardRepository.class, UserRepository.class, ReplyRepository.class, LikeRepository.class})
+
 @DataJpaTest
+@Import({BoardRepository.class, UserRepository.class, ReplyRepository.class, LikeRepository.class})
 public class BoardRepositoryTest {
     @Autowired
     private EntityManager em;
@@ -29,11 +29,12 @@ public class BoardRepositoryTest {
     @Autowired
     private LikeRepository likeRepository;
 
+
     @Test
     public void save_test() {
         // given
         User userPS = userRepository.findById(1)
-                .orElseThrow(() -> new ExceptionApi404("유저를 찾을 수 없습니다"));
+                .orElseThrow();
 
         String title = "제목";
         String content = "내용";

@@ -13,8 +13,9 @@ import org.springframework.context.annotation.Import;
 
 import java.util.Optional;
 
-@Import({LikeRepository.class, BoardRepository.class, UserRepository.class})
+
 @DataJpaTest
+@Import({LikeRepository.class, UserRepository.class, BoardRepository.class})
 public class LikeRepositoryTest {
 
     @Autowired

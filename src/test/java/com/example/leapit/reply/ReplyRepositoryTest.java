@@ -14,8 +14,9 @@ import org.springframework.context.annotation.Import;
 import java.util.List;
 import java.util.Optional;
 
-@Import({ReplyRepository.class, UserRepository.class, BoardRepository.class})
+
 @DataJpaTest
+@Import({ReplyRepository.class, BoardRepository.class, UserRepository.class})
 public class ReplyRepositoryTest {
 
     @Autowired

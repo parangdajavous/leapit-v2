@@ -71,6 +71,7 @@ public class companyInfoRepositoryTest {
         String benefit = "식대지원";
 
         CompanyInfo companyInfo = CompanyInfo.builder()
+                .user(user)
                 .logoImage(logoImage)
                 .companyName(companyName)
                 .establishmentDate(establishmentDate)
