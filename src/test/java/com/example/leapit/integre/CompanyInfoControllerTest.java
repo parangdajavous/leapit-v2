@@ -7,6 +7,7 @@ import com.example.leapit.companyinfo.CompanyInfoRequest;
 import com.example.leapit.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -33,27 +34,32 @@ public class CompanyInfoControllerTest extends MyRestDoc {
     @Autowired
     private MockMvc mvc;
 
+    private String accessToken;
 
-    private String logo = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAEklEQVR42mP8z/C/HwAFAgH+zViQowAAAABJRU5ErkJggg==";
-    private String img = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/5+hHgAHggJ/PcVIMAAAAABJRU5ErkJggg==";
 
+    @BeforeEach
+    public void setUp() {
+        // 테스트 시작 전에 실행할 코드
+        User company01 = User.builder()
+                .id(6)
+                .username("company01")
+                .role(Role.valueOf("COMPANY"))
+                .build();
+        accessToken = JwtUtil.create(company01);
+    }
 
     // 기업정보 등록
     @Test
     public void save_test() throws Exception {
         // given
-        User company04 = User.builder().id(4).username("company04").role(Role.valueOf("COMPANY")).build();
-        String accessToken = JwtUtil.create(company04);
-
-
         CompanyInfoRequest.SaveDTO reqDTO = new CompanyInfoRequest.SaveDTO();
-        reqDTO.setLogoImageFileContent(logo);
+        reqDTO.setLogoImageFileContent("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAEklEQVR42mP8z/C/HwAFAgH+zViQowAAAABJRU5ErkJggg==");
         reqDTO.setCompanyName("Leapit");
         reqDTO.setEstablishmentDate(LocalDate.of(2000, 10, 15));
         reqDTO.setAddress("경기 성남시 분당구 불정로 6 그린팩토리 6-10층");
         reqDTO.setMainService("https://www.naver.com");
         reqDTO.setIntroduction("IT 서비스");
-        reqDTO.setImageFileContent(img);
+        reqDTO.setImageFileContent("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/5+hHgAHggJ/PcVIMAAAAABJRU5ErkJggg==");
         reqDTO.setBenefit("복리후생");
 
 
@@ -99,19 +105,16 @@ public class CompanyInfoControllerTest extends MyRestDoc {
     @Test
     public void update_test() throws Exception {
         // given
-        User company01 = User.builder().id(6).username("company01").role(Role.valueOf("COMPANY")).build();
-        String accessToken = JwtUtil.create(company01);
-
         Integer id = 1;
 
         CompanyInfoRequest.UpdateDTO reqDTO = new CompanyInfoRequest.UpdateDTO();
-        reqDTO.setLogoImageFileContent(logo);
+        reqDTO.setLogoImageFileContent("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAEklEQVR42mP8z/C/HwAFAgH+zViQowAAAABJRU5ErkJggg==");
         reqDTO.setCompanyName("랩핏");
         reqDTO.setEstablishmentDate(LocalDate.of(2000, 10, 15));
         reqDTO.setAddress("경기 성남시 분당구 불정로 6 그린팩토리");
         reqDTO.setMainService("https://www.naver.com");
         reqDTO.setIntroduction("IT 서비스");
-        reqDTO.setImageFileContent(img);
+        reqDTO.setImageFileContent("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/5+hHgAHggJ/PcVIMAAAAABJRU5ErkJggg==");
         reqDTO.setBenefit("복리후생, 식대 지원");
 
         String requestBody = om.writeValueAsString(reqDTO);
@@ -154,11 +157,7 @@ public class CompanyInfoControllerTest extends MyRestDoc {
     @Test
     public void get_one_test() throws Exception {
         // given
-        User company01 = User.builder().id(6).username("company01").role(Role.valueOf("COMPANY")).build();
-        String accessToken = JwtUtil.create(company01);
-
         Integer id = 1;
-
 
         // when
         ResultActions actions = mvc.perform(
@@ -198,11 +197,7 @@ public class CompanyInfoControllerTest extends MyRestDoc {
     @Test
     public void get_detail_company_test() throws Exception {
         // given
-        User company01 = User.builder().id(6).username("company01").role(Role.valueOf("COMPANY")).build();
-        String accessToken = JwtUtil.create(company01);
-
         Integer id = 1;
-
 
         // when
         ResultActions actions = mvc.perform(
