@@ -103,6 +103,37 @@ include::{snippets}/{resume}/get_detail_test/http-request.adoc[]
 ===== Response Example
 include::{snippets}/{resume}/get_detail_test/http-response.adoc[]
 
+== 지원
+=== 1. 지원하기 화면 - 구직자
+===== Request Example
+include::{snippets}/{application}/get_apply_form_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{application}/get_apply_form_test/http-response.adoc[]
+
+=== 2. 지원하기 - 구직자
+===== Request Example
+include::{snippets}/{application}/save_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{application}/save_test/http-response.adoc[]
+
+=== 3. 지원자 상세보기 - 기업
+===== Request Example
+include::{snippets}/{application}/get_detail_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{application}/get_detail_test/http-response.adoc[]
+
+=== 4. 지원자 합격/불합격 처리 - 기업
+===== Request Example
+include::{snippets}/{application}/update_pass_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{application}/update_pass_test/http-response.adoc[]
+
+save_test
+
 == 기업정보
 === 1. 기업정보 등록
 ===== Request Example
@@ -193,10 +224,10 @@ include::{snippets}/{reply}/delete_test/http-response.adoc[]
 == 좋아요
 === 1. 좋아요 등록
 ===== Request Example
-include::{snippets}/{love}/save_test/http-request.adoc[]
+include::{snippets}/{like}/save_test/http-request.adoc[]
 
 ===== Response Example
-include::{snippets}/{love}/save_test/http-response.adoc[]
+include::{snippets}/{like}/save_test/http-response.adoc[]
 
 === 2. 좋아요 취소
 ===== Request Example

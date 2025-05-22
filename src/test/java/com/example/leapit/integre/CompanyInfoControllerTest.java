@@ -2,6 +2,7 @@ package com.example.leapit.integre;
 
 import com.example.leapit.MyRestDoc;
 import com.example.leapit._core.util.JwtUtil;
+import com.example.leapit.common.enums.Role;
 import com.example.leapit.companyinfo.CompanyInfoRequest;
 import com.example.leapit.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -41,7 +42,7 @@ public class CompanyInfoControllerTest extends MyRestDoc {
     @Test
     public void save_test() throws Exception {
         // given
-        User company04 = User.builder().id(4).username("company04").build();
+        User company04 = User.builder().id(4).username("company04").role(Role.valueOf("COMPANY")).build();
         String accessToken = JwtUtil.create(company04);
 
 
@@ -98,7 +99,7 @@ public class CompanyInfoControllerTest extends MyRestDoc {
     @Test
     public void update_test() throws Exception {
         // given
-        User company01 = User.builder().id(6).username("company01").build();
+        User company01 = User.builder().id(6).username("company01").role(Role.valueOf("COMPANY")).build();
         String accessToken = JwtUtil.create(company01);
 
         Integer id = 1;
@@ -153,7 +154,7 @@ public class CompanyInfoControllerTest extends MyRestDoc {
     @Test
     public void get_one_test() throws Exception {
         // given
-        User company01 = User.builder().id(6).username("company01").build();
+        User company01 = User.builder().id(6).username("company01").role(Role.valueOf("COMPANY")).build();
         String accessToken = JwtUtil.create(company01);
 
         Integer id = 1;
@@ -197,7 +198,7 @@ public class CompanyInfoControllerTest extends MyRestDoc {
     @Test
     public void get_detail_company_test() throws Exception {
         // given
-        User company01 = User.builder().id(6).username("company01").build();
+        User company01 = User.builder().id(6).username("company01").role(Role.valueOf("COMPANY")).build();
         String accessToken = JwtUtil.create(company01);
 
         Integer id = 1;

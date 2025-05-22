@@ -826,6 +826,12 @@ public class ResumeControllerTest extends MyRestDoc {
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.resume.etcs[0].etcType").value("LANGUAGE"));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.resume.etcs[0].institutionName").value("YBM"));
         actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.resume.etcs[0].description").value("850점"));
+
+        // 유저정보
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.name").value("쌀"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.email").value("ssar@nate.com"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.birthDate").value(2000));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.contactNumber").value("010-1234-5678"));
         actions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 }
