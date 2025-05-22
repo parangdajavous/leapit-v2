@@ -165,7 +165,7 @@ public class JobPostingRepository {
         if (sortType == SortType.POPULAR) {
             jpql.append(" ORDER BY jp.viewCount DESC");
         } else if (sortType == SortType.LATEST) {
-            jpql.append(" ORDER BY jp.createdAt DESC");
+            jpql.append(" ORDER BY jp.id");
         }
 
         Query query = em.createQuery(jpql.toString(), Object[].class);

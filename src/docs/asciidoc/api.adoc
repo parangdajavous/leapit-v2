@@ -103,6 +103,77 @@ include::{snippets}/{resume}/get_detail_test/http-request.adoc[]
 ===== Response Example
 include::{snippets}/{resume}/get_detail_test/http-response.adoc[]
 
+== 채용공고
+=== 1. 채용공고 등록
+===== Request Example
+include::{snippets}/{jobposting}/save_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{jobposting}/save_test/http-response.adoc[]
+
+=== 2. 채용공고 등록 화면
+===== Request Example
+include::{snippets}/{jobposting}/get_save_form_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{jobposting}/get_save_form_test/http-response.adoc[]
+
+=== 3. 채용공고 삭제
+===== Request Example
+include::{snippets}/{jobposting}/delete_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{jobposting}/delete_test/http-response.adoc[]
+
+=== 4. 채용공고 수정
+===== Request Example
+include::{snippets}/{jobposting}/update_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{jobposting}/update_test/http-response.adoc[]
+
+=== 5. 채용공고 수정 화면
+===== Request Example
+include::{snippets}/{jobposting}/get_update_form_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{jobposting}/get_update_form_test/http-response.adoc[]
+
+=== 6. 채용공고 상세보기 - 기업
+===== Request Example
+include::{snippets}/{jobposting}/company_get_detail_form_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{jobposting}/company_get_detail_form_test/http-response.adoc[]
+
+=== 7. 채용공고 상세보기 - 구직자
+===== Request Example
+include::{snippets}/{jobposting}/personal_get_detail_form_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{jobposting}/personal_get_detail_form_test/http-response.adoc[]
+
+=== 8. 채용공고 리스트 - 기업
+===== Request Example
+include::{snippets}/{jobposting}/get_company_list_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{jobposting}/get_company_list_test/http-response.adoc[]
+
+=== 9. 채용공고 리스트 - 로그인 X
+===== Request Example
+include::{snippets}/{jobposting}/get_list_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{jobposting}/get_list_test/http-response.adoc[]
+
+=== 10. 채용공고 리스트 - 로그인 O
+===== Request Example
+include::{snippets}/{jobposting}/get_personal_list_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{jobposting}/get_personal_list_test/http-response.adoc[]
+
 == 지원
 === 1. 지원하기 화면 - 구직자
 ===== Request Example
@@ -131,8 +202,6 @@ include::{snippets}/{application}/update_pass_test/http-request.adoc[]
 
 ===== Response Example
 include::{snippets}/{application}/update_pass_test/http-response.adoc[]
-
-
 
 == 기업정보
 === 1. 기업정보 등록

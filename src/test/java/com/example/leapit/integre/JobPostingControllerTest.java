@@ -8,6 +8,7 @@ import com.example.leapit.common.enums.Role;
 import com.example.leapit.jobposting.JobPostingRequest;
 import com.example.leapit.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -442,4 +443,324 @@ public class JobPostingControllerTest extends MyRestDoc {
 
     }
 
+    @Test
+    public void get_list_test() throws Exception {
+        // when
+        ResultActions actions = mvc.perform(
+                MockMvcRequestBuilders
+                        .get("/api/jobposting")
+        );
+
+        // eye
+        String responseBody = actions.andReturn().getResponse().getContentAsString();
+        System.out.println(responseBody);
+
+        // then
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("성공"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.positions[0]").value("AI 엔지니어"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.positions[1]").value("데이터 엔지니어"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.positions[2]").value("모바일 앱 개발자"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.positions[3]").value("백엔드"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.positions[4]").value("풀스택"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.positions[5]").value("프론트엔드"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.techStacks[0]").value("CSS"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.techStacks[1]").value("Django"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.techStacks[2]").value("HTML"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.techStacks[3]").value("Java"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.techStacks[4]").value("Kotlin"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.techStacks[5]").value("Node.js"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.techStacks[6]").value("Python"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.techStacks[7]").value("React"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.techStacks[8]").value("SQL"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.techStacks[9]").value("Spring Boot"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.careerLevels[0]").value("YEAR_0"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.careerLevels[1]").value("YEAR_1"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.careerLevels[2]").value("YEAR_2"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.careerLevels[3]").value("YEAR_3"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.careerLevels[4]").value("YEAR_4"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.careerLevels[5]").value("YEAR_5"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.careerLevels[6]").value("YEAR_6"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.careerLevels[7]").value("YEAR_7"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.careerLevels[8]").value("YEAR_8"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.careerLevels[9]").value("YEAR_9"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.careerLevels[10]").value("OVER_10"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.regions[0].id").value(1));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.regions[0].name").value("서울특별시"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.regions[0].subRegions[0].id").value(1));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.regions[0].subRegions[0].name").value("강남구"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.regions[0].subRegions[1].id").value(2));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.regions[0].subRegions[1].name").value("서초구"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.regions[1].id").value(2));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.regions[1].name").value("부산광역시"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.regions[1].subRegions[0].id").value(3));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.regions[1].subRegions[0].name").value("부산진구"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.regions[1].subRegions[1].id").value(4));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.regions[1].subRegions[1].name").value("해운대구"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[0].id").value(1));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[0].title").value("시니어 백엔드 개발자 채용"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[0].companyName").value("점핏 주식회사"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[0].address").value("서울특별시 강남구 테헤란로 1길 10"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[0].image").value("점핏주식회사대표이미지.png"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[0].career").value("5년차 ~ 10년차 이상"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[0].deadline")
+                .value(Matchers.matchesPattern("^\\d{4}-\\d{2}-\\d{2}$")));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[0].dday").isNumber());
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[0].bookmarked").value(false));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[0].techStacks[0].name").value("Python"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[0].techStacks[1].name").value("Java"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[0].techStacks[2].name").value("React"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[1].id").value(3));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[1].title").value("데이터 엔지니어 채용"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[1].companyName").value("랩핏테크"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[1].address").value("서울시 마포구 백범로 12길 22"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[1].image").value("랩핏테크대표이미지.png"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[1].career").value("신입 ~ 2년차"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[1].deadline")
+                .value(Matchers.matchesPattern("^\\d{4}-\\d{2}-\\d{2}$")));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[1].dday").isNumber());
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[1].bookmarked").value(false));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[1].techStacks[0].name").value("SQL"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[1].techStacks[1].name").value("Node.js"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[1].techStacks[2].name").value("React"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[2].id").value(7));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[2].title").value("프론트엔드 웹 개발자 채용"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[2].companyName").value("점핏 주식회사"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[2].address").value("서울특별시 강남구 테헤란로 1길 10"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[2].image").value("점핏주식회사대표이미지.png"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[2].career").value("2년차 ~ 5년차"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[2].deadline")
+                .value(Matchers.matchesPattern("^\\d{4}-\\d{2}-\\d{2}$")));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[2].dday").isNumber());
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[2].bookmarked").value(false));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[2].techStacks[0].name").value("React"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[2].techStacks[1].name").value("HTML"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[2].techStacks[2].name").value("CSS"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[3].id").value(8));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[3].title").value("모바일 프론트엔드 앱 개발자"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[3].companyName").value("점핏 주식회사"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[3].address").value("서울특별시 강남구 테헤란로 1길 10"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[3].image").value("점핏주식회사대표이미지.png"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[3].career").value("2년차 ~ 5년차"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[3].deadline")
+                .value(Matchers.matchesPattern("^\\d{4}-\\d{2}-\\d{2}$")));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[3].dday").isNumber());
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[3].bookmarked").value(false));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[3].techStacks[0].name").value("Node.js"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[3].techStacks[1].name").value("SQL"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[3].techStacks[2].name").value("Java"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[4].id").value(9));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[4].title").value("iOS 앱 개발자 구인"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[4].companyName").value("랩핏테크"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[4].address").value("서울시 마포구 백범로 12길 22"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[4].image").value("랩핏테크대표이미지.png"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[4].career").value("1년차 ~ 4년차"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[4].deadline")
+                .value(Matchers.matchesPattern("^\\d{4}-\\d{2}-\\d{2}$")));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[4].dday").isNumber());
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[4].bookmarked").value(false));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[4].techStacks[0].name").value("Python"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[4].techStacks[1].name").value("React"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[4].techStacks[2].name").value("SQL"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[5].id").value(10));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[5].title").value("AI 연구원 채용"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[5].companyName").value("코드몽키"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[5].address").value("경기도 성남시 분당구 판교로 235"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[5].image").value("코드몽키대표이미지.png"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[5].career").value("신입 ~ 2년차"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[5].deadline")
+                .value(Matchers.matchesPattern("^\\d{4}-\\d{2}-\\d{2}$")));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[5].dday").isNumber());
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[5].bookmarked").value(false));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[5].techStacks[0].name").value("Java"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[5].techStacks[1].name").value("Spring Boot"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[5].techStacks[2].name").value("HTML"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[6].id").value(11));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[6].title").value("풀스택 개발자 채용"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[6].companyName").value("코드몽키"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[6].address").value("경기도 성남시 분당구 판교로 235"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[6].image").value("코드몽키대표이미지.png"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[6].career").value("4년차 ~ 8년차"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[6].deadline")
+                .value(Matchers.matchesPattern("^\\d{4}-\\d{2}-\\d{2}$")));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[6].dday").isNumber());
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[6].bookmarked").value(false));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[6].techStacks[0].name").value("Python"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[6].techStacks[1].name").value("Django"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[6].techStacks[2].name").value("CSS"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[7].id").value(12));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[7].title").value("QA 엔지니어 모집"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[7].companyName").value("랩핏테크"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[7].address").value("서울시 마포구 백범로 12길 22"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[7].image").value("랩핏테크대표이미지.png"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[7].career").value("1년차 ~ 5년차"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[7].deadline")
+                .value(Matchers.matchesPattern("^\\d{4}-\\d{2}-\\d{2}$")));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[7].dday").isNumber());
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[7].bookmarked").value(false));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[7].techStacks[0].name").value("Java"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[7].techStacks[1].name").value("Kotlin"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[7].techStacks[2].name").value("Spring Boot"));
+    }
+
+    @Test
+    public void get_personal_list_test() throws Exception {
+        // when
+        ResultActions actions = mvc.perform(
+                MockMvcRequestBuilders
+                        .get("/s/api/personal/jobposting")
+                        .header("Authorization", "Bearer " + personalAccessToken)
+        );
+
+        // eye
+        String responseBody = actions.andReturn().getResponse().getContentAsString();
+        System.out.println(responseBody);
+
+        // then
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("성공"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.positions[0]").value("AI 엔지니어"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.positions[1]").value("데이터 엔지니어"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.positions[2]").value("모바일 앱 개발자"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.positions[3]").value("백엔드"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.positions[4]").value("풀스택"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.positions[5]").value("프론트엔드"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.techStacks[0]").value("CSS"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.techStacks[1]").value("Django"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.techStacks[2]").value("HTML"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.techStacks[3]").value("Java"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.techStacks[4]").value("Kotlin"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.techStacks[5]").value("Node.js"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.techStacks[6]").value("Python"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.techStacks[7]").value("React"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.techStacks[8]").value("SQL"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.techStacks[9]").value("Spring Boot"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.careerLevels[0]").value("YEAR_0"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.careerLevels[1]").value("YEAR_1"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.careerLevels[2]").value("YEAR_2"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.careerLevels[3]").value("YEAR_3"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.careerLevels[4]").value("YEAR_4"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.careerLevels[5]").value("YEAR_5"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.careerLevels[6]").value("YEAR_6"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.careerLevels[7]").value("YEAR_7"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.careerLevels[8]").value("YEAR_8"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.careerLevels[9]").value("YEAR_9"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.careerLevels[10]").value("OVER_10"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.regions[0].id").value(1));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.regions[0].name").value("서울특별시"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.regions[0].subRegions[0].id").value(1));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.regions[0].subRegions[0].name").value("강남구"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.regions[0].subRegions[1].id").value(2));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.regions[0].subRegions[1].name").value("서초구"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.regions[1].id").value(2));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.regions[1].name").value("부산광역시"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.regions[1].subRegions[0].id").value(3));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.regions[1].subRegions[0].name").value("부산진구"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.regions[1].subRegions[1].id").value(4));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.regions[1].subRegions[1].name").value("해운대구"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[0].id").value(1));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[0].title").value("시니어 백엔드 개발자 채용"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[0].companyName").value("점핏 주식회사"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[0].address").value("서울특별시 강남구 테헤란로 1길 10"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[0].image").value("점핏주식회사대표이미지.png"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[0].career").value("5년차 ~ 10년차 이상"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[0].deadline")
+                .value(Matchers.matchesPattern("^\\d{4}-\\d{2}-\\d{2}$")));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[0].dday").isNumber());
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[0].bookmarked").value(true));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[0].techStacks[0].name").value("Python"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[0].techStacks[1].name").value("Java"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[0].techStacks[2].name").value("React"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[1].id").value(3));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[1].title").value("데이터 엔지니어 채용"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[1].companyName").value("랩핏테크"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[1].address").value("서울시 마포구 백범로 12길 22"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[1].image").value("랩핏테크대표이미지.png"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[1].career").value("신입 ~ 2년차"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[1].deadline")
+                .value(Matchers.matchesPattern("^\\d{4}-\\d{2}-\\d{2}$")));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[1].dday").isNumber());
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[1].bookmarked").value(true));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[1].techStacks[0].name").value("SQL"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[1].techStacks[1].name").value("Node.js"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[1].techStacks[2].name").value("React"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[2].id").value(7));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[2].title").value("프론트엔드 웹 개발자 채용"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[2].companyName").value("점핏 주식회사"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[2].address").value("서울특별시 강남구 테헤란로 1길 10"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[2].image").value("점핏주식회사대표이미지.png"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[2].career").value("2년차 ~ 5년차"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[2].deadline")
+                .value(Matchers.matchesPattern("^\\d{4}-\\d{2}-\\d{2}$")));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[2].dday").isNumber());
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[2].bookmarked").value(false));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[2].techStacks[0].name").value("React"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[2].techStacks[1].name").value("HTML"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[2].techStacks[2].name").value("CSS"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[3].id").value(8));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[3].title").value("모바일 프론트엔드 앱 개발자"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[3].companyName").value("점핏 주식회사"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[3].address").value("서울특별시 강남구 테헤란로 1길 10"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[3].image").value("점핏주식회사대표이미지.png"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[3].career").value("2년차 ~ 5년차"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[3].deadline")
+                .value(Matchers.matchesPattern("^\\d{4}-\\d{2}-\\d{2}$")));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[3].dday").isNumber());
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[3].bookmarked").value(false));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[3].techStacks[0].name").value("Node.js"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[3].techStacks[1].name").value("SQL"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[3].techStacks[2].name").value("Java"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[4].id").value(9));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[4].title").value("iOS 앱 개발자 구인"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[4].companyName").value("랩핏테크"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[4].address").value("서울시 마포구 백범로 12길 22"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[4].image").value("랩핏테크대표이미지.png"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[4].career").value("1년차 ~ 4년차"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[4].deadline")
+                .value(Matchers.matchesPattern("^\\d{4}-\\d{2}-\\d{2}$")));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[4].dday").isNumber());
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[4].bookmarked").value(false));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[4].techStacks[0].name").value("Python"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[4].techStacks[1].name").value("React"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[4].techStacks[2].name").value("SQL"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[5].id").value(10));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[5].title").value("AI 연구원 채용"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[5].companyName").value("코드몽키"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[5].address").value("경기도 성남시 분당구 판교로 235"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[5].image").value("코드몽키대표이미지.png"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[5].career").value("신입 ~ 2년차"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[5].deadline")
+                .value(Matchers.matchesPattern("^\\d{4}-\\d{2}-\\d{2}$")));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[5].dday").isNumber());
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[5].bookmarked").value(false));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[5].techStacks[0].name").value("Java"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[5].techStacks[1].name").value("Spring Boot"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[5].techStacks[2].name").value("HTML"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[6].id").value(11));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[6].title").value("풀스택 개발자 채용"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[6].companyName").value("코드몽키"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[6].address").value("경기도 성남시 분당구 판교로 235"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[6].image").value("코드몽키대표이미지.png"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[6].career").value("4년차 ~ 8년차"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[6].deadline")
+                .value(Matchers.matchesPattern("^\\d{4}-\\d{2}-\\d{2}$")));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[6].dday").isNumber());
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[6].bookmarked").value(false));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[6].techStacks[0].name").value("Python"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[6].techStacks[1].name").value("Django"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[6].techStacks[2].name").value("CSS"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[7].id").value(12));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[7].title").value("QA 엔지니어 모집"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[7].companyName").value("랩핏테크"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[7].address").value("서울시 마포구 백범로 12길 22"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[7].image").value("랩핏테크대표이미지.png"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[7].career").value("1년차 ~ 5년차"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[7].deadline")
+                .value(Matchers.matchesPattern("^\\d{4}-\\d{2}-\\d{2}$")));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[7].dday").isNumber());
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[7].bookmarked").value(false));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[7].techStacks[0].name").value("Java"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[7].techStacks[1].name").value("Kotlin"));
+        actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.jobPostingList[7].techStacks[2].name").value("Spring Boot"));
+    }
 }
