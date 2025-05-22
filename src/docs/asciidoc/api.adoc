@@ -4,8 +4,8 @@ endif::[]
 
 :user: user-controller-test
 :resume: resume-controller-test
-:jobposting: jobposting-controller-test
-:jobpostingBookmark: jobposting-bookmark-controller-test
+:jobposting: job-posting-controller-test
+:jobpostingBookmark: job-posting-bookmark-controller-test
 :application: application-controller-test
 :companyInfo: company-info-controller-test
 :board: board-controller-test
@@ -194,6 +194,20 @@ include::{snippets}/{jobposting}/get_personal_list_test/http-request.adoc[]
 
 ===== Response Example
 include::{snippets}/{jobposting}/get_personal_list_test/http-response.adoc[]
+
+=== 11. 메인페이지 - 로그인 O
+===== Request Example
+include::{snippets}/{jobposting}/index_login_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{jobposting}/index_login_test/http-response.adoc[]
+
+=== 12. 메인페이지 - 로그인 X
+===== Request Example
+include::{snippets}/{jobposting}/index_logout_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{jobposting}/index_logout_test/http-response.adoc[]
 
 === 공고 북마크(jobpostingBookmark)
 === 1. 개인 마이페이지 공고 스크랩 현황 관리

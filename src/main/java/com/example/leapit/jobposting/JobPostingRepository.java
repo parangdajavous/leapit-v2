@@ -294,7 +294,7 @@ public class JobPostingRepository {
         Query query = em.createQuery(
                 "SELECT jp FROM JobPosting jp " +
                         "WHERE jp.deadline >= :today " +
-                        "ORDER BY jp.createdAt DESC"
+                        "ORDER BY jp.id DESC"
         );
         query.setParameter("today", today);
         query.setMaxResults(3);
