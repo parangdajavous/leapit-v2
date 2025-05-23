@@ -63,8 +63,8 @@ public class ApplicationController {
     @PutMapping("/s/api/company/application/{id}/bookmark")
     public ResponseEntity<?> updateBookmark(@PathVariable("id") Integer applicationId) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        applicationService.updateBookmark(applicationId, sessionUser.getId());
-        return Resp.ok(null);
+        ApplicationResponse.DTO respDTO = applicationService.updateBookmark(applicationId, sessionUser.getId());
+        return Resp.ok(respDTO);
     }
 
     // 기업 지원서 상세보기

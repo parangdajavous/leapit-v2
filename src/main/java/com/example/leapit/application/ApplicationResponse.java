@@ -9,7 +9,9 @@ import com.example.leapit.jobposting.JobPostingResponse;
 import com.example.leapit.resume.Resume;
 import com.example.leapit.resume.ResumeResponse;
 import com.example.leapit.user.User;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -195,6 +197,27 @@ public class ApplicationResponse {
             this.bookmarkStatus = application.getBookmark();
             this.jobPostingTitle = application.getJobPosting().getTitle();
             this.resumeDTO = resume;
+        }
+    }
+
+    @Data
+    public static class DTO {
+        private Integer id;
+        private Integer resumeId;
+        private Integer jobPostingId;
+        private String bookmark; // BOOKMARKED / NOT_BOOKMARKED
+        private LocalDate appliedDate;
+        private String passStatus; // PASS / FAIL / WAITING
+        private String viewStatus; // VIEWED / UNVIEWED
+
+        public DTO(Application application) {
+            this.id = application.getId();
+            this.resumeId = application.getResume().getId();
+            this.jobPostingId = application.getJobPosting().getId();
+            this.bookmark = application.getBookmark().label;
+            this.appliedDate = application.getAppliedDate();
+            this.passStatus = application.getPassStatus().label;
+            this.viewStatus = application.getViewStatus().label;
         }
     }
 }

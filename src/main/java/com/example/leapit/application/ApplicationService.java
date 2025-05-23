@@ -87,7 +87,7 @@ public class ApplicationService {
     }
 
     @Transactional
-    public void updateBookmark(Integer applicationId, Integer sessionUserId) {
+    public ApplicationResponse.DTO updateBookmark(Integer applicationId, Integer sessionUserId) {
         // 1. 해당 applicationId 존재 확인
         Application applicationPS = applicationRepository.findById(applicationId)
                 .orElseThrow(() -> new ExceptionApi404("해당 지원서는 존재하지 않습니다."));
@@ -96,6 +96,10 @@ public class ApplicationService {
             throw new ExceptionApi403("권한이 없습니다.");
         // 3. update  BOOKMARKED -> NOT_BOOKMARKED, NOT_BOOKMARKED -> BOOKMARKED 로 바꿈
         applicationPS.updateBookmark(applicationPS.getBookmark().toString());
+
+        ApplicationResponse.DTO respDTO = new ApplicationResponse.DTO(applicationPS);
+
+        return respDTO;
     }
 
     // 특정 채용공고에 대한 이력서 지원 화면
